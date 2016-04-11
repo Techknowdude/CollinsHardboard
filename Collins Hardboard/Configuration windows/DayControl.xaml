@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Configuration_windows.DayControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:configurationWindows="clr-namespace:Configuration_windows"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" BorderThickness="2" BorderBrush="DarkBlue"
+             >
+    <Control.Resources>
+        <ControlTemplate x:Key="ShiftTemplate">
+            <ItemsControl>
+                <Label Background="Red" Height="20" Margin="5"/>
+            </ItemsControl>
+        </ControlTemplate>
+    </Control.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Name="Column1"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Name="TitleRow" Height="30"></RowDefinition>
+            <RowDefinition Name="ContentRow" Height="10*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Name="DayTitleLabel" Height="50" Grid.Row="0" Content="{Binding Path=Title}" Background="CadetBlue"/>
+        <ItemsControl ItemsSource="{Binding Path=DayItems}"  Name="ItemsGrid" Grid.Row="1">
+        </ItemsControl>
+    </Grid>
+</UserControl>

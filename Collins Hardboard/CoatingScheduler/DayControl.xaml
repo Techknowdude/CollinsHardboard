@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="CoatingScheduler.DayControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:coatingScheduler="clr-namespace:CoatingScheduler"
+             mc:Ignorable="d" Width="Auto" MinWidth="60" Height="Auto" MinHeight="80">
+    <Grid Width="Auto">
+        <StackPanel Orientation="Horizontal" Width="Auto" Height="Auto">
+            <StackPanel Width="Auto" Height="Auto" VerticalAlignment="Center">
+                <DatePicker Name="DayDatePicker" HorizontalAlignment="Left" Margin="5,0,0,5" VerticalAlignment="Center" SelectedDateChanged="DayDatePicker_OnSelectedDateChanged"/>
+                <Button Name="BtnRemoveDay" Content="Remove Day" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" Width="75" Click="RemoveDayButton_Click"/>
+                <Button Name="BtnRunDay" Content="Run Day" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Center" Width="75" Click="RunDayButton_Click"/>
+            </StackPanel>
+            <StackPanel Width="Auto" Height="Auto">
+                <ListView Name="LineListView" DataContext="LineControl" Margin="5,0,0,0" Height="Auto" MinHeight="40" Width="Auto" MinWidth="100">
+                </ListView>
+                <Button Name="BtnAddLine" Content="Add Shift" HorizontalAlignment="Right" Margin="5,10,10,5" VerticalAlignment="Bottom" Width="75" Click="Add_Button" />
+            </StackPanel>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

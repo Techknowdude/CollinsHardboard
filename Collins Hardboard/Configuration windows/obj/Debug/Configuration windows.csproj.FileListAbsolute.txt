@@ -1,0 +1,50 @@
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\ConversionFile.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\Configuration windows.exe.config
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\Configuration windows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\Configuration windows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\ImportLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\UtilityWindows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\LumenWorks.Framework.IO.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\ImportLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\ModelLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Debug\UtilityWindows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\Configuration windows.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\ConfigurationSelectionWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\DayInformationWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\DayShiftControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\LineSelectionWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\MachineConfigWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\MachineControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\MainWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\EditShiftWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\TimeSelectWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\CalendarControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\ConfigurationSelectionWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\ConfigurationsWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\DayControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\DayInformationWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\DayShiftControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\LineSelectionWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\MachineConfigWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\MachineControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\MainWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\EditShiftWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\ShiftWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\TimeSelectWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\App.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\Configuration windows_MarkupCompile.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\Configuration windows_MarkupCompile.lref
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\CalendarControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\ConfigurationsWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\DayControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\ShiftWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\Configuration windows.g.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\Configuration_windows.Properties.Resources.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\Configuration windows.csproj.GenerateResource.Cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\Configuration windows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Debug\Configuration windows.pdb

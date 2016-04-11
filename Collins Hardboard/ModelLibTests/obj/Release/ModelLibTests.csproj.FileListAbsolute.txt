@@ -1,0 +1,11 @@
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLibTests\bin\Release\ConversionFile.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLibTests\bin\Release\ModelLibTests.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLibTests\bin\Release\ModelLibTests.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLibTests\bin\Release\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLibTests\bin\Release\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLibTests\bin\Release\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLibTests\bin\Release\ModelLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLibTests\bin\Release\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLibTests\obj\Release\ModelLibTests.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLibTests\obj\Release\ModelLibTests.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLibTests\obj\Release\ModelLibTests.pdb

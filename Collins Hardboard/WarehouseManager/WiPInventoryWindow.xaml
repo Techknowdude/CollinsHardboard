@@ -1,0 +1,30 @@
+﻿<Window x:Class="WarehouseManager.WiPInventoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:modelLib="clr-namespace:ModelLib;assembly=ModelLib"
+        xmlns:importLib="clr-namespace:ImportLib;assembly=ImportLib"
+        Title="WiP Inventory" Height="500" Width="430" Name="This">
+    <Grid>
+        <Grid.Resources>
+        </Grid.Resources>
+        <StackPanel>
+            <Menu>
+                <MenuItem Name="SaveItem" Header="Save" Click="SaveItem_OnClick"></MenuItem>
+                <MenuItem Name="LoadItem" Header="Load" Click="LoadItem_OnClick"></MenuItem>
+                <MenuItem Name="ImportItem" Header="Import" Click="ImportItem_OnClick"></MenuItem>
+            </Menu>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Width="120">Product Code</Label>
+                <Label Width="80">Units</Label>
+                <Label Width="80">Grade</Label>
+                <Label Width="40">Purge</Label>
+            </StackPanel>
+            <ListView Name="WiPItemView" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" >
+
+
+            </ListView>
+            <Button Name="AddWiPButton" Content="Add WiP Item" HorizontalAlignment="Left" Width="100" Margin="5" Click="AddWiPButton_OnClick"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

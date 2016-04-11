@@ -1,0 +1,13 @@
+﻿<Window x:Class="InventoryViewer.InventoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Main Inventory" MinHeight="350" Width="450">
+    <Grid>
+        <Menu Height="24"  VerticalAlignment="Top">
+            <MenuItem Height="24" Margin="0,0,3,0" Name="AddMenuItem" Header="_Add New Inventory" Click="AddMenuItem_OnClick"></MenuItem>
+            <MenuItem Height="24" Margin="0,0,3,0" Name="LoadInventoryMenuItem" Header="_Refresh" Click="LoadInventoryMenuItem_OnClick"></MenuItem>
+        </Menu>
+
+        <ListView Margin="0,24,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Name="ItemListView" ScrollViewer.VerticalScrollBarVisibility="Auto" ></ListView>
+    </Grid>
+</Window>

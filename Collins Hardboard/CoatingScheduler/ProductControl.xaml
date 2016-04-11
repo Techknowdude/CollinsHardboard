@@ -1,0 +1,57 @@
+﻿<coatingScheduler:ProductControlBase x:Class="CoatingScheduler.ProductControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+                                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                                    xmlns:coatingScheduler="clr-namespace:CoatingScheduler"
+                                    mc:Ignorable="d" 
+             Height="Auto" MinWidth="490" Width="Auto" MinHeight="87"
+             BorderThickness="1" BorderBrush="DarkBlue">
+    <Grid Name="ControlGridView" Height="Auto" Width="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28*"/>
+            <RowDefinition Height="28*"/>
+            <RowDefinition Height="28*"/>
+        </Grid.RowDefinitions>
+        <xctk:RichTextBox TabIndex="1" x:Name="TxbThickness" HorizontalAlignment="Left" Height="22" Margin="3,3,0,0" Text="{Binding Path=(coatingScheduler:CoatingScheduleProduct.Thickness)}" VerticalAlignment="Top" Width="59" Grid.Row="0" >
+            <FlowDocument>
+                <Paragraph/>
+                <Paragraph>
+                    <Run Text=""/>
+                </Paragraph>
+            </FlowDocument>
+        </xctk:RichTextBox>
+        <xctk:RichTextBox TabIndex="2" x:Name="TxbProductDescription" HorizontalAlignment="Left" Height="22" Margin="67,3,0,0" Text="{Binding Path=(coatingScheduler:CoatingScheduleProduct.Description)}" VerticalAlignment="Top" Width="169" Grid.Row="0" UndoLimit="101"/>
+        <xctk:RichTextBox TabIndex="3" x:Name="TxbGrades" HorizontalAlignment="Left" Height="22" Margin="241,3,0,0" Text="{Binding Path=Grades}" VerticalAlignment="Top" Width="59" Grid.Row="0" />
+        <xctk:RichTextBox TabIndex="7" x:Name="TxbNotes" HorizontalAlignment="Left" Height="22" Margin="179,2.8,0,0" VerticalAlignment="Top" Width="279" Grid.Row="1" Text="{Binding Path=(coatingScheduler:CoatingScheduleProduct.Notes)}"/>
+        <xctk:RichTextBox TabIndex="9" x:Name="TxbPlacement" HorizontalAlignment="Left" Height="22" Margin="93,4,0,2.8" VerticalAlignment="Center" Width="292" Grid.Row="2" Text="{Binding Path=(coatingScheduler:CoatingScheduleProduct.Placement)}"/>
+        <!--<CheckBox TabIndex="5" x:Name="CbxUnits" IsChecked="{Binding Path=(mainApplication:CoatingScheduleProduct.HasUnits)}" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>-->
+        <!--<CheckBox TabIndex="8" x:Name="CbxPlacement" IsChecked="{Binding Path=(mainApplication:CoatingScheduleProduct.HasPlacement)}" HorizontalAlignment="Left" Margin="90,0,0,0" Grid.Row="2" VerticalAlignment="Center" />-->
+        <!--<Label x:Name="LblPlacement" Content="Placement:" HorizontalAlignment="Left" Margin="105,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>-->
+        <Label x:Name="LblNotes" Content="Notes" HorizontalAlignment="Left" Margin="137,1.8,0,1" Grid.Row="1" VerticalAlignment="Center"/>
+        <ComboBox Margin="3"  TabIndex="10" Name="DurationComboBox" SelectedIndex="0" HorizontalAlignment="Left" SelectionChanged="DurationComboBox_OnSelectionChanged" VerticalAlignment="Center" Grid.Row="1" Width="65">
+            <ComboBoxItem>Units</ComboBoxItem>
+            <ComboBoxItem>Hours</ComboBoxItem>
+        </ComboBox>
+        <ComboBox Name="PaintTrialComboBox" Width="72" Margin="305,0,0,0" SelectedIndex="0" HorizontalAlignment="Left" Grid.Row="0" Height="22" VerticalAlignment="Center">
+            <ComboBoxItem>Not Trial</ComboBoxItem>
+            <ComboBoxItem>Trial</ComboBoxItem>
+        </ComboBox>
+        <TextBox TabIndex="6" Name="MtbUnits" Text="{Binding Path=(coatingScheduler:CoatingScheduleProduct.Units)}" Margin="74,3.8,0,3" Height="22" HorizontalAlignment="Left" Width="58" VerticalAlignment="Center" Grid.Row="1" TextChanged="TextUpdated" />
+        <ComboBox TabIndex="4" Name="CbbBarcode" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="81" Height="22" Margin="379,0,0,0" SelectedIndex="0" SelectionChanged="CbbBarcode_SelectionChanged">
+            <system:String>Barcode</system:String>
+            <system:String>No Barcode</system:String>
+        </ComboBox>
+        <Button Name="BtnRemoveProduct" Content="Remove" HorizontalAlignment="Left" Margin="3,3,0,3.8" Grid.Row="2" VerticalAlignment="Center" Width="77" Height="22" Click="BtnRemoveProduct_Click"/>
+        <Button Visibility="Hidden" Name="BtnPushUp" Content="↥" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="24" Height="22" Margin="434,0,0,0" FontSize="14" FontWeight="Bold" FontFamily="Microsoft Sans Serif" Click="BtnPushUp_Click" />
+        <Button Visibility="Hidden" Name="BtnPushDown" Content="↧" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="24" Height="22" Margin="434,0,0,0" FontSize="14" FontWeight="Bold" FontFamily="Microsoft Sans Serif" Click="BtnPushDown_OnClick" />
+        <Button Name="BtnSwapUp" Content="↑" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="24" Height="22" Margin="465,0,3,0" FontSize="14" FontFamily="Microsoft Sans Serif" FontWeight="Bold" Click="BtnSwapUp_OnClick" />
+        <Button Name="BtnSwapDown" Content="↓" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="24" Height="22" Margin="465,0,3,0" FontSize="14" FontFamily="Microsoft Sans Serif" FontWeight="Bold" Click="BtnSwapDown_OnClick" />
+        <ComboBox TabIndex="4" x:Name="CbbMarked" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="99" Height="22" Margin="390,4,0,2.8" SelectedIndex="0" SelectionChanged="CbbMarked_OnSelectionChanged">
+            <system:String>Backbrand</system:String>
+            <system:String>No Backbrand</system:String>
+        </ComboBox>
+    </Grid>
+</coatingScheduler:ProductControlBase>

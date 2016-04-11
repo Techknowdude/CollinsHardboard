@@ -1,0 +1,8 @@
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLib\bin\Release\ConversionFile.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLib\bin\Release\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLib\bin\Release\ModelLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLib\bin\Release\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLib\bin\Release\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLib\obj\Release\ModelLib.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLib\obj\Release\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ModelLib\obj\Release\ModelLib.pdb

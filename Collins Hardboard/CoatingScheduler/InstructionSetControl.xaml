@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="CoatingScheduler.InstructionSetControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" >
+    <Grid>
+            <StackPanel>
+                <TextBlock Name="CoatingLineText" FontWeight="Bold" Text="Line title" Height="22" HorizontalAlignment="Center" />
+                <ListView Name="InstructionListView" MinWidth="400">
+                    <ListView.View>
+                        <GridView>
+                        <GridViewColumn Width="280" Header="Instruction">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBox Text="{Binding Text}" HorizontalAlignment="Stretch" MinWidth="260" />
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="120" Header="Barcode?">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBox Text="{Binding Barcode}" Width="100"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                    </ListView.View>
+                </ListView>
+                <StackPanel Orientation="Horizontal">
+                <Button Name="AddInstructionButton" HorizontalAlignment="Left" Margin="5" Content="Add Instruction" Click="AddInstructionButton_OnClick"/>
+                <Button Name="DeleteInstructionButton" HorizontalAlignment="Left" Margin="5" Content="Delete Instruction" Click="DeleteInstructionButton_OnClick"/>
+            </StackPanel> 
+            </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,34 @@
+# HG changeset patch
+# User Brandon W <gamingking@gmail.com>
+# Date 1452186919 28800
+# Parent  7c37553176d5caa0a7c16a857b2c5df6aadc6650
+diff --git a/Collins Hardboard/Collins Hardboard.sln b/Collins Hardboard/Collins Hardboard.sln
+index b8249a2fc65d2fec080eaddcd71889bcedc0b78f..f13297feacdb579539e7ba8e1a7f8c60093ec401
+GIT binary patch
+literal 8986
+ec%1FQ0Sy2E0K%a6Pi+qe6aWAK0000006ZEa8UO(R
+
+diff --git a/Collins Hardboard/Main Application/MainWindow.xaml.cs b/Collins Hardboard/Main Application/MainWindow.xaml.cs
+--- a/Collins Hardboard/Main Application/MainWindow.xaml.cs	
++++ b/Collins Hardboard/Main Application/MainWindow.xaml.cs	
+@@ -46,7 +46,6 @@
+         {
+             StaticInventoryTracker.LoadDefaults();
+             StaticFactoryValuesManager.LoadValues();
+-            CoatingSchedule.LoadDefault();
+         }
+ 
+         private void Button_Click(object sender, RoutedEventArgs e)
+diff --git a/Sample Data/Machines.dat b/Sample Data/Machines.dat
+index 62e1e80c7b8eb94e794c9244b2f95cea3f50dabb..c7bc76b2c47592a9f3f4dd34c2321e93676e480e
+GIT binary patch
+literal 2230
+zc%1Fj*=oX25C-5Bj4@qlvHNCiwLwHkTDPkj6{`?UnuzqalrG*Vl$Jh&Z`(&`660|O
+z&m4RJ4@iXn%P=z`$w-nUmo2+nTJ!&X`oG{BlV&GhOGxt*$_kV+%L+&;fvgsa(8dWH
+z53FtkWD-$@g*S-C%9huLa2{$4unVC|jHCo`U|P_w0}H6%sAG5U?jhY^VUk0OkZuZT
+z3DPYVW)W2a>elPfZWA^v>pelbLznG8n|QE2u_Y$MR@Dvv$u@KYRZg;8<7>2veL^c!
+zjVd3oG|jW9=R=m}coy|=B(@c3k6D`MSr^(9qV9APo{8UyQ(_Z|NTW8+SX|)ZD#Ygm
+zp7mk3puP}p!+V7GlBItS9E;w%l(-8EKa(qZz(t&9F<zbQm&V_dYeFVM*{}x?Pl)Lv
+z?Diqf2ywGxLYyVA8sb(5H+?HCZ8uOKnh?9a=91Vkn_k<2ILG324dUJ2+i&W1JbE8~
+U{CvH9562^EiL<(Ebr*I10i?6NzW@LL
+

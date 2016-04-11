@@ -1,0 +1,13 @@
+﻿<Window x:Class="CoatingScheduler.UnitChangeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Update Inventory" Height="148" Width="359.2" ResizeMode="NoResize" Topmost="True">
+    <StackPanel>
+        <Label Name="MessageLabel" Margin="10" HorizontalContentAlignment="Center" Content="{Binding Path=MessageText}"></Label>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Label>Units:</Label>
+            <TextBox Name="UnitsTextBox" Text="{Binding Path=UnitsText}" Width="100"></TextBox>
+        </StackPanel>
+        <Button Name="NextButton" HorizontalAlignment="Center" Margin="10" Width="50" Click="NextButton_OnClick">Next</Button>
+    </StackPanel>
+</Window>

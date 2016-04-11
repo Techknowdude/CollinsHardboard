@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Configuration_windows.DayShiftControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             >
+    <Grid Width="Auto" Height="Auto">
+        <StackPanel Name="MainPanel" Orientation="Horizontal">
+            <Label Name="ShiftLabel" Background="Cornsilk" Margin="5" Padding="5">Shift Title</Label>
+            <Button Name="ActiveButton" Margin="5" Padding="5" Click="ActiveButton_OnClick">Cancel</Button>
+            <Button Name="OvertimeButton" Margin="5" Padding="5" Click="OvertimeButton_OnClick">Add overtime</Button>
+            <Button Name="TimeButton" Margin="5" Padding="5" Click="TimeButton_OnClick">Set time</Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

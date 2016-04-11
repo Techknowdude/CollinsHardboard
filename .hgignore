@@ -1,0 +1,10 @@
+syntax: glob
+Build
+Temp
+obj
+*.sln.docstates
+*.pidb
+*.userprefs
+*.DS_Store
+Thumbs.db
+*/bin

@@ -1,0 +1,34 @@
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\ConversionFile.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\InventoryImportExample.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\ProductImportExample.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\SalesImportExample.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\TestingData.xls
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\UnitTests.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\UnitTests.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\CoatingScheduler.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\ImportLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\Main Application.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\UtilityWindows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\WarehouseManager.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\Configuration windows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\LumenWorks.Framework.IO.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\ProductionScheduler.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\InventoryViewer.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\ScheduleGen.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\CoatingScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\ImportLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\Main Application.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\ModelLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\UtilityWindows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\WarehouseManager.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\Configuration windows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\ProductionScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\InventoryViewer.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\bin\Release\ScheduleGen.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\obj\Release\UnitTests.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\obj\Release\UnitTests.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UnitTests\obj\Release\UnitTests.pdb

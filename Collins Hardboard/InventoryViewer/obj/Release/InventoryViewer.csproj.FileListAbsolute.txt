@@ -1,0 +1,35 @@
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\ConversionFile.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\InventoryViewer.exe.config
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\InventoryViewer.exe.manifest
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\InventoryViewer.application
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\InventoryViewer.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\InventoryViewer.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\Configuration windows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\ImportLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\Configuration windows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\ImportLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\ModelLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryViewer.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\EfficiencyViewer.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryItemControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\ItemEfficiencyControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\WeeklyEfficiencyControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\EfficiencyViewer.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryItemControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\ItemEfficiencyControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\WeeklyEfficiencyControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\App.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryViewer_MarkupCompile.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryViewer.g.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryViewer.Properties.Resources.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryViewer.csproj.GenerateResource.Cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryViewer.exe.manifest
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryViewer.application
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryViewer.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryViewer.pdb

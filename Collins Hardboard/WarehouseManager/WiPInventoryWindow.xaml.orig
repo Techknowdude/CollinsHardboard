@@ -1,0 +1,60 @@
+﻿<Window x:Class="WarehouseManager.WiPInventoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:modelLib="clr-namespace:ModelLib;assembly=ModelLib"
+        xmlns:importLib="clr-namespace:ImportLib;assembly=ImportLib"
+        Title="WiPInventoryWindow" Height="300" Width="300" Name="This">
+    <Grid>
+<<<<<<< local
+        <Grid.Resources>
+        </Grid.Resources>
+        <ListView Name="WiPItemView" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" >
+=======
+        <ListView Name="WiPItemView" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" ItemsSource="{Binding WiPItems}" >
+>>>>>>> other
+            <ListView.View>
+                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Inventory information">
+                    <GridViewColumn Width="120">
+                        <GridViewColumnHeader Click="ColumnHeader_Click" Tag="ProductCode" Content="Product Code" />
+<<<<<<< local
+<<<<<<< local
+                        
+=======
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                            <Grid>
+                                <TextBox Text="{Binding ProductCode}" />
+                            </Grid>
+                        </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+>>>>>>> other
+                    </GridViewColumn>
+                    <GridViewColumn Width="120" >
+                        <GridViewColumnHeader Click="ColumnHeader_Click" Tag="Units" Content="Units" />
+<<<<<<< local
+
+=======
+=======
+>>>>>>> other
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+<<<<<<< local
+                                    <TextBox Text="{Binding SelectedItem.ProductCode, ElementName=list}" />
+=======
+                                    <TextBox Text="{Binding Units}" />
+>>>>>>> other
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+<<<<<<< local
+>>>>>>> other
+=======
+>>>>>>> other
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>

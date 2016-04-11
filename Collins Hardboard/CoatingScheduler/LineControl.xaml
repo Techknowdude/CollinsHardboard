@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="CoatingScheduler.LineControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" Width="Auto" VerticalAlignment="Top">
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+        <StackPanel VerticalAlignment="Top">
+            <ComboBox x:Name="ShiftBox" HorizontalAlignment="Left" Height="22" Margin="4,4,4,4" VerticalAlignment="Top" Width="71" SelectionChanged="ShiftBox_OnSelectionChanged">
+            </ComboBox>
+            <Button x:Name="BtnRemove" Click="BtnRemove_OnClick" Content="Remove Shift" Width="90" Height="22" Margin="4,4,4,4" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+        </StackPanel>
+        <ListView Name="ShiftListView" Margin="5,0,0,0" MinWidth="490" MinHeight="60" Width="Auto" Height="Auto" VerticalContentAlignment="Top" HorizontalAlignment="Left" VerticalAlignment="Top" >
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top"></StackPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+        <StackPanel Name="RunningTotalStackPanel" Orientation="Vertical" VerticalAlignment="Top" Margin="0,8,0,0">
+        </StackPanel>
+    </StackPanel>
+</UserControl>

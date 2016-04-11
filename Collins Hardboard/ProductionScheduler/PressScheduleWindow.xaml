@@ -1,0 +1,21 @@
+﻿<Window x:Class="ProductionScheduler.PressScheduleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PressScheduleWindow" Height="450" Width="600">
+    <StackPanel Name="MainPanel" CanVerticallyScroll="True" CanHorizontallyScroll="True">
+        <Menu Name="FileMenu" >
+            <MenuItem Name="SaveMenuItem" Header="_Save" Click="SaveMenuItem_OnClick"/>
+            <MenuItem Name="LoadMenuItem" Header="_Load" Click="LoadMenuItem_OnClick" />
+            <MenuItem Name="Export" Header="_Export" Click="ExportMenuItem_OnClick" />
+            <MenuItem Name="SettingsMenuItem" Header="_Settings" Click="SettingsMenuItem_OnClick" />
+        </Menu>
+        <Label FontSize="26">Production Schedule and Plate Mix</Label>
+        
+
+        <Label FontSize="26">Press Schedule: </Label>
+
+        <Button Name="AddItemButton" Width="80" Height="30" HorizontalAlignment="Left" Click="AddItemButton_OnClick">Add Week</Button>
+        <ListView Name="WeekControlListView" ItemsSource="{Binding Path=WeekControls}">
+        </ListView>
+    </StackPanel>
+</Window>

@@ -1,0 +1,56 @@
+﻿<Window x:Class="Main_Application.PlantSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PlantSettingsWindow" MinHeight="300" MinWidth="340" MaxWidth="430">
+    <StackPanel>
+        <Menu>
+            <MenuItem Height="24" Margin="0,0,10,0" Name="SaveItem" Click="SaveItem_OnClick" Header="Save"/>
+            <MenuItem Height="24" Margin="0,0,10,0" Name="LoadItem" Click="LoadItem_OnClick" Header="Load"/>
+        </Menu>
+        <GroupBox Header="Waste ">
+            <StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Margin="20,0,0,0">Min</Label>
+                    <TextBox Name="WasteMinTextBox" Width="80" Text="{Binding Path=WasteMin}"></TextBox>
+                    <Label>Max</Label>
+                    <TextBox Name="WasteMaxTextBox" Width="80" Text="{Binding Path=WasteMax}"></TextBox>
+                </StackPanel>
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <Label>Current</Label>
+                    <TextBox Name="WasteCurrentTextBox" Width="80" Text="{Binding Path=CurrentWaste}"></TextBox>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <StackPanel Margin="0,5" Orientation="Horizontal">
+            <Label>WiP prefix:</Label>
+            <TextBox MaxLength="1" Width="20" FontSize="14" VerticalContentAlignment="Center" Text="{Binding Path=WiPChar}" />
+        </StackPanel>
+        <GroupBox Header="Item Grades">
+            <StackPanel>
+                <ListView Name="GradeListView" MinHeight="50" MaxHeight="150" ItemsSource="{Binding Path=GradeControls}"></ListView>
+                <StackPanel Orientation="Horizontal">
+                    <Button Name="AddGradeButton" Click="AddGradeButton_OnClick" Height="24" Width="50" Margin="0,0,10,0">Add</Button>
+                    <Button Name="DeleteGradeButton" Click="DeleteGradeButton_OnClick" Width="60">Delete</Button>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Item Textures">
+            <StackPanel>
+                <ListView Name="TextureListView" MinHeight="50" MaxHeight="150" ItemsSource="{Binding Path=TextureControls}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Name="AddTexButton" Click="AddTexButton_OnClick" Height="24" Width="50" Margin="0,0,10,0">Add</Button>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Coating Lines">
+            <StackPanel>
+                <ListView Name="CoatingLineListView" MinHeight="50" MaxHeight="150" ItemsSource="{Binding Path=CoatingLineControls}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Name="AddCoatingButton" Click="AddCoatingButton_OnClick" Height="24" Width="50" Margin="0,0,10,0">Add</Button>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+    </StackPanel>
+</Window>

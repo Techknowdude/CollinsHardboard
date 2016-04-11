@@ -1,0 +1,19 @@
+﻿<coatingScheduler:ProductControlBase x:Class="CoatingScheduler.ProductNoteControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+                                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                                    xmlns:coatingScheduler="clr-namespace:CoatingScheduler"
+                                    mc:Ignorable="d" 
+             Height="Auto" MinWidth="490" Width="494" MinHeight="87"
+             BorderThickness="1" BorderBrush="DarkBlue">
+    <Grid Name="ControlGridView" Height="84" Width="Auto">
+        <Button Name="BtnRemoveProduct" Content="Remove" HorizontalAlignment="Left" Margin="3,3,3,3" VerticalAlignment="Bottom" Width="75" Height="22" Click="BtnRemoveProduct_Click" />
+        <xctk:RichTextBox TabIndex="1" Text="{Binding Path=(coatingScheduler:CoatingScheduleNote.Text)}" x:Name="NotesBox" HorizontalAlignment="Stretch" MinHeight="40" Height="Auto" Margin="3,3,33,28"  VerticalAlignment="Stretch" MinWidth="450" />
+        <Button x:Name="BtnSwapUp" Content="↑" VerticalAlignment="Top" HorizontalAlignment="Right" Width="24" Height="22" Margin="3" FontSize="14" FontFamily="Microsoft Sans Serif" FontWeight="Bold" Click="BtnSwapUp_OnClick" />
+        <Button x:Name="BtnSwapDown" Content="↓" VerticalAlignment="Top" HorizontalAlignment="Right" Width="24" Height="22" Margin="3,30,3,3" FontSize="14" FontFamily="Microsoft Sans Serif" FontWeight="Bold" Click="BtnSwapDown_OnClick" />
+    </Grid>
+    <!--Text="{Binding Path=(mainApplication:CoatingScheduleNotes.Text)}" -->
+</coatingScheduler:ProductControlBase>

@@ -1,0 +1,33 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Main_Application.MainWindow"
+        Title="Hardboard Scheduler" MinHeight="73.6" MinWidth="528.8">
+    <StackPanel Height="Auto" Width="Auto">
+        <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" Width="Auto" Height="Auto" >
+            <MenuItem Header="_View">
+                <MenuItem Header="Product _Forecast" Click="Button_Click"/>
+                <MenuItem Header="_WiP Inventory" Click="BtnWiPInventory_Click"/>
+                <MenuItem Header="_Inventory" Click="BtnOpenInventory_Click"></MenuItem>
+                <MenuItem Header="_Coating Schedule" Click="BtnOpenCoatingSchedule_Click"/>
+                <MenuItem Header="_Press Schedule" Click="BtnOpenPressSchedule_Click"/>
+                <MenuItem Header="Schedule _Generator" Click="BtnOpenGenerator_Click"/>
+                <MenuItem Header="Coating _Efficiency" Click="Efficiency_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Configure">
+                <MenuItem Name="ConfigMenuItem" Header="Machine _Configurations" Click="ConfigMenuItem_OnClick"/>
+                <MenuItem Name="MachinesMenuItem" Header="_Machines" Click="MachinesMenuItem_OnClick"/>
+                <MenuItem Name="CoatingShiftMenuItem" Header="_Coating Shifts" Click="CoatingShiftMenuItem_OnClick"/>
+                <MenuItem Name="ProductionShiftMenuItem" Header="_Production Shifts" Click="ProductionShiftMenuItem_OnClick"/>
+                <MenuItem Name="PlantSettingsMenuItem" Header="Plant _Settings" Click="PlantSettingsMenuItem_OnClick"/>
+            </MenuItem>
+            <MenuItem Header="_Import">
+                <MenuItem x:Name="BtnImportInternalAll" Header="Import _All" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BtnImportInternalAll_OnClick"/>
+                <MenuItem x:Name="BtnImportInternalSales" Header="Import _Sales" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnImportInternalSales_Click"/>
+                <MenuItem x:Name="BtnImportInternalMaster" Header="Import _Master" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnImportInternalMaster_Click"/>
+                <MenuItem x:Name="BtnImportInternalInventory" Header="Import _Inventory" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnImportInternalInventory_Click"/>
+                <MenuItem x:Name="BtnImportInternalForecast" Header="Import Sales _History" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnImportInternalForecast_Click"/>
+            </MenuItem>
+        </Menu>
+    </StackPanel>
+</Window>

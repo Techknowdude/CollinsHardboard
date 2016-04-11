@@ -1,0 +1,51 @@
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\ConversionFile.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\Configuration windows.exe.config
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\Configuration windows.exe.manifest
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\Configuration windows.application
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\Configuration windows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\Configuration windows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\ImportLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\ImportLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\ModelLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\ConfigurationWindows.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\ConfigurationSelectionWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\DayInformationWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\DayShiftControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\LineSelectionWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\MachineConfigWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\MachineControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\MainWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\EditShiftWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\TimeSelectWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\CalendarControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\ConfigurationSelectionWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\ConfigurationsWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\DayControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\DayInformationWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\DayShiftControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\LineSelectionWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\MachineConfigWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\MachineControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\MainWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\EditShiftWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\ShiftWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\TimeSelectWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\App.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\GeneratedInternalTypeHelper.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\Configuration windows_MarkupCompile.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\Configuration windows_MarkupCompile.lref
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\CalendarControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\ConfigurationsWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\DayControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\ShiftWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\Configuration windows.g.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\Configuration_windows.Properties.Resources.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\ConfigurationWindows.csproj.GenerateResource.Cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\Configuration windows.exe.manifest
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\Configuration windows.application
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\Configuration windows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\Configuration windows.pdb

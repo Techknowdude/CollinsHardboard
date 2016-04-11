@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">All</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>1c22fc18-cd74-47e1-b266-507254111ede</ProjectGuid>
+    <OutputType>msi</OutputType>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>Installer.aip</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <IsWindowsApplication>True</IsWindowsApplication>
+    <AssemblyName>Installer</AssemblyName>
+    <Name>Installer</Name>
+    <RootNamespace>Installer</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'All' ">
+    <DebugSymbols>false</DebugSymbols>
+    <EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'DefaultBuild' " />
+  <ItemGroup>
+    <Compile Include="Installer.aip">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoatingScheduler\CoatingScheduler.csproj">
+      <Name>CoatingScheduler</Name>
+      <Project>{0319bcb2-275d-4b53-b321-68a8f38000b1}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\Configuration windows\ConfigurationWindows.csproj">
+      <Name>ConfigurationWindows</Name>
+      <Project>{15ff810c-2aa5-49c9-86e2-c0d10a14a09c}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\ImportLib\ImportLib.csproj">
+      <Name>ImportLib</Name>
+      <Project>{f317f1c7-6ddc-4303-84bb-2a7a88f581fb}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\InventoryViewer\InventoryViewer.csproj">
+      <Name>InventoryViewer</Name>
+      <Project>{24cc1c8a-eacb-4bdf-b849-bcda9ecc7605}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\Main Application\Main Application.csproj">
+      <Name>Main Application</Name>
+      <Project>{c9086dec-4fe8-4815-9196-e59f8505b67c}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelLib\ModelLib.csproj">
+      <Name>ModelLib</Name>
+      <Project>{50998390-8bb5-4802-af11-422a9f92cc51}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductionScheduler\ProductionScheduler.csproj">
+      <Name>ProductionScheduler</Name>
+      <Project>{a4c7194c-59bf-4819-9ac0-f29766463e29}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\ScheduleGen\ScheduleGen.csproj">
+      <Name>ScheduleGen</Name>
+      <Project>{1e74d0ea-01ab-4a1e-aff2-7ee6adc22823}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\StaticHelpers\StaticHelpers.csproj">
+      <Name>StaticHelpers</Name>
+      <Project>{a7025254-a2a3-47f3-b589-ba10cdd4045b}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput</OutputsToImport>
+    </ProjectReference>
+    <ProjectReference Include="..\WarehouseManager\WarehouseManager.csproj">
+      <Name>WarehouseManager</Name>
+      <Project>{8996bcef-b61f-4f9b-a31d-eb53205dcd60}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput</OutputsToImport>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Caphyon\Advanced Installer\AdvInstExtTasks.Targets" />
+</Project>

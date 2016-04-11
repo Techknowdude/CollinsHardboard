@@ -1,0 +1,90 @@
+﻿<Window x:Class="WarehouseManager.ForcastWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:modelLib="clr-namespace:ModelLib;assembly=ModelLib"
+        xmlns:staticHelpers="clr-namespace:StaticHelpers;assembly=StaticHelpers"
+        Title="ForcastWindow" Height="1000" Width="1645">
+    <Window.Resources>
+        <DataTemplate x:Key="NameTemplate"> <!-- Working on adding cell borders    -->
+            <Border BorderThickness="0,0,1,1" BorderBrush="LightGray" Margin="-6,0,-6,0">
+                <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"></TextBlock>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="ActualValueTemplate">
+            <Border BorderThickness="10,10,10,10" BorderBrush="Black">
+            </Border>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <ListView Name="ProductListView" HorizontalAlignment="Stretch" Margin="0,19,0.4,0.4" VerticalAlignment="Stretch" >
+            <ListView.View>
+                <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Sales forcast information">
+                    <GridViewColumn Width="100" CellTemplate="{StaticResource NameTemplate}" DisplayMemberBinding="{Binding (modelLib:ForecastItem.ProductCode)}" >
+                        <GridViewColumnHeader Name="HrProdCode" Tag="ProductCode" Click="ColumnHeader_Click" BorderThickness="1" >Product Code</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding (modelLib:ForecastItem.ProductDescription)}" >
+                        <GridViewColumnHeader Name="HrDesc" Tag="Description" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" >Description</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="80" DisplayMemberBinding="{Binding (modelLib:ForecastItem.Units)}" >
+                        <GridViewColumnHeader Name="HrInv" Tag="Units" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" >Inventory</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding (modelLib:ForecastItem.OneMonthAvg)}">
+                        <GridViewColumnHeader Name="Hr1MoAvg" Tag="AvgOneMonth" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Content="1 Month &#xD;&#xA;Avg Supply" />
+                    </GridViewColumn>
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding (modelLib:ForecastItem.ThreeMonthAvg)}">
+                        <GridViewColumnHeader Name="Hr3MoAvg" Tag="AvgThreeMonths" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Content="3 Month &#xD;&#xA;Avg Supply" />
+                    </GridViewColumn>
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SixMonthAvg)}">
+                        <GridViewColumnHeader Name="Hr6MoAvg" Tag="AvgSixMonths" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Content="6 Month &#xD;&#xA;Avg Supply" />
+                    </GridViewColumn>
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding (modelLib:ForecastItem.TwelveMonthAvg)}">
+                        <GridViewColumnHeader Name="Hr1YrAvg" Tag="AvgTwelveMonths" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Content="1 Year &#xD;&#xA;Avg Supply" />
+                    </GridViewColumn>
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding (modelLib:ForecastItem.PastYearAvg)}">
+                        <GridViewColumnHeader Name="HrLyAvg" Tag="AvgPastYear" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Content="Last Year &#xD;&#xA;Avg Supply" />
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldOneMonthAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits1MonthAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold1MonthAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldTwoMonthsAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits2MonthsAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold2MonthsAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldThreeMonthsAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits3MonthsAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold3MonthsAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldFourMonthsAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits4MonthsAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold4MonthsAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldFiveMonthsAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits5MonthsAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold5MonthsAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldSixMonthsAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits6MonthsAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold6MonthsAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldSevenMonthsAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits7MonthsAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold7MonthsAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldEightMonthsAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits8MonthsAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold8MonthsAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldNineMonthsAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits9MonthsAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold9MonthsAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldTenMonthsAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits10MonthsAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold10MonthsAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldElevenMonthsAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits11MonthsAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold11MonthsAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldTweleveMonthsAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits12MonthsAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold12MonthsAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding (modelLib:ForecastItem.SoldThirteenMonthsAgo)}" >
+                        <GridViewColumnHeader Tag="SoldUnits13MonthsAgo" Click="ColumnHeader_Click" ContentStringFormat="{}{G}" Name="Sold13MonthsAgoColumn">Month</GridViewColumnHeader>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Excel Export" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+    </Grid>
+</Window>

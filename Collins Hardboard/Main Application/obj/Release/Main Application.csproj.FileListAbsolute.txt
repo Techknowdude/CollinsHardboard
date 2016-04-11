@@ -1,0 +1,60 @@
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\ConversionFile.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Main Application.exe.config
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Main Application.exe.manifest
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Main Application.application
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Main Application.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Main Application.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\CoatingScheduler.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Configuration windows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\ImportLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\InventoryViewer.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\ProductionScheduler.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\ScheduleGen.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\WarehouseManager.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Xceed.Wpf.AvalonDock.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Xceed.Wpf.DataGrid.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\CoatingScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\Configuration windows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\ImportLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\InventoryViewer.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\ModelLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\ProductionScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\ScheduleGen.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\WarehouseManager.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\de\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\es\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\fr\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\hu\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\it\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\ro\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\ru\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\sv\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Release\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\Main Application.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\CoatingLineControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\GradeControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\MainWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\PlantSettingsWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\TextureControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\CoatingLineControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\GradeControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\MainWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\PlantSettingsWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\TextureControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\App.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\Main Application_MarkupCompile.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\Main Application.g.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\Main_Application.Properties.Resources.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\Main Application.csproj.GenerateResource.Cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\Main Application.exe.manifest
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\Main Application.application
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\Main Application.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Release\Main Application.pdb

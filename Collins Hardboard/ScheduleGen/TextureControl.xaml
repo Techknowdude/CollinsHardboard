@@ -1,0 +1,28 @@
+﻿<scheduleGen:GenControl x:Class="ScheduleGen.TextureControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:scheduleGen="clr-namespace:ScheduleGen"
+             mc:Ignorable="d" 
+             d:DesignHeight="24" d:DesignWidth="430">
+    <StackPanel Orientation="Horizontal" Height="24">
+        <TextBox Name="PriorityBox" Width="80" Text="{Binding Path=PriorityText}"></TextBox>
+        <Button Name="DeleteButton" Width="50" Margin="5,0" Click="DeleteButton_OnClick">Delete</Button>
+        <ComboBox Name="TexComboBox" Width="150" SelectionChanged="TexComboBox_OnSelectionChanged"/>
+        <ComboBox Width="90" Name="WhenComboBox" SelectedIndex="0" SelectionChanged="WhenComboBox_OnSelectionChanged">
+            <ComboBoxItem>Only on</ComboBoxItem>
+            <ComboBoxItem>Never On</ComboBoxItem>
+        </ComboBox>
+        <ComboBox Name="DayComboBox" Width="110" SelectedIndex="0" SelectionChanged="DayComboBox_OnSelectionChanged">
+            <ComboBoxItem>Sunday</ComboBoxItem>
+            <ComboBoxItem>Monday</ComboBoxItem>
+            <ComboBoxItem>Tuesday</ComboBoxItem>
+            <ComboBoxItem>Wednesday</ComboBoxItem>
+            <ComboBoxItem>Thursday</ComboBoxItem>
+            <ComboBoxItem>Friday</ComboBoxItem>
+            <ComboBoxItem>Saturday</ComboBoxItem>
+        </ComboBox>
+        
+    </StackPanel>
+</scheduleGen:GenControl>

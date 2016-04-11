@@ -1,0 +1,27 @@
+﻿<Window x:Class="ScheduleGen.ScheduleGenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ScheduleGenWindow" Height="300" Width="578.2">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button Name="GenerateButton" Width="110" Click="GenerateButton_OnClick" >Generate Schedule</Button>
+            <Button Name="SaveButton" Width="80" Click="SaveButton_OnClick" Margin="5,0">Save Settings</Button>
+            <Button Name="LoadButton" Width="80" Click="LoadButton_OnClick" >Load Settings</Button>
+            
+        </StackPanel>
+        <ListView Name="ControlsListView"></ListView>
+        <StackPanel Orientation="Horizontal">
+            <ComboBox Name="NewControlComboBox" SelectedIndex="0" >
+                <ComboBoxItem>Coating Line Conflict</ComboBoxItem>
+                <ComboBoxItem>Purge WiP</ComboBoxItem>
+                <ComboBoxItem>Run Item Before</ComboBoxItem>
+                <ComboBoxItem>Sales Orders</ComboBoxItem>
+                <ComboBoxItem>Sales Prediction</ComboBoxItem>
+                <ComboBoxItem>Texture Conflict</ComboBoxItem>
+                <ComboBoxItem>Waste Control</ComboBoxItem>
+                <ComboBoxItem>Width Order</ComboBoxItem>
+            </ComboBox>
+            <Button Name="AddControlButton" Width="30" Click="AddControlButton_Click">Add</Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

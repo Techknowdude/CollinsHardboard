@@ -1,0 +1,55 @@
+﻿<Window x:Class="Configuration_windows.EditShiftWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Shift information" Height="377.8" Width="382.4">
+    <Grid>
+        <StackPanel Margin="10,10,10,10">
+            <StackPanel Orientation="Horizontal">
+                <Label>Shift Name:</Label>
+                <TextBox Name="NameTextBox">Name</TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>Starting date</Label>
+                <DatePicker Name="StartDatePicker"></DatePicker>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>Ending date</Label>
+                <DatePicker Name="EndDatePicker"></DatePicker>
+            </StackPanel>
+            <Label>Days of the week:</Label>
+            <StackPanel Orientation="Horizontal" Margin="30,0,0,0">
+                <CheckBox Name="MondayCheckBox" Margin="5">Monday</CheckBox>
+                <CheckBox Name="TuesdayCheckBox" Margin="5">Tuesday</CheckBox>
+                <CheckBox Name="WednesdayCheckBox" Margin="5">Wednesday</CheckBox>
+                <CheckBox Name="ThursdayCheckBox" Margin="5">Thursday</CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="30,0,0,0">
+                <CheckBox Name="FridayCheckBox" Margin="5">Friday</CheckBox>
+                <CheckBox Name="SaturdayCheckBox" Margin="5">Saturday</CheckBox>
+                <CheckBox Name="SundayCheckBox" Margin="5">Sunday</CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>Start time:</Label>
+                <xctk:MaskedTextBox Name="StartTimeBox" Mask="00:00:00 AM" MinWidth="10" Margin="10,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>Duration:</Label>
+                <xctk:MaskedTextBox Name="EndTimeBox" Mask="00:00:00" MinWidth="10" Margin="10,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label VerticalAlignment="Center">Shift text color:</Label>
+                <xctk:ColorPicker Name="ForegroundColorPicker" Height="40" Width="60"></xctk:ColorPicker>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label VerticalAlignment="Center">Shift background color:</Label>
+                <xctk:ColorPicker Name="BackgroundColorPicker" Height="40" Width="60"></xctk:ColorPicker>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Name="AcceptButton" Padding="8,4" Margin="10" Click="AcceptButton_Click">Save</Button>
+                <Button Name="CancelButton" Padding="8,4" Margin="10" Click="CancelButton_Click">Cancel</Button>
+            </StackPanel>
+            </StackPanel>
+    </Grid>
+</Window>

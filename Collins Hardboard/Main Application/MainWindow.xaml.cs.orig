@@ -1,0 +1,36 @@
+﻿using System.Windows;
+using ImportLib;
+using WarehouseManager;
+
+namespace Main_Application
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+<<<<<<< local
+=======
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ForcastWindow forcastWindow = new ForcastWindow();
+            forcastWindow.Show();
+        }
+
+        private void btnImport_Click(object sender, RoutedEventArgs e)
+        {
+            ExternalImportHelper.ImportAll();
+        }
+
+        private void btnImportInternal_Click(object sender, RoutedEventArgs e)
+        {
+            InternalImport.GetInstance().ImportAll();
+>>>>>>> other
+        }
+    }
+}

@@ -1,0 +1,146 @@
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\MainWindow.g.cs
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\App.g.cs
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application_MarkupCompile.cache
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Main Application.exe.config
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ConversionFile.csv
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Main Application.exe
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Main Application.pdb
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\CoatingScheduler.exe
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ImportLib.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ModelLib.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\StaticHelpers.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\WarehouseManager.exe
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.DataGrid.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\UtilityWindows.exe
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\CoatingScheduler.pdb
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ImportLib.pdb
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ModelLib.pdb
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\StaticHelpers.pdb
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\WarehouseManager.pdb
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\UtilityWindows.pdb
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\MainWindow.baml
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.g.resources
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main_Application.Properties.Resources.resources
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.csproj.GenerateResource.Cache
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.exe
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\Main Application.exe.config
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\Main Application.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\Main Application.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\ConversionFile.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\Main Application.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\Main Application.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\CoatingScheduler.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\ImportLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\WarehouseManager.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.DataGrid.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\UtilityWindows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\LumenWorks.Framework.IO.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\CoatingScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\ImportLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\ModelLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\WarehouseManager.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\UtilityWindows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\Main Application.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\MainWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\MainWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\App.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\Main Application_MarkupCompile.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\Main Application.g.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\Main_Application.Properties.Resources.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\Main Application.csproj.GenerateResource.Cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ConversionFile.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Main Application.exe.config
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Main Application.exe.manifest
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Main Application.application
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Main Application.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Main Application.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\CoatingScheduler.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Configuration windows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ImportLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\InventoryViewer.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ProductionScheduler.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ScheduleGen.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\WarehouseManager.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.DataGrid.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\CoatingScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Configuration windows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ImportLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\InventoryViewer.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ModelLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ProductionScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ScheduleGen.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\WarehouseManager.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\CoatingLineControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\GradeControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\MainWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\PlantSettingsWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\TextureControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\CoatingLineControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\GradeControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\MainWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\PlantSettingsWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\TextureControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\App.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application_MarkupCompile.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.g.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main_Application.Properties.Resources.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.csproj.GenerateResource.Cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.exe.manifest
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.application
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\LumenWorks.Framework.IO.dll

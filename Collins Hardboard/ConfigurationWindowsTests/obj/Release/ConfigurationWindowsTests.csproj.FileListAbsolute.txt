@@ -1,0 +1,16 @@
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\ConversionFile.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\ConfigurationWindowsTests.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\ConfigurationWindowsTests.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\Configuration windows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\ImportLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\Configuration windows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\ImportLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\ModelLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Release\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\obj\Release\ConfigurationWindowsTests.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\obj\Release\ConfigurationWindowsTests.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\obj\Release\ConfigurationWindowsTests.pdb

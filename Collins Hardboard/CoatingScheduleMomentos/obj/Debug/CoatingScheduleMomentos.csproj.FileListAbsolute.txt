@@ -1,0 +1,6 @@
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduleMomentos\bin\Debug\CoatingScheduleMomentos.exe.config
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduleMomentos\bin\Debug\CoatingScheduleMomentos.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduleMomentos\bin\Debug\CoatingScheduleMomentos.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduleMomentos\obj\Debug\CoatingScheduleMomentos.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduleMomentos\obj\Debug\CoatingScheduleMomentos.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduleMomentos\obj\Debug\CoatingScheduleMomentos.pdb

@@ -1,0 +1,130 @@
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\AddProductWindow.baml
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduleWindow.baml
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\DayControl.baml
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\InstructionSetControl.baml
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\LineControl.baml
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\ShiftControl.baml
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\AddProductWindow.g.cs
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduleWindow.g.cs
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\DayControl.g.cs
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\InstructionSetControl.g.cs
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\LineControl.g.cs
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\ProductControl.g.cs
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\ProductNoteControl.g.cs
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\ShiftControl.g.cs
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\App.g.cs
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler_MarkupCompile.cache
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler_MarkupCompile.lref
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ConversionFile.csv
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\CoatingScheduler.exe.config
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\CoatingScheduler.exe
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\CoatingScheduler.pdb
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ImportLib.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ModelLib.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\StaticHelpers.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\UtilityWindows.exe
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ImportLib.pdb
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ModelLib.pdb
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\StaticHelpers.pdb
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\UtilityWindows.pdb
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\ProductControl.baml
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\ProductNoteControl.baml
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.g.resources
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.Properties.Resources.resources
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.csproj.GenerateResource.Cache
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.exe
+C:\Users\Brandon\Google Drive\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\ConversionFile.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\CoatingScheduler.exe.config
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\CoatingScheduler.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\CoatingScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\ImportLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\UtilityWindows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\LumenWorks.Framework.IO.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\ImportLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\ModelLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\bin\Debug\UtilityWindows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\AddProductWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduleWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\DayControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\InstructionSetControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\LineControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\ShiftControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\AddProductWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduleWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\DayControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\InstructionSetControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\LineControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\ProductControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\ProductNoteControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\ShiftControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\App.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler_MarkupCompile.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler_MarkupCompile.lref
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\ProductControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\ProductNoteControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.g.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.Properties.Resources.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.csproj.GenerateResource.Cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ConversionFile.csv
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\CoatingScheduler.exe.config
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\CoatingScheduler.exe.manifest
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\CoatingScheduler.application
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\CoatingScheduler.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\CoatingScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\Configuration windows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ImportLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\Configuration windows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ImportLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ModelLib.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.csproj.ResolveComReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\AddProductWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduleWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\InstructionSetControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\LineControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\ShiftControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\TrackingItemControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\TrackingSelectionWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\UnitChangeWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\AddProductWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduleWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\DayControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\InstructionSetControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\LineControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\ProductControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\ProductNoteControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\ShiftControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\TrackingItemControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\TrackingSelectionWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\UnitChangeWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\App.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler_MarkupCompile.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler_MarkupCompile.lref
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\DayControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\ProductControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\ProductNoteControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.g.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.Properties.Resources.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.csproj.GenerateResource.Cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.exe.manifest
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.application
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\LumenWorks.Framework.IO.dll

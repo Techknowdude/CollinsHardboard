@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="InventoryViewer.InventoryItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="26" Height="26" d:DesignWidth="500">
+    <StackPanel Orientation="Horizontal">
+        <ComboBox Name="MasterComboBox" Width="120" SelectionChanged="MasterComboBox_OnSelectionChanged"></ComboBox>
+        <Label Margin="3,0,0,0">Units:</Label>
+        <TextBox Name="UnitsTextBox" BorderThickness="2" BorderBrush="Red" Width="80"></TextBox>
+        <Label Margin="3,0,0,0">Grade: </Label>
+        <ComboBox Name="GradeComboBox" Width="80"></ComboBox>
+        <Button Name="DeleteButton" Margin="5,0" Click="DeleteButton_OnClick">Delete</Button>
+    </StackPanel>
+</UserControl>
