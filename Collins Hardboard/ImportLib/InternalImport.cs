@@ -426,7 +426,7 @@ namespace ImportLib
 
                                 curRow++;
                                 String prodCode = reader["Product"];
-                                double pcs = StaticFunctions.StringToDouble(reader["TotalPieces"]);
+                                double pcs = StaticFunctions.StringToDouble(reader["Pieces"]);
                                 String grade = reader["Grade"];
                                 String thick = reader["Thickness"];
                                 String width = reader["Width"];
@@ -834,7 +834,7 @@ ORDER BY        OrderNum, PD.Product;
 
                     try
                     {
-                        prodCode = result["ProductCode"].ToString();
+                        prodCode = result["ProductCode"].ToString();    
                         duedate = DateTime.Parse(result["DueDate"].ToString());
                         tex = result["Texture"].ToString();
                         thick = result["Thickness"].ToString();
@@ -918,7 +918,6 @@ ORDER BY        OrderNum, PD.Product;
                                     var pieces = StaticFunctions.StringToDouble(reader["Pieces"]);
                                     var tex = reader["Texture"];
                                     var thick = reader["Thickness"];
-                                    var type = reader["Type"];
                                     var style = reader["Style"];
                                     var width = reader["Width"];
                                     var length = reader["Length"];
@@ -932,9 +931,9 @@ ORDER BY        OrderNum, PD.Product;
                                     if (master != -1)
                                     {
                                         StaticInventoryTracker.AddPastSale(master, duedate, pieces);
-                                        Console.WriteLine(@"{0},{1},{2},{3},{4},{5},{6},{7}", prodCode, tex,
+                                        Console.WriteLine(@"{0},{1},{2},{3},{4},{5},{6}", prodCode, tex,
                                             thick,
-                                            type, style, width, length, cert);
+                                             style, width, length, cert);
                                     }
                                     ++rows;
                                 }

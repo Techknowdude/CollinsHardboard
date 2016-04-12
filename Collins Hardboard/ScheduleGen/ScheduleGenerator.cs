@@ -95,7 +95,7 @@ namespace ScheduleGen
             scheduleWindow.Show();
 
             // get list of all items that are made
-            ProductItems.AddRange(StaticInventoryTracker.ProductMasterList);
+            ProductItems.AddRange(StaticInventoryTracker.ProductMasterList.Where(x => x.MadeIn == "Coating"));
 
             // initialize with current waste, line, and width
             CurrentWaste = StaticFactoryValuesManager.CurrentWaste;
@@ -140,7 +140,6 @@ namespace ScheduleGen
 
                         CoatingScheduleProduct product = new CoatingScheduleProduct(nextItem);
                         double unitsToMake = nextOrder.PiecesToMake/nextItem.PiecesPerUnit;
-                        int multiples = 1;
 
                         if (Math.Abs(unitsToMake % nextItem.UnitsPerHour*8) > 0.0000001) // if not filling a shift, add enough to do so
                         {
