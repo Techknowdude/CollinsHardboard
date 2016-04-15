@@ -115,7 +115,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IncorrectMomentoCastMessage" xml:space="preserve">
-    <value>Product attempted to load momento of incorrect type. Expected {0}. Actual: {1}</value>
+    <value>Product attempted to load memento of incorrect type. Expected {0}. Actual: {1}</value>
     <comment>{0} is the expected type. 
 {1} is the type used.</comment>
   </data>

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Configuration_windows;
 using Microsoft.Office.Interop.Excel;
+using ModelLib;
 using StaticHelpers;
 
 namespace CoatingScheduler
@@ -345,6 +346,39 @@ namespace CoatingScheduler
                 }
             }
         }
+
+        /// <summary>
+        /// Fills the shift with the item by using the config passed.
+        /// </summary>
+        /// <param name="machine"></param>
+        /// <param name="config"></param>
+        /// <param name="item"></param>
+        /// <param name="idealNumber"></param>
+        /// <returns></returns>
+        public double ScheduleItem(Machine machine, Configuration config, ProductMasterItem item, double idealNumber)
+        {
+            double made = 0;
+
+            CoatingScheduleProduct product = new CoatingScheduleProduct(item);
+
+            AddLogic(product);
+
+            Shift shift = ((CoatingScheduleLine)ParentLogic).Shift;
+            double hours = shift.Duration.TotalHours;
+
+            var productController = ChildrenLogic.Last() as CoatingScheduleProduct;
+
+            // find the maximum units that can be scheduled.
+            made = hours*config.ItemsOutPerMinute*60/item.PiecesPerUnit;
+            made = Math.Ceiling(made);
+
+            productController.Machine = machine;
+            productController.Config = config;
+            productController.SetUnits(made.ToString());
+
+            return made;
+        }
+
     }
 
 }

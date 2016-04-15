@@ -116,17 +116,19 @@ namespace ScheduleGen
 
                 while (CurrentDay <= EndGen && orders.Count > 0)
                 {
-                    var nextOrder = orders.Dequeue();
+                    var nextOrder = orders.Peek();
+
+                    while (nextOrder != null && nextOrder.PiecesToMake < 1) // get rid of empty orders
+                    {
+                        orders.Dequeue();
+                        nextOrder = orders.Peek();
+                    }
+
+                    if(nextOrder == null) break;
 
                     ProductMasterItem nextItem =
                         StaticInventoryTracker.ProductMasterList.FirstOrDefault(x => x.MasterID == nextOrder.MasterID);
-
-                    // Get to a line that is not full
-                    while (LineFull())
-                    {
-                        AddControl();
-                    }
-
+                    
                     Tuple<Machine, Configuration, int> machineLine = GetBestMachine(nextItem);
 
                     Machine machine = machineLine.Item1;
@@ -143,22 +145,43 @@ namespace ScheduleGen
 
                         if (Math.Abs(unitsToMake % nextItem.UnitsPerHour*8) > 0.0000001) // if not filling a shift, add enough to do so
                         {
-                            unitsToMake += unitsToMake % nextItem.UnitsPerHour*8;
+                            unitsToMake += unitsToMake % nextItem.UnitsPerHour*8;// this should be nextItem.UnitsPerHour*8 - unitsToMake %(nextItem.UnitsPerHour*8)
                         }
 
                         if (unitsToMake > 0)
                         {
-                            scheduleShift.AddLogic(product);
-
-                            product.Units = unitsToMake.ToString(); // add to schedule
-                            product.Machine = machine;
-                            product.Config = config;
-
+                            var unitsMade = scheduleShift.ScheduleItem(machine, config, nextItem, double.MaxValue);
+                            var takeOff = unitsMade;
+                            foreach (var makeOrder in orders.Where(m => m.MasterID == nextItem.MasterID))
+                            {
+                                if (takeOff > makeOrder.PiecesToMake/nextItem.PiecesPerUnit)
+                                {
+                                    takeOff = takeOff - makeOrder.PiecesToMake/nextItem.PiecesPerUnit;
+                                    makeOrder.PiecesToMake = 0; // remove this
+                                }
+                                else
+                                {
+                                    makeOrder.PiecesToMake -= (int)takeOff*nextItem.PiecesPerUnit;
+                                }
+                            }
 
                             // factor in waste created
-                            CurrentWaste += nextItem.Waste * unitsToMake;
+                            CurrentWaste += nextItem.Waste * unitsMade;
+
+                            if (unitsMade*nextItem.PiecesPerUnit >= nextOrder.PiecesToMake)// change to nextOrder.PiecesToMake == 0
+                                orders.Dequeue();
+                            else
+                            {
+                                Console.WriteLine("Not done making this...");
+                            }
 
                         }
+
+                        AddControl(); // All production uses up at least one shift.
+                    }
+                    else
+                    {
+                        orders.Dequeue(); // skips things we can't make. This is most likely an error by the operator's configuration of the plant.
                     }
 
                 }
@@ -200,33 +223,36 @@ namespace ScheduleGen
                             //set shift to add to
                             scheduleShift = (CoatingScheduleShift) scheduleLine.ChildrenLogic[lineIndex];
 
-                            CoatingScheduleProduct product = new CoatingScheduleProduct(nextItem);
+                            //CoatingScheduleProduct product = new CoatingScheduleProduct(nextItem);
                             double unitsToMake = GetUnitsToMake(nextItem, machine);
 
                             if (unitsToMake > 0)
                             {
-                                scheduleShift.AddLogic(product);
+                                //scheduleShift.AddLogic(product);
 
-                                product.Units = unitsToMake.ToString(); // add to schedule
-                                product.Machine = machine;
-                                product.Config = config;
+                                var unitsMade = scheduleShift.ScheduleItem(machine, config, nextItem, unitsToMake);
+                                //product.Units = unitsToMake.ToString(); // add to schedule
+                                //product.Machine = machine;
+                                //product.Config = config;
 
                                 try
                                 {
-                                    _fulfilled[nextItem] += unitsToMake;
+                                    _fulfilled[nextItem] += unitsMade;
                                 }
                                 catch (Exception)
                                 {
-                                    _fulfilled[nextItem] = unitsToMake;
+                                    _fulfilled[nextItem] = unitsMade;
                                 }
 
-                                AddSalesFulfillment(nextItem, unitsToMake);
+                                AddSalesFulfillment(nextItem, unitsMade);
                                 added = true;
 
                                 // factor in waste created
-                                CurrentWaste += nextItem.Waste*unitsToMake;
+                                CurrentWaste += nextItem.Waste*unitsMade;
 
                                 RemoveIfCompleted(nextItem);
+
+                                AddControl(); // you only make one thing per shift
                             }
                             else
                             {
@@ -289,127 +315,7 @@ namespace ScheduleGen
         }
 
 
-        public static double GetUnitsToMake(ProductMasterItem nextItem, Machine machine)
-        {
-            double unitsToMake = 0;
-            double maxInShift = 0;
-
-            var config =
-                machine.ConfigurationList.FirstOrDefault(conf => conf.ItemOutID == nextItem.MasterID);
-            //                             hours                            rate              to units        to minutes
-            if (config != null)
-                maxInShift = (scheduleLine.Shift.Hours(scheduleLine.Date) * config.ItemsOutPerMinute /
-                               nextItem.PiecesPerUnit * 60);
-
-            var inventory = StaticInventoryTracker.InventoryItems.FirstOrDefault(
-                inv => inv.MasterID == nextItem.MasterID);
-            double currentInv = inventory?.Units ?? 0;
-
-            double max = 0;
-            double min = 0;
-            double target = 0;
-
-            if (nextItem.TurnType == "T")
-            {
-                ForecastItem forecast =
-                    StaticInventoryTracker.ForecastItems.FirstOrDefault(
-                        forcast => forcast.MasterID == nextItem.MasterID);
-                if (forecast != null)
-                {
-                    switch (duration)
-                    {
-                        case SalesPrediction.SalesDurationEnum.LastMonth:
-                            avgSold = forecast.AvgOneMonth;
-                            break;
-                        case SalesPrediction.SalesDurationEnum.Last3Months:
-                            avgSold = forecast.AvgThreeMonths;
-                            break;
-                        case SalesPrediction.SalesDurationEnum.Last6Months:
-                            avgSold = forecast.AvgSixMonths;
-                            break;
-                        case SalesPrediction.SalesDurationEnum.Last12Months:
-                            avgSold = forecast.AvgTwelveMonths;
-                            break;
-                        case SalesPrediction.SalesDurationEnum.LastYear:
-                            avgSold = forecast.AvgPastYear;
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-
-                    if (avgSold == 0)
-                        avgSold = 40; // do this to prevent infinite looping
-
-
-                    target
-                        = avgSold * nextItem.TargetSupply; // avg sold * months supply
-
-                    max = avgSold * nextItem.MaxSupply;
-                    min = avgSold * nextItem.MinSupply;
-
-                    // if target is too low
-                    if (target + currentInv < min)
-                    {
-                        unitsToMake = min;
-                    }
-                    // if target is too high
-                    else if (target + currentInv > max)
-                    {
-                        unitsToMake = max;
-                    }
-                    // if target is acceptable
-                    else
-                    {
-                        unitsToMake = target;
-                    }
-
-                    // fill shift if possible
-                    if (unitsToMake < maxInShift && unitsToMake < max)
-                    {
-                        unitsToMake = maxInShift;
-                    }
-                }
-            }
-            else // create by units
-            {
-                max = nextItem.MaxSupply;
-                min = nextItem.MinSupply;
-                target = nextItem.TargetSupply;
-                if (target == 0)
-                {
-                    unitsToMake = // run to order. Get sum of orders
-                        StaticInventoryTracker.SalesItems.Where(
-                            sale => sale.MasterID == nextItem.MasterID && 
-                            sale.Date < SalesOutlook &&
-                            sale.Units - sale.Fulfilled < 1)
-                            .Sum(sale => sale.Units - sale.Fulfilled);
-                }
-                else
-                {
-                    if (target + currentInv < min) // target too small
-                    {
-                        unitsToMake = min;
-                    }
-                    else if (target + currentInv > max) // target too big
-                    {
-                        unitsToMake = max;
-                    }
-                    else
-                    {
-                        unitsToMake = target;
-                    }
-                }
-            }
-
-            if (unitsToMake > maxInShift)
-                unitsToMake = maxInShift;
-            // try to fill shift
-            if (unitsToMake < maxInShift && unitsToMake < max)
-                unitsToMake = maxInShift;
-
-            return (int)unitsToMake; // round to nearest unit
-        }
-
+        
         public static Tuple<Machine,Configuration,int> GetBestMachine(ProductMasterItem nextItem)
         {
             Machine bestMachine = null;
@@ -423,10 +329,10 @@ namespace ScheduleGen
             }
 
             // get machines that can make
-            var machines =
+            List<Machine> machines =
                 MachineHandler.Instance.MachineList.Where(
                     machine =>
-                        machine.ConfigurationList.Any(conf => conf.ItemOutID == nextItem.MasterID));
+                        machine.ConfigurationList.Any(conf => conf.ItemOutID == nextItem.MasterID)).ToList();
             foreach (var machine in machines)
             {
                 if (otherMachines.Any(mac => mac.MachineConflicts.Contains(machine.Name))) continue; // if other machines conflict with this, continue
@@ -584,6 +490,144 @@ namespace ScheduleGen
                 ControlsList.Add(genControl);
             }
         }
+
+
+        public static double GetUnitsToMake(ProductMasterItem nextItem, Machine machine)
+        {
+            double unitsToMake = 0;
+            double maxInShift = 0;
+
+            var config =
+                machine.ConfigurationList.FirstOrDefault(conf => conf.ItemOutID == nextItem.MasterID);
+            //                             hours                            rate              to units        to minutes
+            if (config != null)
+                maxInShift = (scheduleLine.Shift.Hours(scheduleLine.Date) * config.ItemsOutPerMinute /
+                               nextItem.PiecesPerUnit * 60);
+
+            var inventory = StaticInventoryTracker.InventoryItems.FirstOrDefault(
+                inv => inv.MasterID == nextItem.MasterID);
+            double currentInv = inventory?.Units ?? 0;
+
+            double max = 0;
+            double min = 0;
+            double target = 0;
+
+            if (nextItem.TurnType == "T")
+            {
+                ForecastItem forecast =
+                    StaticInventoryTracker.ForecastItems.FirstOrDefault(
+                        forcast => forcast.MasterID == nextItem.MasterID);
+                if (forecast != null)
+                {
+                    switch (duration)
+                    {
+                        case SalesPrediction.SalesDurationEnum.LastMonth:
+                            avgSold = forecast.AvgOneMonth;
+                            break;
+                        case SalesPrediction.SalesDurationEnum.Last3Months:
+                            avgSold = forecast.AvgThreeMonths;
+                            break;
+                        case SalesPrediction.SalesDurationEnum.Last6Months:
+                            avgSold = forecast.AvgSixMonths;
+                            break;
+                        case SalesPrediction.SalesDurationEnum.Last12Months:
+                            avgSold = forecast.AvgTwelveMonths;
+                            break;
+                        case SalesPrediction.SalesDurationEnum.LastYear:
+                            avgSold = forecast.AvgPastYear;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                    if (avgSold == 0)
+                        avgSold = 40; // do this to prevent infinite looping
+
+
+                    target
+                        = avgSold * nextItem.TargetSupply; // avg sold * months supply
+
+                    max = avgSold * nextItem.MaxSupply;
+                    min = avgSold * nextItem.MinSupply;
+
+                    // if target is too low
+                    if (target + currentInv < min)
+                    {
+                        unitsToMake = min;
+                    }
+                    // if target is too high
+                    else if (target + currentInv > max)
+                    {
+                        unitsToMake = max;
+                    }
+                    // if target is acceptable
+                    else
+                    {
+                        unitsToMake = target;
+                    }
+
+                    // fill shift if possible
+                    if (unitsToMake < maxInShift && unitsToMake < max)
+                    {
+                        unitsToMake = maxInShift;
+                    }
+                }
+            }
+            else // create by units
+            {
+                max = nextItem.MaxSupply;
+                min = nextItem.MinSupply;
+                target = nextItem.TargetSupply;
+                if (target == 0)
+                {
+                    unitsToMake = // run to order. Get sum of orders
+                        StaticInventoryTracker.SalesItems.Where(
+                            sale => sale.MasterID == nextItem.MasterID &&
+                            sale.Date < SalesOutlook &&
+                            sale.Units - sale.Fulfilled < 1)
+                            .Sum(sale => sale.Units - sale.Fulfilled);
+                }
+                else
+                {
+                    if (target + currentInv < min) // target too small
+                    {
+                        unitsToMake = min;
+                    }
+                    else if (target + currentInv > max) // target too big
+                    {
+                        unitsToMake = max;
+                    }
+                    else
+                    {
+                        unitsToMake = target;
+                    }
+
+                    // Make enough to fill the shift by default
+
+                    double make = unitsToMake;
+
+                    do
+                    {
+                        make -= nextItem.UnitsPerHour * 8; // 8 hours in a shift by default
+
+                        if (make < 0)
+                        {
+                            unitsToMake += -(make); // add enough to cover shift.
+                        }
+
+                    } while (make > 0);
+                }
+            }
+
+            if (unitsToMake > maxInShift)
+                unitsToMake = maxInShift;
+            // try to fill shift
+            if (unitsToMake < maxInShift && unitsToMake < max)
+                unitsToMake = maxInShift;
+
+            return (int)unitsToMake; // round to nearest unit
+        }
+
 
         private static void AddControl()
         {

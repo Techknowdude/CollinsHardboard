@@ -201,7 +201,7 @@ namespace CoatingScheduler
             }
             else
             {
-                throw new Exception("Call recieved by a non-child control.");
+                throw new Exception("Call received by a non-child control.");
             }
         }
 
@@ -446,7 +446,7 @@ namespace CoatingScheduler
             }
             else
             {
-                throw new Exception("Call recieved by a non-child control.");
+                throw new Exception("Call received by a non-child control.");
             }
         }
 

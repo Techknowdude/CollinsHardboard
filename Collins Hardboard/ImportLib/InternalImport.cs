@@ -715,7 +715,7 @@ ORDER BY        OrderNum, PD.Product;
                             if (!ignore &&
                                 MessageBox.Show(
                                     String.Format(
-                                        "No master file etry for {0}. Unable to add sale. Ignore future errors?", prodCode),
+                                        "No master file entry for {0}. Unable to add sale. Ignore future errors?", prodCode),
                                     "Error",
                                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {
@@ -918,10 +918,8 @@ ORDER BY        OrderNum, PD.Product;
                                     var pieces = StaticFunctions.StringToDouble(reader["Pieces"]);
                                     var tex = reader["Texture"];
                                     var thick = reader["Thickness"];
-                                    var style = reader["Style"];
                                     var width = reader["Width"];
                                     var length = reader["Length"];
-                                    var cert = reader["Certified"];
 
                                     var duedate = DateTime.Parse(reader["DueDate"]);
 
@@ -931,9 +929,9 @@ ORDER BY        OrderNum, PD.Product;
                                     if (master != -1)
                                     {
                                         StaticInventoryTracker.AddPastSale(master, duedate, pieces);
-                                        Console.WriteLine(@"{0},{1},{2},{3},{4},{5},{6}", prodCode, tex,
+                                        Console.WriteLine(@"{0},{1},{2},{3},{4}", prodCode, tex,
                                             thick,
-                                             style, width, length, cert);
+                                             width, length);
                                     }
                                     ++rows;
                                 }

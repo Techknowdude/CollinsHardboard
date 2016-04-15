@@ -201,6 +201,7 @@ namespace Configuration_windows
         /// </summary>
         public void Load(bool autoLoad = true)
         {
+            string fileName = SaveName;
             try
             {
                 if (!autoLoad)
@@ -214,11 +215,14 @@ namespace Configuration_windows
                     bool? accept = openFileDialog.ShowDialog();
                     if (accept == true)
                     {
-                        SaveName = openFileDialog.FileName;
+                        fileName = openFileDialog.FileName;
                     }
                 }
-                using (BinaryReader reader = new BinaryReader(new FileStream(SaveName, FileMode.OpenOrCreate)))
+                using (BinaryReader reader = new BinaryReader(new FileStream(fileName, FileMode.OpenOrCreate)))
                 {
+                    Configurations.Clear();
+                    ConfigurationNames.Clear();
+
                     Int32 configCount = reader.ReadInt32();
                     for(; configCount > 0; configCount--)
                     {
@@ -240,9 +244,12 @@ namespace Configuration_windows
                 {
                     try
                     {
-                        SaveName = openFileDialog.FileName;
-                        using (BinaryReader reader = new BinaryReader(new FileStream(SaveName, FileMode.OpenOrCreate)))
+                        fileName = openFileDialog.FileName;
+                        using (BinaryReader reader = new BinaryReader(new FileStream(fileName, FileMode.OpenOrCreate)))
                         {
+                            Configurations.Clear();
+                            ConfigurationNames.Clear();
+
                             Int32 configCount = reader.ReadInt32();
                             for (; configCount > 0; configCount--)
                             {
@@ -257,6 +264,8 @@ namespace Configuration_windows
                     }
                 }
             }
+
+            MachineHandler.RecheckMachineConfigRefs();
         }
     }
 }

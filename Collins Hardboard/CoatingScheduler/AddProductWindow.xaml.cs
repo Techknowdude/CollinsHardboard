@@ -42,7 +42,7 @@ namespace CoatingScheduler
                 {
                     if (
                         MessageBox.Show("Add product without assigning a machine?",
-                            "This will make automation inacurate", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            "This will make automation inaccurate", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
                         Accepted = true;
                         Close();
@@ -54,7 +54,7 @@ namespace CoatingScheduler
                     {
                         if (
                             MessageBox.Show("Add product without assigning a configuration?",
-                                "This will make automation inacurate", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                                "This will make automation inaccurate", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
                             Accepted = true;
                             Close();

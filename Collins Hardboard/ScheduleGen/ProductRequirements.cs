@@ -54,7 +54,7 @@ namespace ScheduleGen
 
         /// <summary>
         /// Item IDs and number required to make some number of pieces of this product.
-        /// [ID][Num to make]
+        /// [ID][Number to make]
         /// </summary>
         public Tuple<int, int> Input
         {
@@ -94,7 +94,7 @@ namespace ScheduleGen
         public static ProductRequirements CreateProductRequirements(int masterID, Configuration usedConfig)
         {
             var req = new ProductRequirements(masterID);
-            req.OutPieces = usedConfig.ItemsOut;
+            req.OutPieces = usedConfig.ItemsOut > 0 ? usedConfig.ItemsOut : 1;
             req.Input = new Tuple<int, int>(usedConfig.ItemInID,usedConfig.ItemsIn);
             _allRequirements.Add(req);
             return req;
@@ -286,6 +286,9 @@ namespace ScheduleGen
 
             AddCurrentInventory();
 
+            // output the requirements
+            OutputStringToFile();
+
             var orders = new Queue<MakeOrder>();
 
             DateTime current = DateTime.Today;
@@ -297,7 +300,8 @@ namespace ScheduleGen
                     if (productRequirements.RequiredPieces.ContainsKey(current))
                     {
                         var day = productRequirements.RequiredPieces[current];
-                        orders.Enqueue(new MakeOrder(productRequirements.MasterID,day.PurchaseOrderPieces));
+                        if(day.PurchaseOrderPieces > 0)
+                            orders.Enqueue(new MakeOrder(productRequirements.MasterID,day.PurchaseOrderPieces));
                     }
                 }
                 current = current.AddDays(1);

@@ -240,7 +240,15 @@ namespace Configuration_windows
             num = reader.ReadInt32(); // configs
             for(; num > 0; --num)
             {
-                configurationList.Add( Configuration.CreateConfiguration(reader));
+                //attempt to load reference the needed config from the config list.
+                var config = Configuration.CreateConfiguration(reader);
+                var match = ConfigurationsHandler.GetInstance()
+                    .Configurations.FirstOrDefault(x => x.Name == config.Name);
+
+                if (match != null)
+                    config = match;
+
+                configurationList.Add( config);
             }
             num = reader.ReadInt32(); // lines to run on
             for (; num > 0; --num)
@@ -280,6 +288,19 @@ namespace Configuration_windows
             }
             
             return config;
+        }
+
+        public void CheckConfigRefs()
+        {
+            for (int index = 0; index < ConfigurationList.Count; index++)
+            {
+                var configuration = ConfigurationList[index];
+                var match = ConfigurationsHandler.GetInstance()
+                    .Configurations.FirstOrDefault(x => x.Name == configuration.Name);
+
+                if (match != null)
+                    ConfigurationList[index] = match;
+            }
         }
     }
 }

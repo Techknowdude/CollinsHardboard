@@ -92,6 +92,16 @@ namespace Configuration_windows
         {
             _savedFocus = MachineListBox.SelectedIndex;
         }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            MachineHandler.Instance.SaveDialog();
+        }
+
+        private void LoadButton_Click(object sender, RoutedEventArgs e)
+        {
+            MachineHandler.Instance.LoadDialog();
+        }
     }
 
 }

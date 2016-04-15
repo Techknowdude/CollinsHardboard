@@ -181,6 +181,7 @@ namespace Configuration_windows
             {
                 using (BinaryReader reader = new BinaryReader(new FileStream(SaveName, FileMode.OpenOrCreate)))
                 {
+                    MachineList.Clear();
                     Int32 configCount = reader.ReadInt32();
                     for (; configCount > 0; configCount--)
                     {
@@ -199,9 +200,11 @@ namespace Configuration_windows
                 bool? accept = openFileDialog.ShowDialog();
                 if (accept == true)
                 {
-                    SaveName = openFileDialog.FileName;
+                    //SaveName = openFileDialog.FileName;
                     using (BinaryReader reader = new BinaryReader(new FileStream(SaveName, FileMode.OpenOrCreate)))
                     {
+                        MachineList.Clear();
+
                         Int32 configCount = reader.ReadInt32();
                         for (; configCount > 0; configCount--)
                         {
@@ -232,5 +235,58 @@ namespace Configuration_windows
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
-   }
+
+        public void LoadDialog()
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.DefaultExt = "dat";
+                openFileDialog.Filter = "Data Files (.dat)|*.dat|All Files|*";
+                openFileDialog.Multiselect = false;
+
+                bool? accept = openFileDialog.ShowDialog();
+                if (accept == true)
+                {
+                    //SaveName = openFileDialog.FileName;
+                    using (BinaryReader reader = new BinaryReader(new FileStream(SaveName, FileMode.OpenOrCreate)))
+                    {
+                        MachineList.Clear();
+
+                        Int32 configCount = reader.ReadInt32();
+                        for (; configCount > 0; configCount--)
+                        {
+                            Machine newMachine = Machine.CreateMachine(reader);
+                            AddMachine(newMachine);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
+        }
+
+        public void SaveDialog()
+        {
+            try
+            {
+                SaveMachines(SaveName);
+                MessageBox.Show("Save successful");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Save failed. Is the machine.dat file open?");
+            }
+        }
+
+        public static void RecheckMachineConfigRefs()
+        {
+            foreach (var machine in Instance.MachineList)
+            {
+                machine.CheckConfigRefs();
+            }
+        }
+    }
 }
