@@ -42,14 +42,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Configuration windows.exe" size="108544">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CoatingScheduler.exe" size="121856">
+      <assemblyIdentity name="CoatingScheduler" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>+4pDrcup5fZEzKpxE7/98qvr59HH7HQ6zJdsFu1UflY=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Configuration windows.exe" size="108032">
       <assemblyIdentity name="Configuration windows" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>CzfgLUxGrpz4kRvteQYtmFat+PVwKkRrIoHcxCXYUdk=</dsig:DigestValue>
+        <dsig:DigestValue>UqKRFWdXBFXNdxR54CeQv5ZbYKGFle9qNaS9P5J5VdI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +73,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>WdZy5NUxFKmVlw9DkF6ZhlUZ/dJoKBiudyyR5efUdTI=</dsig:DigestValue>
+        <dsig:DigestValue>R0lyxgV0UPSriCqf41rR56I35/eGFFpMguLBlsGYprs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -85,31 +97,31 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>6DHIqsbXciYMwCkyzbNSqACa56aueJrVjNNcZevQMCA=</dsig:DigestValue>
+        <dsig:DigestValue>PrlAFsWxmylfu/ZMmDpbBA9EkCS6tSW/Tx5XBQUiWmw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProductionScheduler.exe" size="56776">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProductionScheduler.exe" size="76232">
       <assemblyIdentity name="ProductionScheduler" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>JEUtkCO5UYg5T9nhGXhUVF+JyxGFw+PwJhVHZ7exnhk=</dsig:DigestValue>
+        <dsig:DigestValue>ID6YKHXkD6jJ31AeksWPcngxVXdAoWrPU/3unn20wZI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StaticHelpers.dll" size="24576">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StaticHelpers.dll" size="26624">
       <assemblyIdentity name="StaticHelpers" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>f4AKNdC+uFpRi+FbhHl719MvqoSZqj8vdse0QMe3rlM=</dsig:DigestValue>
+        <dsig:DigestValue>lCKDjrzUi2q3dXwz5FQ7SleU8BUrEVx//e0S4bmcS1w=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -121,7 +133,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>caeBTfepsPLsO8vr6bI7RLrv7En0p3Fj2Cvb8yUcwJw=</dsig:DigestValue>
+        <dsig:DigestValue>Krb5YK2C3u6F3+MNDJo5WSp8TqzsIr/8LXTsamNU8kk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

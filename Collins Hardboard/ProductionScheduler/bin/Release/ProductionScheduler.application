@@ -7,14 +7,14 @@
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="ProductionScheduler.exe.manifest" size="7436">
+    <dependentAssembly dependencyType="install" codebase="ProductionScheduler.exe.manifest" size="8134">
       <assemblyIdentity name="ProductionScheduler.exe" version="1.0.0.2" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>tI6Z33iCa/uwEW9b0QBv7wuBchf5yz1L/NMaw1xjh0Q=</dsig:DigestValue>
+        <dsig:DigestValue>eQ0mvzDMmM5wtn6s95hhlnte6HM8AVrBEcD+nTSqf4Y=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

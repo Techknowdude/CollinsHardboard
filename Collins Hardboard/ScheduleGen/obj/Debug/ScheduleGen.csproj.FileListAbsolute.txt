@@ -12,6 +12,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Schedul
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\bin\Debug\ProductionScheduler.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\bin\Debug\StaticHelpers.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\bin\Debug\LumenWorks.Framework.IO.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\bin\Debug\WarehouseManager.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\bin\Debug\CoatingScheduler.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\bin\Debug\Configuration windows.pdb
@@ -53,4 +54,3 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Schedul
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Debug\ScheduleGen.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Debug\ScheduleGen.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Debug\ScheduleGen.pdb
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\bin\Debug\LumenWorks.Framework.IO.dll

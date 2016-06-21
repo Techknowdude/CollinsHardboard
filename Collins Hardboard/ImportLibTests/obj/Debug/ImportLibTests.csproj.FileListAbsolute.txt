@@ -3,6 +3,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportL
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportLibTests\bin\Debug\ImportLib.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportLibTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportLibTests\bin\Debug\ModelLib.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportLibTests\bin\Debug\LumenWorks.Framework.IO.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportLibTests\bin\Debug\StaticHelpers.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportLibTests\bin\Debug\ImportLib.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportLibTests\bin\Debug\ModelLib.pdb
@@ -10,5 +11,4 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportL
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportLibTests\obj\Debug\ImportLibTests.csprojResolveAssemblyReference.cache
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportLibTests\obj\Debug\ImportLibTests.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportLibTests\obj\Debug\ImportLibTests.pdb
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportLibTests\bin\Debug\LumenWorks.Framework.IO.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ImportLibTests\bin\Debug\ConversionFile.csv

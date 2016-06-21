@@ -104,6 +104,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Ap
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.DataGrid.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\LumenWorks.Framework.IO.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\CoatingScheduler.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Configuration windows.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ImportLib.pdb
@@ -143,4 +144,3 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Ap
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.pdb
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\LumenWorks.Framework.IO.dll

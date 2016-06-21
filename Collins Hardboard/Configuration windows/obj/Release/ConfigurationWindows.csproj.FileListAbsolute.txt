@@ -49,3 +49,4 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configu
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\Configuration windows.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\Configuration windows.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\obj\Release\Configuration windows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configuration windows\bin\Release\LumenWorks.Framework.IO.dll

@@ -48,3 +48,4 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Coating
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Release\CoatingScheduler.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Release\CoatingScheduler.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Release\CoatingScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Release\LumenWorks.Framework.IO.dll

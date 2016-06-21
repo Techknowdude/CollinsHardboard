@@ -53,3 +53,4 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Schedul
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Release\ScheduleGen.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Release\ScheduleGen.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Release\ScheduleGen.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\bin\Release\LumenWorks.Framework.IO.dll

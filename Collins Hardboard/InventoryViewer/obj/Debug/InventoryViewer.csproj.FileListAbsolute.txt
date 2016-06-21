@@ -9,6 +9,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Invento
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Debug\ModelLib.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Debug\StaticHelpers.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Debug\LumenWorks.Framework.IO.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Debug\Configuration windows.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Debug\ImportLib.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Debug\ModelLib.pdb
@@ -33,4 +34,3 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Invento
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Debug\InventoryViewer.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Debug\InventoryViewer.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Debug\InventoryViewer.pdb
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Debug\LumenWorks.Framework.IO.dll

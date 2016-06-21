@@ -8,6 +8,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Schedul
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGenTests\bin\Debug\ScheduleGen.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGenTests\bin\Debug\StaticHelpers.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGenTests\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGenTests\bin\Debug\LumenWorks.Framework.IO.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGenTests\bin\Debug\CoatingScheduler.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGenTests\bin\Debug\Configuration windows.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGenTests\bin\Debug\ImportLib.pdb
@@ -18,4 +19,3 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Schedul
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGenTests\obj\Debug\ScheduleGenTests.csprojResolveAssemblyReference.cache
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGenTests\obj\Debug\ScheduleGenTests.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGenTests\obj\Debug\ScheduleGenTests.pdb
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGenTests\bin\Debug\LumenWorks.Framework.IO.dll

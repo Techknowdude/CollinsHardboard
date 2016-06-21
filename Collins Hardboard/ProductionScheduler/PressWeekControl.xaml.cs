@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -16,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Configuration_windows.Annotations;
 using ImportLib;
 using ModelLib;
 using WarehouseManager;
@@ -25,11 +27,13 @@ namespace ProductionScheduler
     /// <summary>
     /// Interaction logic for PressDayControl.xaml
     /// </summary>
-    public partial class PressWeekControl : UserControl
+    public partial class PressWeekControl : UserControl, INotifyPropertyChanged
     {
         private ObservableCollection<PressItemControl> _controlsList = new ObservableCollection<PressItemControl>();
         private DateTime _week;
         private ObservableCollection<PlateMixControl> _mixControls = new ObservableCollection<PlateMixControl>();
+        private string _availablePlatesText;
+        private int _availablePlates;
 
         public ObservableCollection<PlateMixControl> MixControls
         {
@@ -37,9 +41,29 @@ namespace ProductionScheduler
             set { _mixControls = value; }
         }
 
+        public int AvailablePlates
+        {
+            get { return _availablePlates; }
+            set
+            {
+                _availablePlates = value;
+                OnPropertyChanged();
+                AvailablePlatesText = $"Available plates: {value}";
+            }
+        }
+
         public String WeekTitle { get { return _week.ToString("dddd M/dd/yy"); } }
 
-        
+        public String AvailablePlatesText
+        {
+            get { return _availablePlatesText; }
+            set
+            {
+                _availablePlatesText = value;
+                OnPropertyChanged(); // will this send the property name?
+            }
+        }
+
         public DateTime Week
         {
             get { return _week; }
@@ -66,6 +90,7 @@ namespace ProductionScheduler
 
             Schedule = window;
             Week = week;
+            AvailablePlates = PressManager.Instance.NumPlates;
         }
 
         public PressWeekControl()
@@ -187,6 +212,7 @@ namespace ProductionScheduler
 
             InitializeComponent();
             DataContext = this;
+            AvailablePlates = PressManager.Instance.NumPlates;
 
             Week = DateTime.Parse(reader.ReadString());
             Int32 numControls = reader.ReadInt32();
@@ -204,6 +230,7 @@ namespace ProductionScheduler
                 PlateMixControl control = PlateMixControl.Load(reader);
                 control.Window = this;
                 MixControls.Add(control);
+                AvailablePlates -= control.NumChanges;
             }
 
         }
@@ -252,6 +279,14 @@ namespace ProductionScheduler
                 PressScheduleWindow.WeekControls.Remove(this);
 
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

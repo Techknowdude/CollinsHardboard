@@ -6,21 +6,22 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="49.699" d:DesignWidth="520"
-             Margin="10">
+             Margin="10"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <StackPanel Orientation="Horizontal">
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label>Thickness:</Label>
-                <TextBox Name="WidthTextBox" Width="60" Text="{Binding Path=Thickness}"></TextBox>
+                <TextBox Name="WidthTextBox" Width="60" Text="{Binding Path=Thickness}" IsEnabled="False"></TextBox>
                 <Label>Name:</Label>
-                <TextBox Name="TitleTextBox" Width="240" Text="{Binding Path=ItemName}"/>
+                <ComboBox Name="TitleTextBox" Width="240" ItemsSource="{Binding MasterItems}" SelectionChanged="TitleTextBox_OnSelectionChanged"/>
                 </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <ComboBox Name="RunTypeBox" Width="120" HorizontalAlignment="Left" SelectedIndex="0">
+                <ComboBox Name="RunTypeBox" Width="120" HorizontalAlignment="Left" SelectedIndex="1">
                     <ComboBoxItem Name="RunUntilBoxItem" Content="Run until "/>
                     <ComboBoxItem Name="RunShiftsBoxItem" Content="Run x shifts until "/>
                 </ComboBox>
-                <xctk:IntegerUpDown Name="ShiftNumber" Width="50" Value="{Binding Path=NumShifts}"></xctk:IntegerUpDown>
+                <xctk:IntegerUpDown Name="ShiftNumber" Width="50" Value="{Binding Path=NumShifts}" DefaultValue="1"></xctk:IntegerUpDown>
                 <xctk:DateTimePicker Name="DateTimePicker" Width="240" TimeFormat="ShortTime" Value="{Binding Path=EndTime}" ></xctk:DateTimePicker>
             </StackPanel>
         </StackPanel>

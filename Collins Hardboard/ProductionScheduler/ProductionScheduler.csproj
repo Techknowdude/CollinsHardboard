@@ -68,6 +68,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -88,6 +89,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PressMasterItem.cs" />
+    <Compile Include="PressMasterItemControl.xaml.cs">
+      <DependentUpon>PressMasterItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PressPlateConfigurationControl.xaml.cs">
+      <DependentUpon>PressPlateConfigurationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PressShiftControl.xaml.cs">
+      <DependentUpon>PressShiftControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShiftProduction.cs" />
+    <Page Include="ExtendedScheduleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -96,15 +112,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ExtendedSchedule.cs" />
+    <Compile Include="ExtendedScheduleWindow.xaml.cs">
+      <DependentUpon>ExtendedScheduleWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewPressItemWindow.xaml.cs">
       <DependentUpon>NewPressItemWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlateConfiguration.cs" />
     <Compile Include="PlateMixControl.xaml.cs">
       <DependentUpon>PlateMixControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="PressSettingsWindow.xaml.cs">
       <DependentUpon>PressSettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PressShift.cs" />
     <Compile Include="PressWeekControl.xaml.cs">
       <DependentUpon>PressWeekControl.xaml</DependentUpon>
     </Compile>
@@ -121,7 +143,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PressMasterItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PressPlateConfigurationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PressSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PressShiftControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -174,6 +208,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CoatingScheduler\CoatingScheduler.csproj">
+      <Project>{0319BCB2-275D-4B53-B321-68A8F38000B1}</Project>
+      <Name>CoatingScheduler</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Configuration windows\ConfigurationWindows.csproj">
       <Project>{15FF810C-2AA5-49C9-86E2-C0D10A14A09C}</Project>
       <Name>ConfigurationWindows</Name>

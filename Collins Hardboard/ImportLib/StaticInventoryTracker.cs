@@ -15,7 +15,7 @@ namespace ImportLib
 
         private const string datFile = "InventoryTrack.dat";
 
-        private static List<Texture> _texturesList = new List<Texture>(){ new Texture("Old Mill"), new Texture("Shake"), new Texture("Smooth")}; 
+        private static List<Texture> _texturesList = new List<Texture>(){ Texture.GetTexture( "Old Mill"), Texture.GetTexture("Shake"), Texture.GetTexture("Smooth")}; 
 
         private static Char _wipMarker = 'W';
         public static Char WiPMarker { get { return _wipMarker; } set { _wipMarker = value; } }

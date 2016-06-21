@@ -6,6 +6,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configu
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Debug\ModelLib.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Debug\Xceed.Wpf.Toolkit.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Debug\StaticHelpers.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Debug\LumenWorks.Framework.IO.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Debug\Configuration windows.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Debug\ImportLib.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Debug\ModelLib.pdb
@@ -13,5 +14,4 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Configu
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\obj\Debug\ConfigurationWindowsTests.csprojResolveAssemblyReference.cache
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\obj\Debug\ConfigurationWindowsTests.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\obj\Debug\ConfigurationWindowsTests.pdb
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Debug\LumenWorks.Framework.IO.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ConfigurationWindowsTests\bin\Debug\ConversionFile.csv

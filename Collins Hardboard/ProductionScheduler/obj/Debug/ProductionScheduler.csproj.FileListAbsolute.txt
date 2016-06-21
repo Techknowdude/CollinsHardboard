@@ -10,6 +10,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Product
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\bin\Debug\StaticHelpers.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\bin\Debug\WarehouseManager.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\bin\Debug\LumenWorks.Framework.IO.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\bin\Debug\Configuration windows.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\bin\Debug\ImportLib.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\bin\Debug\ModelLib.pdb
@@ -39,4 +40,15 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Product
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\ProductionScheduler.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\ProductionScheduler.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\ProductionScheduler.pdb
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\bin\Debug\LumenWorks.Framework.IO.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\ExtendedScheduleWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\ExtendedScheduleWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\bin\Debug\CoatingScheduler.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\bin\Debug\CoatingScheduler.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\ProductionScheduler_MarkupCompile.lref
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\PressPlateConfigurationControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\PressPlateConfigurationControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\PressMasterItemControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\PressMasterItemControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\PressShiftControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\PressShiftControl.baml

@@ -69,29 +69,29 @@ namespace ScheduleGen
                     StaticInventoryTracker.ForecastItems.FirstOrDefault(x => x.ProductCode == item.ProductionCode);
                 if (inv != null && forecast != null)
                 {
-                    double use;
+                    double available;
                     switch (SalesDuration)
                     {
                         case SalesDurationEnum.LastMonth:
-                            use = forecast.AvgOneMonth;
+                            available = forecast.AvgOneMonth;
                             break;
                         case SalesDurationEnum.Last3Months:
-                            use = forecast.AvgThreeMonths;
+                            available = forecast.AvgThreeMonths;
                             break;
                         case SalesDurationEnum.Last6Months:
-                            use = forecast.AvgSixMonths;
+                            available = forecast.AvgSixMonths;
                             break;
                         case SalesDurationEnum.Last12Months:
-                            use = forecast.AvgTwelveMonths;
+                            available = forecast.AvgTwelveMonths;
                             break;
                         case SalesDurationEnum.LastYear:
-                            use = forecast.AvgPastYear;
+                            available = forecast.AvgPastYear;
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
-                    if (use > inv.Units)
-                        return Priority;
+                    if (available < item.MinSupply)
+                        return Priority; // TODO: account for time -> decrement the inventory as time goes on
                 }
             }
             return 0;

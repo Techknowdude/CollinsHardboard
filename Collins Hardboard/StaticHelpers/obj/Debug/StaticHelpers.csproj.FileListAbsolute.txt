@@ -35,7 +35,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticH
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticHelpers\bin\Debug\ru\Microsoft.Expression.Drawing.resources.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticHelpers\bin\Debug\zh-Hans\Microsoft.Expression.Drawing.resources.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticHelpers\bin\Debug\zh-Hant\Microsoft.Expression.Drawing.resources.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticHelpers\obj\Debug\StaticHelpers.csprojResolveAssemblyReference.cache
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticHelpers\obj\Debug\StaticHelpers.csproj.ResolveComReference.cache
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticHelpers\obj\Debug\StaticHelpers.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticHelpers\obj\Debug\StaticHelpers.pdb
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticHelpers\obj\Debug\StaticHelpers.csprojResolveAssemblyReference.cache

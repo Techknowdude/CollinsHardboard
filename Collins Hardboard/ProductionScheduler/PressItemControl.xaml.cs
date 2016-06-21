@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -23,6 +25,7 @@ namespace ProductionScheduler
         private ProductMasterItem _product;
         private String _itemName;
         private bool _isTrial;
+        private double _hours;
         #endregion
 
         #region Properties
@@ -57,14 +60,30 @@ namespace ProductionScheduler
         }
 
         #endregion
+        public double UnitsProduced { get { return _product.UnitsPerHour*Hours; } }
+
         public PressItem Item { get; set; }
+
+        public ObservableCollection<ProductMasterItem> MasterItems => StaticInventoryTracker.ProductMasterList;
 
         public PressWeekControl WeekControl { get; set; }
 
         public bool IsTrial
         {
             get { return _isTrial; }
-            set { _isTrial = value; }
+            set
+            {
+                _isTrial = value;
+            }
+        }
+
+        public double Hours
+        {
+            get { return _hours; }
+            set
+            {
+                _hours = value;
+            }
         }
 
         public PressItemControl(PressItem item = null, PressWeekControl pressWeekControl = null)
@@ -155,6 +174,17 @@ namespace ProductionScheduler
             item.IsTrial = reader.ReadBoolean();
 
             return new PressItemControl(item);
+        }
+
+        private void TitleTextBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ProductMasterItem selectedItem = TitleTextBox.SelectedValue as ProductMasterItem;
+
+            if (selectedItem == null) return;
+
+            ItemName = selectedItem.Description;
+            Thickness = StaticHelpers.StaticFunctions.ConvertDoubleToStringThickness(selectedItem.Thickness);
+            _product = selectedItem;
         }
     }
 }

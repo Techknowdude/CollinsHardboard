@@ -255,6 +255,7 @@ namespace ImportLib
         public bool ImportInventory()
         {
             bool completed;
+                StaticInventoryTracker.InventoryItems.Clear();
             if (CSVImport)
             {
                 completed = ImportInventoryFromCSV();

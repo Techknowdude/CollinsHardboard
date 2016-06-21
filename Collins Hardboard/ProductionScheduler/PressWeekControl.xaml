@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Margin="0,10">
+             d:DesignHeight="300" d:DesignWidth="300" Margin="0,10"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+            
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <DatePicker Name="ChangeDate" SelectedDate="{Binding Path=Week}" >
@@ -16,10 +18,12 @@
         <ListView Name="PlateMixListView" Margin="0,0,0,10" ItemsSource="{Binding Path=MixControls}">
 
         </ListView>
+        <TextBlock Text="{Binding AvailablePlatesText}"> 
+        </TextBlock> 
         <Button Name="AddMixButton" Width="80" Height="30" HorizontalAlignment="Left" Click="AddMixButton_OnClick">Add plates</Button>
 
-        <Button Content="Add Item" Name="AddItemButton" Height="30" Width="80" Margin="10" HorizontalAlignment="Left" Click="AddItemButton_OnClick"/>
         <ListView Name="PressItemView" ItemsSource="{Binding Path=ControlsList}" Margin="60,0,0,0">
         </ListView>
+        <Button Content="Add Item" Name="AddItemButton" Height="30" Width="80" Margin="10" HorizontalAlignment="Left" Click="AddItemButton_OnClick"/>
     </StackPanel>
 </UserControl>

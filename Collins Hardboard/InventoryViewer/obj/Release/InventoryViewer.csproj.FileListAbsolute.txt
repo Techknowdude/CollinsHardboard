@@ -33,3 +33,4 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Invento
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryViewer.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryViewer.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\obj\Release\InventoryViewer.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\InventoryViewer\bin\Release\LumenWorks.Framework.IO.dll

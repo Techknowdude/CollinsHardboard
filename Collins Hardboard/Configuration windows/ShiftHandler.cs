@@ -155,5 +155,11 @@ namespace Configuration_windows
 
             return currentDay.AddDays(daysUntil);
         }
+
+        public Shift GetShift(DateTime time)
+        {
+            return Shifts.FirstOrDefault(
+                shift => shift.DaysList.Contains(time.DayOfWeek) && shift.StartTime <= time && time <= shift.EndDate);
+        }
     }
 }

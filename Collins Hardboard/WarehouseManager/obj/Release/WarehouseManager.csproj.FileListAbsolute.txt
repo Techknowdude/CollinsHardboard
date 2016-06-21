@@ -32,3 +32,4 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Warehou
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\obj\Release\WarehouseManager.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\obj\Release\WarehouseManager.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\obj\Release\WarehouseManager.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\bin\Release\LumenWorks.Framework.IO.dll

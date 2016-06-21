@@ -88,6 +88,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Coating
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ModelLib.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\StaticHelpers.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\LumenWorks.Framework.IO.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\Configuration windows.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ImportLib.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\ModelLib.pdb
@@ -127,4 +128,3 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Coating
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\obj\Debug\CoatingScheduler.pdb
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\CoatingScheduler\bin\Debug\LumenWorks.Framework.IO.dll

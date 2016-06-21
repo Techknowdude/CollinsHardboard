@@ -65,6 +65,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Warehou
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\bin\Debug\ModelLib.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\bin\Debug\StaticHelpers.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\bin\Debug\UtilityWindows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\bin\Debug\LumenWorks.Framework.IO.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\bin\Debug\ImportLib.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\bin\Debug\ModelLib.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\bin\Debug\StaticHelpers.pdb
@@ -89,4 +90,3 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Warehou
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\obj\Debug\WarehouseManager.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\obj\Debug\WarehouseManager.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\obj\Debug\WarehouseManager.pdb
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\bin\Debug\LumenWorks.Framework.IO.dll

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ModelLib;
 
 namespace ProductionScheduler
@@ -9,7 +10,10 @@ namespace ProductionScheduler
     {
 
         #region Fields
+        //New Stuff
+        private List<PlateConfiguration> _plateConfigurations = new List<PlateConfiguration>(); 
 
+        // Old Stuff
         private const string DatFile = "pressManager.dat";
         private Int32 _numPlates = 0;
         private Int32 _numPlateChangesPerWeek = 1;
@@ -135,5 +139,87 @@ namespace ProductionScheduler
             return success;
         }
 
+        public static DateTime ScheduleItem(ProductMasterItem item, double count)
+        {
+            DateTime finishedDateTime = DateTime.MaxValue;
+
+            // Find closest plate config
+            foreach (var plateConfiguration in Instance._plateConfigurations)
+            {
+                plateConfiguration.Add(item, ref count);
+            }
+
+            return finishedDateTime;
+        }
+
+        /// <summary>
+        /// Retrieves the press shifts that finished within the time frame
+        /// </summary>
+        /// <param name="start">Lower bound for checking. Not inclusive.</param>
+        /// <param name="end">Upper bound for checking. Is inclusive.</param>
+        /// <returns>List of shifts. List is never null, but may be empty</returns>
+        public List<PressShift> GetPressShifts(DateTime start, DateTime end)
+        {
+            List<PressShift> shifts = new List<PressShift>();
+
+            foreach (var plateConfiguration in _plateConfigurations)
+            {
+                if (plateConfiguration.EndTime <= end && plateConfiguration.EndTime > start)
+                {
+                    var shift = plateConfiguration.GetShift(start, end);
+                    if(shift != null)
+                        shifts.Add(shift);
+                }
+            }
+
+            return shifts;
+        }
+
+        /// <summary>
+        /// Tries to add the item to the schedule
+        /// </summary>
+        /// <param name="item">Item to add</param>
+        /// <param name="unitCount">Units to make. Changed by function to be the leftover units not completed.</param>
+        /// <param name="dueDate">Time the units should be completed.</param>
+        /// <returns>True if any units were scheduled. Unit count is deducted any units scheduled</returns>
+        public bool AddItem(ProductMasterItem item, ref double unitCount, DateTime dueDate)
+        {
+            bool added = false;
+            for (int index = 0; unitCount > 0 && index < _plateConfigurations.Count; index++)
+            {
+                var configuration = _plateConfigurations[index];
+                // keep true that it was added. Check unit count for full completion.
+                added = added || configuration.Add(item, ref unitCount, dueDate);
+            }
+            if (unitCount > 0)
+            {
+                var config = AddNewConfig();
+                config.Add(item, ref unitCount, dueDate);
+                _plateConfigurations.Add(config);
+            }
+
+            return added;
+        }
+
+        /// <summary>
+        /// Creates a new configuration after the last configuration on the list that goes from then until the next plate change.
+        /// </summary>
+        /// <returns></returns>
+        private PlateConfiguration AddNewConfig()
+        {
+            DateTime begin = DateTime.Today;
+            DateTime end = begin;
+            if (_plateConfigurations != null && _plateConfigurations.Count > 0)
+            {
+                begin = _plateConfigurations.Last().EndTime.AddDays(1);
+            }
+            end = begin.AddDays(1);
+            while (PlateChangeDays.All(d => d != end.DayOfWeek))
+            {
+                end = end.AddDays(1);
+            }
+
+            return new PlateConfiguration(begin,end);
+        }
     }
 }

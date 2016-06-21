@@ -15,3 +15,4 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticH
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticHelpers\obj\Release\StaticHelpers.csproj.ResolveComReference.cache
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticHelpers\obj\Release\StaticHelpers.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticHelpers\obj\Release\StaticHelpers.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\StaticHelpers\obj\Release\StaticHelpers.csprojResolveAssemblyReference.cache

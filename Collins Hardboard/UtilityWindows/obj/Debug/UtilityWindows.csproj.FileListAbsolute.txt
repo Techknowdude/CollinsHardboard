@@ -36,6 +36,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Utility
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UtilityWindows\bin\Debug\UtilityWindows.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UtilityWindows\bin\Debug\UtilityWindows.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UtilityWindows\bin\Debug\UtilityWindows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UtilityWindows\obj\Debug\UtilityWindows.csprojResolveAssemblyReference.cache
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UtilityWindows\obj\Debug\ProgressWindow.baml
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UtilityWindows\obj\Debug\ProgressDialog.g.cs
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\UtilityWindows\obj\Debug\ProgressWindow.g.cs
