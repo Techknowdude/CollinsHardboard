@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProductionScheduler"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="300" Width="300"
              DataContext="{Binding Path=Shift, RelativeSource={RelativeSource Self}}"
              
              >
@@ -16,20 +16,49 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="120"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         
         <TextBlock Grid.Row="0" Grid.Column="0">Shift:</TextBlock>
         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=Name}"></TextBlock>
         
-        <ComboBox VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Path=PressItems}" SelectedValue="{Binding Path=SelectedItem}"/>
-        <Button VerticalAlignment="Center" HorizontalAlignment="Center" Padding="10,2" Grid.Row="1" Grid.Column="1" Command="{Binding Path=AddCommand}" >Add Item</Button>
+        <ComboBox x:Name="ProductSelectionBox" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" SelectedValue="{Binding Path=SelectedItem}"/>
+        <Button VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="10,2" Grid.Row="1" Grid.Column="2" Click="ButtonBase_OnClick" Command="{Binding Path=AddCommand}" >Add Item</Button>
         
-        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Path=Produced}">
+        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding Path=Produced}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <local:PressMasterItemControl/>
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                                <Setter Property="Margin" Value="0,0,10,0"></Setter>
+                            </Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                            </Style>
+
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0">Product:</TextBlock>
+                        <TextBox Grid.Column="1" Text="{Binding Path=Name}"></TextBox>
+                        <TextBlock Grid.Column="2" Text="Thickness:"></TextBlock>
+                        <TextBox Grid.Column="3" Text="{Binding Path=ThicknessString}"></TextBox>
+                        <TextBlock Grid.Column="4">Units:</TextBlock>
+                        <TextBox Grid.Column="5" Text="{Binding Path=UnitsMade}"></TextBox>
+                        <Button Grid.Column="6">Delete</Button>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\App.xaml
-11922757092
+10-1481602857
 
-26557141116
+25889595570
 22701484417
-ExtendedScheduleWindow.xaml;MainWindow.xaml;NewPressItemWindow.xaml;PlateMixControl.xaml;PressMasterItemControl.xaml;PressPlateConfigurationControl.xaml;PressSettingsWindow.xaml;PressShiftControl.xaml;PressWeekControl.xaml;PressItemControl.xaml;PressScheduleWindow.xaml;
+MainWindow.xaml;NewPressItemWindow.xaml;PlateMixControl.xaml;PressMasterItemControl.xaml;PressPlateConfigurationControl.xaml;PressSettingsWindow.xaml;PressShiftControl.xaml;PressWeekControl.xaml;PressItemControl.xaml;PressScheduleWindow.xaml;
 
-True
+False
 

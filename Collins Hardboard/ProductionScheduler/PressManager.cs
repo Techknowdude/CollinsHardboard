@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Input;
+using Configuration_windows;
 using ModelLib;
+using StaticHelpers;
 
 namespace ProductionScheduler
 {
@@ -17,7 +21,7 @@ namespace ProductionScheduler
         private const string DatFile = "pressManager.dat";
         private Int32 _numPlates = 0;
         private Int32 _numPlateChangesPerWeek = 1;
-        private List<DayOfWeek> _plateChangeDays = new List<DayOfWeek>();
+        private ObservableCollection<DayOfWeek> _plateChangeDays = new ObservableCollection<DayOfWeek>();
         private List<PressItem> _pressItems = new List<PressItem>(); 
         #endregion
 
@@ -43,7 +47,7 @@ namespace ProductionScheduler
             set { _numPlateChangesPerWeek = value; }
         }
 
-        public List<DayOfWeek> PlateChangeDays
+        public ObservableCollection<DayOfWeek> PlateChangeDays
         {
             get { return _plateChangeDays; }
             set { _plateChangeDays = value; }
@@ -62,6 +66,7 @@ namespace ProductionScheduler
         private PressManager()
         {
             Load();
+            ShiftHandler.ProductionInstance.LoadShifts();
         }
 
         public static bool Save()
@@ -73,7 +78,7 @@ namespace ProductionScheduler
                     return Save(writer);
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 return false;
             }
@@ -110,7 +115,7 @@ namespace ProductionScheduler
                     return Load(reader);
                 }
             }
-            catch
+            catch (Exception exception)
             {
                 return false;
             }
@@ -193,7 +198,7 @@ namespace ProductionScheduler
             }
             if (unitCount > 0)
             {
-                var config = AddNewConfig();
+                var config = CreateNewConfig();
                 config.Add(item, ref unitCount, dueDate);
                 _plateConfigurations.Add(config);
             }
@@ -205,7 +210,7 @@ namespace ProductionScheduler
         /// Creates a new configuration after the last configuration on the list that goes from then until the next plate change.
         /// </summary>
         /// <returns></returns>
-        private PlateConfiguration AddNewConfig()
+        public PlateConfiguration CreateNewConfig()
         {
             DateTime begin = DateTime.Today;
             DateTime end = begin;
@@ -213,13 +218,42 @@ namespace ProductionScheduler
             {
                 begin = _plateConfigurations.Last().EndTime.AddDays(1);
             }
-            end = begin.AddDays(1);
-            while (PlateChangeDays.All(d => d != end.DayOfWeek))
+
+            if(PlateChangeDays.Count > 0)
             {
-                end = end.AddDays(1);
+                while (PlateChangeDays.All(d => d != begin.DayOfWeek))
+                {
+                    begin = begin.AddDays(-1);
+                }
+                end = begin.AddDays(1);
+                while (PlateChangeDays.All(d => d != end.DayOfWeek))
+                {
+                    end = end.AddDays(1);
+                }
+                end = end.AddDays(-1);
+            }
+            else
+            {
+                // default to a week
+                end = begin.AddDays(7);
             }
 
-            return new PlateConfiguration(begin,end);
+            var plateChange = new PlateConfiguration(begin, end);
+            _plateConfigurations?.Add(plateChange);
+            return plateChange;
+        }
+        
+        public void Remove(PlateConfiguration configuration)
+        {
+            if (configuration != null)
+            {
+                int index = _plateConfigurations.IndexOf(configuration);
+                if (index >= 0)
+                {
+                    _plateConfigurations.RemoveAt(index);
+                    PressScheduleWindow.WeekControls.RemoveAt(index);
+                }
+            }
         }
     }
 }

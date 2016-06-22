@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Input;
 using Configuration_windows;
 using ModelLib;
 using StaticHelpers;
@@ -15,7 +17,7 @@ namespace ProductionScheduler
         private DateTime _endTime;
         private List<PressShift> _shifts;
         private int _numAvailablePlates;
-        private Dictionary<Texture, int> _plates; 
+        private ObservableCollection<PlateCount> _plates; 
 
         public DateTime StartTime
         {
@@ -47,16 +49,89 @@ namespace ProductionScheduler
         public int NumAvailablePlates
         {
             get { return _numAvailablePlates; }
-            set { _numAvailablePlates = value; }
+            set
+            {
+                _numAvailablePlates = value; 
+                RaisePropertyChangedEvent();
+            }
         }
 
 
-        private ObservableCollection<Shift> ProductionShifts { get { return new ObservableCollection<Shift>()
+        private ObservableCollection<Shift> ProductionShifts { get { return ShiftHandler.ProductionInstance.Shifts; } }
+
+        public List<PressShift> Shifts
         {
-            Shift.ShiftFactory("TestShift",DateTime.Today.AddHours(8),new TimeSpan(8,0,0),DateTime.MinValue,DateTime.MaxValue,null,new List<DayOfWeek>() {DayOfWeek.Monday,DayOfWeek.Tuesday,DayOfWeek.Wednesday,DayOfWeek.Friday,DayOfWeek.Sunday}),
-            Shift.ShiftFactory("TestShift",DateTime.Today.AddHours(8),new TimeSpan(16,0,0),DateTime.MinValue,DateTime.MaxValue,null,new List<DayOfWeek>() {DayOfWeek.Monday,DayOfWeek.Tuesday,DayOfWeek.Wednesday,DayOfWeek.Friday,DayOfWeek.Sunday}),
-            Shift.ShiftFactory("TestShift",DateTime.Today.AddHours(8),new TimeSpan(24,0,0),DateTime.MinValue,DateTime.MaxValue,null,new List<DayOfWeek>() {DayOfWeek.Monday,DayOfWeek.Tuesday,DayOfWeek.Wednesday,DayOfWeek.Friday,DayOfWeek.Sunday}),
-        }; } } // { get { return ShiftHandler.ProductionInstance.Shifts; } } 
+            get { return _shifts; }
+            set { _shifts = value; }
+        }
+
+        public ICommand RemoveCommand { get { return new DelegateCommand(Remove);} }
+
+        public ObservableCollection<PlateCount> Plates
+        {
+            get { return _plates; }
+            set { _plates = value; }
+        }
+
+        public ICommand AddPlateCommand
+        {
+            get { return new DelegateCommand(AddPlate);}
+        }
+
+        public ICommand DeletePlateCommand
+        {
+            get { return new DelegateCommand(DeletePlate); }
+        }
+
+        private void DeletePlate(object obj)
+        {
+            PlateCount pc = obj as PlateCount;
+            Plates.Remove(pc);
+            UpdateAvailablePlates();
+        }
+
+        private void AddPlate()
+        {
+            Plates.Add(new PlateCount(Texture.GetDefault(),0,PlateChanged));
+        }
+
+        void UpdateAvailablePlates()
+        {
+            int availablePlates = PressManager.Instance.NumPlates;
+            foreach (var plateCount in Plates)
+            {
+                availablePlates -= plateCount.Count;
+            }
+
+            NumAvailablePlates = availablePlates < 0 ? 0 : availablePlates;
+        }
+
+        private void PlateChanged(object sender, PropertyChangedEventArgs e)
+        {
+            PlateCount pc = sender as PlateCount;
+
+            UpdateAvailablePlates();
+            int availablePlates = NumAvailablePlates;
+
+            //prevent too many plates
+            if (availablePlates < 0)
+            {
+                if (pc != null)
+                    pc.Count += availablePlates;
+                NumAvailablePlates = 0;
+            }
+            else
+            {
+                NumAvailablePlates = availablePlates;
+            }
+        }
+
+        public void Remove()
+        {
+            PressManager.Instance.Remove(this);
+        }
+
+        // { get { return ShiftHandler.ProductionInstance.Shifts; } } 
 
         /// <summary>
         /// Constructor for xaml control
@@ -64,13 +139,13 @@ namespace ProductionScheduler
         public PlateConfiguration()
         {
             _shifts = new List<PressShift>();
-            _plates = new Dictionary<Texture, int>();
+            _plates = new ObservableCollection<PlateCount>();
         }
 
         public PlateConfiguration(DateTime start, DateTime end)
         {
             _shifts = new List<PressShift>();
-            _plates = new Dictionary<Texture, int>();
+            _plates = new ObservableCollection<PlateCount>();
             Initialize(start,end);
         }
 
@@ -115,17 +190,24 @@ namespace ProductionScheduler
             //TODO: check if the change is possible
             bool changed = false;
             int current = 0;
-            if (_plates.ContainsKey(Texture.GetTexture(tex)))
+            var plate = _plates.FirstOrDefault(t => t.Tex == Texture.GetTexture(tex));
+            if (plate == null)
             {
-                current = _plates[Texture.GetTexture(tex)];
-            }
-            int change = plates - current;
-
-            if (change <= NumAvailablePlates)
-            {
-                _plates[Texture.GetTexture(tex)] = plates;
-                NumAvailablePlates += change;
+                plate = new PlateCount(Texture.GetTexture(tex), plates,PlateChanged);
+                _plates.Add(plate);
                 changed = true;
+            }
+            else
+            {
+                current = plate.Count;
+                int change = plates - current;
+
+                if (change <= NumAvailablePlates)
+                {
+                    plate.Count = plates;
+                    NumAvailablePlates += change;
+                    changed = true;
+                }
             }
 
             return changed;
@@ -175,5 +257,6 @@ namespace ProductionScheduler
         {
             return true;
         }
+
     }
 }

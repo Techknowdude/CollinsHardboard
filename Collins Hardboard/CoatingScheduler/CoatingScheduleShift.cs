@@ -379,6 +379,23 @@ namespace CoatingScheduler
             return made;
         }
 
+        public double UnitsConsumed(ProductMasterItem item)
+        {
+            double consumed = 0;
+            foreach (var coatingScheduleLogic in ChildrenLogic.Where(l => l is CoatingScheduleProduct))
+            {
+                var product = ((CoatingScheduleProduct) coatingScheduleLogic);
+                var config = product.Config;
+
+                if (config.ItemInID == item.MasterID)
+                {
+                   // consumed = (config.ItemsIn/(double) config.ItemsOut*(product.Units*product.PiecesPerUnit))/
+                     //          item.PiecesPerUnit;
+                }
+            }
+
+            return consumed;
+        }
     }
 
 }

@@ -67,6 +67,10 @@
       <Project>{A4C7194C-59BF-4819-9AC0-F29766463E29}</Project>
       <Name>ProductionScheduler</Name>
     </ProjectReference>
+    <ProjectReference Include="..\StaticHelpers\StaticHelpers.csproj">
+      <Project>{a7025254-a2a3-47f3-b589-ba10cdd4045b}</Project>
+      <Name>StaticHelpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -130,9 +130,10 @@ namespace ProductionScheduler
 
         public void MoveUp(PressItemControl pressItemControl)
         {
+            return;
             if (Equals(pressItemControl, _controlsList[0]))
             {
-                Schedule.MoveUp(pressItemControl, this);
+                //Schedule.MoveUp(pressItemControl, this);
             }
             else
             {
@@ -160,9 +161,10 @@ namespace ProductionScheduler
 
         public void MoveDown(PressItemControl pressItemControl)
         {
+            return;
             if (Equals(pressItemControl, _controlsList.Last()))
             {
-                Schedule.MoveDown(pressItemControl, this);
+                //Schedule.MoveDown(pressItemControl, this);
             }
             else
             {
@@ -237,8 +239,8 @@ namespace ProductionScheduler
 
         private void DeleteWeekButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("Are you sure?","",MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                PressScheduleWindow.WeekControls.Remove(this);
+            //if(MessageBox.Show("Are you sure?","",MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+              //  PressScheduleWindow.WeekControls.Remove(this);
         }
 
         private void AddItemButton_OnClick(object sender, RoutedEventArgs e)
@@ -276,7 +278,7 @@ namespace ProductionScheduler
                     }
                 }
                 WiPInventoryWindow.UpdateControls();
-                PressScheduleWindow.WeekControls.Remove(this);
+                //PressScheduleWindow.WeekControls.Remove(this);
 
             }
         }

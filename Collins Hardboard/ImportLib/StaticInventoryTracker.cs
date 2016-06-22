@@ -30,6 +30,7 @@ namespace ImportLib
         static ObservableCollection<SalesItem> _salesItems = new ObservableCollection<SalesItem>();
 
         static ObservableCollection<ProductMasterItem> _productMasterList = new ObservableCollection<ProductMasterItem>();
+        static ObservableCollection<ProductMasterItem> _pressMasterList = new ObservableCollection<ProductMasterItem>(); 
         private static bool _isLoaded = false;
 
         #endregion
@@ -50,6 +51,8 @@ namespace ImportLib
         public static void AddMasterItem(ProductMasterItem item)
         {
             _productMasterList.Add(item);
+            if (item.MadeIn == "Press") 
+                _pressMasterList.Add(item);
         }
 
         public static ObservableCollection<SalesItem> SalesItems
@@ -155,6 +158,12 @@ namespace ImportLib
         {
             get { return _isLoaded; }
             set { _isLoaded = value; }
+        }
+
+        public static ObservableCollection<ProductMasterItem> PressMasterList
+        {
+            get { return _pressMasterList; }
+            set { _pressMasterList = value; }
         }
 
         #endregion

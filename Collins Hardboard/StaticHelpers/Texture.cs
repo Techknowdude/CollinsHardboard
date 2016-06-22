@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 
 namespace StaticHelpers
 {
     public class Texture : ObservableObject
     {
-        static Dictionary<String,Texture> _textures = new Dictionary<String,Texture>();
+        static ObservableCollection<Texture> _textures = new ObservableCollection<Texture>();
+        public static ObservableCollection<Texture> TexturesCollection { get { return _textures; } }
 
         private String _name;
 
         public static Texture GetTexture(String name)
         {
-            if (!_textures.ContainsKey(name))
+            var tex = _textures.FirstOrDefault(t => t.Name == name);
+            if (tex == null)
             {
-                _textures[name] = new Texture(name);
+                tex = new Texture(name);
+                _textures.Add(tex);
             }
 
-            return _textures[name];
+            return tex;
         }
 
         private Texture(string name)
@@ -35,6 +40,7 @@ namespace StaticHelpers
             }
         }
 
+
         public override string ToString()
         {
             return Name;
@@ -48,6 +54,18 @@ namespace StaticHelpers
         public static Texture Load(BinaryReader reader)
         {
             return new Texture(reader.ReadString());
+        }
+
+        public static Texture GetDefault()
+        {
+            if (_textures.Count > 0)
+            {
+                return _textures.First();
+            }
+            else
+            {
+                return GetTexture("OM");
+            }
         }
     }
 }

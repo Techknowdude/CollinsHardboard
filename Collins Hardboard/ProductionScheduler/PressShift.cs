@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using ImportLib;
@@ -13,7 +13,7 @@ namespace ProductionScheduler
     {
         private DateTime _startTime;
         private TimeSpan _duration;
-        private List<PressMasterItem> _produced;
+        private ObservableCollection<PressMasterItem> _produced;
         private string _name;
 
         public DateTime StartTime
@@ -51,7 +51,7 @@ namespace ProductionScheduler
                 RaisePropertyChangedEvent();
             }
         }
-        public List<PressMasterItem> Produced
+        public ObservableCollection<PressMasterItem> Produced
         {
             get { return _produced; }
             set
@@ -61,15 +61,12 @@ namespace ProductionScheduler
             }
         }
         public DateTime EndTime { get { return StartTime + Duration; } }
+        public ObservableCollection<ProductMasterItem> PressItems => StaticInventoryTracker.PressMasterList; 
 
-        public List<ProductMasterItem> PressItems { get
-        {
-            return StaticInventoryTracker.ProductMasterList.Where(x => x.MadeIn == "Press").ToList();
-        } } 
 
         public PressShift(DateTime start = default(DateTime), TimeSpan duration = default(TimeSpan), string name = "")
         {
-            _produced = new List<PressMasterItem>();
+            _produced = new ObservableCollection<PressMasterItem>();
             StartTime = start;
             Duration = duration;
             Name = name;
@@ -80,15 +77,30 @@ namespace ProductionScheduler
 
         public ICommand AddCommand
         {
-            get { return new DelegateCommand(() =>
-            {
-                double zero = 0;
-                if (SelectedItem != null)
-                    Add(SelectedItem, ref zero);
-            }); }
+            get { return new DelegateCommand(Add); }
+        }
+
+        private void Add()
+        {
+            double zero = 0;
+            Add(SelectedItem, ref zero);
         }
 
         public ProductMasterItem SelectedItem { get; set; }
+
+        public ICommand RemoveCommand
+        {
+            get { return new DelegateCommand(Remove); }
+        }
+
+        private void Remove(object arg)
+        {
+            PressMasterItem item = arg as PressMasterItem;
+            if (item != null)
+            {
+                _produced.Remove(item);
+            }
+        }
 
         public bool IsFull()
         {

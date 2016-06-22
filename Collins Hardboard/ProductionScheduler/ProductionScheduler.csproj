@@ -89,6 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PlateCount.cs" />
     <Compile Include="PressMasterItem.cs" />
     <Compile Include="PressMasterItemControl.xaml.cs">
       <DependentUpon>PressMasterItemControl.xaml</DependentUpon>
@@ -100,10 +101,6 @@
       <DependentUpon>PressShiftControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShiftProduction.cs" />
-    <Page Include="ExtendedScheduleWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -111,10 +108,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ExtendedSchedule.cs" />
-    <Compile Include="ExtendedScheduleWindow.xaml.cs">
-      <DependentUpon>ExtendedScheduleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="NewPressItemWindow.xaml.cs">
       <DependentUpon>NewPressItemWindow.xaml</DependentUpon>

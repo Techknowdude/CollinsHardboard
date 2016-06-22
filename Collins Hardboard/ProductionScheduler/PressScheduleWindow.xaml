@@ -3,25 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:productionScheduler="clr-namespace:ProductionScheduler"
         Title="PressScheduleWindow" Height="450" Width="600">
-    <StackPanel Name="MainPanel" CanVerticallyScroll="True" CanHorizontallyScroll="True">
-        <Menu Name="FileMenu" >
+    <Grid Name="MainPanel">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" Name="FileMenu" >
             <MenuItem Name="SaveMenuItem" Header="_Save" Click="SaveMenuItem_OnClick"/>
             <MenuItem Name="LoadMenuItem" Header="_Load" Click="LoadMenuItem_OnClick" />
             <!--<MenuItem Name="Export" Header="_Export" Click="ExportMenuItem_OnClick" />-->
             <MenuItem Name="SettingsMenuItem" Header="_Settings" Click="SettingsMenuItem_OnClick" />
         </Menu>
-        <ScrollViewer>
+        <ScrollViewer Grid.Row="1">
             <ListView>
                 <Label FontSize="26">Production Schedule and Plate Mix</Label>
-
-
                 <Label FontSize="26">Press Schedule:</Label>
-
                 <Button Name="AddItemButton" Width="120" Height="30" HorizontalAlignment="Left" Click="AddItemButton_OnClick">Add Plate Change</Button>
-                <ListView Name="WeekControlListView" ItemsSource="{Binding Path=WeekControls}">
-                </ListView>
-
+                <ListView Name="WeekControlListView" ItemsSource="{Binding Path=WeekControls}"></ListView>
             </ListView>
         </ScrollViewer>
-    </StackPanel>
+    </Grid>
 </Window>

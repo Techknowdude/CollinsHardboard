@@ -2,38 +2,32 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="Press Settings" Height="300" Width="383.132">
+        Title="Press Settings" Height="300" Width="383.132"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Label>Plate changes per week:</Label>
-            <xctk:DecimalUpDown Name="NumChangesUpDown" Minimum="0" DefaultValue="1" Maximum="7" Value="{Binding Path=NumChanges}"></xctk:DecimalUpDown>
+            <Label>Total Plates:</Label>
+            <TextBox Text="{Binding Path=NumPlates}" MinWidth="30"></TextBox>
         </StackPanel>
         <Label>Days available for plate changes:</Label>
         <StackPanel Orientation="Horizontal">
             <Label Margin="10,0,0,0">Monday</Label>
-            <CheckBox Name="MondayCheckBox" VerticalAlignment="Center" Checked="MondayCheckBox_OnChecked"></CheckBox>
+            <CheckBox Name="MondayCheckBox" VerticalAlignment="Center" IsChecked="{Binding Path=MondayChecked}"></CheckBox>
             <Label Margin="10,0,0,0">Tuesday</Label>
-            <CheckBox Name="TuesdayCheckBox" VerticalAlignment="Center" Checked="TuesdayCheckBox_OnChecked"></CheckBox>
+            <CheckBox Name="TuesdayCheckBox" VerticalAlignment="Center" IsChecked="{Binding Path=TuesdayChecked}"></CheckBox>
             <Label Margin="10,0,0,0">Wednesday</Label>
-            <CheckBox Name="WednesdayCheckBox" VerticalAlignment="Center" Checked="WednesdayCheckBox_OnChecked"></CheckBox>
+            <CheckBox Name="WednesdayCheckBox" VerticalAlignment="Center" IsChecked="{Binding Path=WednesdayChecked}"></CheckBox>
             <Label Margin="10,0,0,0">Thursday</Label>
-            <CheckBox Name="ThursdayCheckBox" VerticalAlignment="Center" Checked="ThursdayCheckBox_OnChecked"></CheckBox>
+            <CheckBox Name="ThursdayCheckBox" VerticalAlignment="Center" IsChecked="{Binding Path=ThursdayChecked}"></CheckBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Margin="10,0,0,0">Friday</Label>
-            <CheckBox Name="FridayCheckBox" VerticalAlignment="Center" Checked="FridayCheckBox_OnChecked"></CheckBox>
+            <CheckBox Name="FridayCheckBox" VerticalAlignment="Center" IsChecked="{Binding Path=FridayChecked}"></CheckBox>
             <Label Margin="10,0,0,0">Saturday</Label>
-            <CheckBox Name="SaturdayCheckBox" VerticalAlignment="Center" Checked="SaturdayCheckBox_OnChecked"></CheckBox>
+            <CheckBox Name="SaturdayCheckBox" VerticalAlignment="Center" IsChecked="{Binding Path=SaturdayChecked}"></CheckBox>
             <Label Margin="10,0,0,0">Sunday</Label>
-            <CheckBox Name="SundayCheckBox" VerticalAlignment="Center" Checked="SundayCheckBox_OnChecked"></CheckBox>
+            <CheckBox Name="SundayCheckBox" VerticalAlignment="Center" IsChecked="{Binding Path=SundayChecked}"></CheckBox>
         </StackPanel>
         
-        <Label>Rough items:</Label>
-        <ListView Name="RoughItemListView" MinHeight="40" ItemsSource="{Binding Path=PressRoughList}"></ListView>
-        <StackPanel Orientation="Horizontal">
-            <ComboBox Name="RoughItemsComboBox" ItemsSource="{Binding Path=RoughList}"></ComboBox>
-            <Button Name="AddRoughItemButton" Height="25" Margin="10,0" Padding="5,0" Click="AddRoughItemButton_OnClick">Add</Button>
-            <Button Name="RemoveRoughItemButton" Padding="5,0" Click="RemoveRoughItemButton_OnClick">Remove</Button>
-        </StackPanel>
     </StackPanel>
 </Window>
