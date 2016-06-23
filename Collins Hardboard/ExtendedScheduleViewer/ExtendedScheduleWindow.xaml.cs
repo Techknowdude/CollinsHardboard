@@ -1,5 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
+using ModelLib;
+using ProductionScheduler;
 
 namespace ExtendedScheduleViewer
 {
@@ -10,6 +13,9 @@ namespace ExtendedScheduleViewer
     {
         ExtendedSchedule schedule = ExtendedSchedule.Instance;
         private ObservableCollection<TrackingDayControl> _dayControls = new ObservableCollection<TrackingDayControl>();
+        private ObservableCollection<ProductMasterItem> _watchItems;
+
+        public ObservableCollection<ProductMasterItem> WatchItems => ExtendedSchedule.Instance.Watches;
 
         public ObservableCollection<TrackingDayControl> DayControls
         {
@@ -21,6 +27,8 @@ namespace ExtendedScheduleViewer
         {
             InitializeComponent();
             schedule.Window = this;
+            PressManager.Instance.GetHashCode(); // init
+            schedule.Update();
         }
 
         public ExtendedSchedule Schedule

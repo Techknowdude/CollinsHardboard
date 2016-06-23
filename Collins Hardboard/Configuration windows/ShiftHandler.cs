@@ -167,14 +167,22 @@ namespace Configuration_windows
             Shift targetShift = GetPreviousShift(currentShift);
 
             DateTime currentDateTime = date;
-            TimeSpan timeBack = currentShift.StartTime - targetShift.StartTime - targetShift.Duration;
+            TimeSpan timeBack = currentShift.StartTime - targetShift.StartTime;
+            if (timeBack < TimeSpan.Zero)
+            {
+                timeBack = TimeSpan.Zero - timeBack;
+            }
             var day = (currentDateTime - timeBack).DayOfWeek;
             currentDateTime -= timeBack;
-            while (!targetShift.DaysList.Contains(day))
+            while (timeBack == TimeSpan.Zero || !targetShift.DaysList.Contains(day))
             {
                 currentShift = targetShift;
                 targetShift = GetPreviousShift(targetShift);
-                timeBack = currentShift.StartTime - targetShift.StartTime - targetShift.Duration;
+                timeBack = currentShift.StartTime - targetShift.StartTime;
+                if (timeBack < TimeSpan.Zero)
+                {
+                    timeBack = TimeSpan.Zero - timeBack;
+                }
                 day = (currentDateTime - timeBack).DayOfWeek;
                 currentDateTime -= timeBack;
             }

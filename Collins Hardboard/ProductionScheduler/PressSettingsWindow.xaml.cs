@@ -189,6 +189,7 @@ namespace ProductionScheduler
             InitializeComponent();
             DataContext = this;
             SetControlData();
+            Closing += PressSettingsWindow_Closing;
         }
 
         private void SetControlData()
@@ -223,23 +224,23 @@ namespace ProductionScheduler
             }
         }
 
-        //void PressSettingsWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    var result = MessageBox.Show("Would you like to save any changes?", "", MessageBoxButton.YesNoCancel);
-        //    if ( result ==
-        //        MessageBoxResult.Yes)
-        //    {
-        //        if (PressManager.Save())
-        //            MessageBox.Show("Save successful");
-        //        else
-        //        {
-        //            MessageBox.Show("There was an issue saving.");
-        //        }
-        //    }
-        //    else if (result == MessageBoxResult.Cancel)
-        //    {
-        //        e.Cancel = true;
-        //    }
-        //}
+        void PressSettingsWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var result = MessageBox.Show("Would you like to save any changes?", "", MessageBoxButton.YesNoCancel);
+            if (result ==
+                MessageBoxResult.Yes)
+            {
+                if (PressManager.Save())
+                    MessageBox.Show("Save successful");
+                else
+                {
+                    MessageBox.Show("There was an issue saving.");
+                }
+            }
+            else if (result == MessageBoxResult.Cancel)
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }

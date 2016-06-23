@@ -11,6 +11,12 @@ namespace ExtendedScheduleViewer
         private TrackingShift _shift;
         private ObservableCollection<SummaryControl> _summaryControls = new ObservableCollection<SummaryControl>();
 
+        public ObservableCollection<SummaryControl> SummaryControls
+        {
+            get { return _summaryControls; }
+            set { _summaryControls = value; }
+        }
+
         public TrackingShift Shift
         {
             get { return _shift; }
@@ -26,20 +32,20 @@ namespace ExtendedScheduleViewer
         }
         public TrackingShiftControl(TrackingShift shift)
         {
-            InitializeComponent();
             Shift = shift;
+            InitializeComponent();
             Shift.Control = this;
         }
 
         public void AddSummary(ItemSummary newSum)
         {
             var newControl = new SummaryControl(newSum);
-            TrackingStackPanel.Children.Add(newControl);
+            SummaryControls.Add(newControl);
         }
 
         public void ClearControls()
         {
-            TrackingStackPanel.Children.Clear();
+            SummaryControls.Clear();
         }
     }
 }

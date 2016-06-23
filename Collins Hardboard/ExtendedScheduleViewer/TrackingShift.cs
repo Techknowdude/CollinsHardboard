@@ -12,7 +12,6 @@ namespace ExtendedScheduleViewer
 {
     public class TrackingShift : ObservableObject
     {
-        private static List<TrackingShift> _allShifts = new List<TrackingShift>();
 
         public String ShiftTitle
         {
@@ -67,7 +66,9 @@ namespace ExtendedScheduleViewer
             PressShifts.Clear();
             DateTime lastShiftEnd = ShiftHandler.CoatingInstance.GetPreviousShiftEnd(StaticFunctions.GetDayAndTime(CoatingLine.Date,
                 CoatingLine.Shift.StartTime),CoatingLine.Shift);
-            var pShifts = PressManager.Instance.GetPressShifts(lastShiftEnd, StaticFunctions.GetDayAndTime(CoatingLine.Date,CoatingLine.Shift.StartTime) + CoatingLine.Shift.Duration);
+            var timeAfterShift = StaticFunctions.GetDayAndTime(CoatingLine.Date, CoatingLine.Shift.StartTime) +
+                                 CoatingLine.Shift.Duration;
+            var pShifts = PressManager.Instance.GetPressShifts(lastShiftEnd, timeAfterShift);
             foreach (var pressShift in pShifts)
             {
                 PressShifts.Add(pressShift);
@@ -84,7 +85,6 @@ namespace ExtendedScheduleViewer
             _pressShifts = new ObservableCollection<PressShift>();
             _coatingLine = line;
             SetPressShifts();
-            _allShifts.Add(this);
         }
 
         public double GetProduced(ProductMasterItem item)
@@ -130,6 +130,11 @@ namespace ExtendedScheduleViewer
         /// <returns>Units in inventory after shift</returns>
         public double AddSummary(ProductMasterItem item, double running)
         {
+            if (ExtendedSchedule.runningTotalsDictionary.ContainsKey(item))
+            {
+                running = ExtendedSchedule.runningTotalsDictionary[item];
+            }
+
             double added = GetProduced(item);
             double removed = GetConsumed(item);
 
@@ -137,6 +142,8 @@ namespace ExtendedScheduleViewer
 
             ItemSummaries.Add(newSum);
             Control.AddSummary(newSum);
+
+            ExtendedSchedule.runningTotalsDictionary[item] = newSum.RunningUnits;
 
             return newSum.RunningUnits;
         }
@@ -147,7 +154,12 @@ namespace ExtendedScheduleViewer
 
             foreach (var itemSummary in ItemSummaries)
             {
-                lastCountsDictionary.Add(itemSummary.Item,itemSummary.RunningUnits);
+                if(!lastCountsDictionary.ContainsKey(itemSummary.Item))
+                    lastCountsDictionary.Add(itemSummary.Item,itemSummary.RunningUnits);
+                else
+                {
+                    lastCountsDictionary[itemSummary.Item] = itemSummary.RunningUnits;
+                }
             }
 
             return lastCountsDictionary;
@@ -159,7 +171,7 @@ namespace ExtendedScheduleViewer
             {
                 if (lastCountDictionary!= null && lastCountDictionary.ContainsKey(watchedItem))
                 {
-                    AddSummary(watchedItem, lastCountDictionary[watchedItem]);
+                    lastCountDictionary[watchedItem] = AddSummary(watchedItem, lastCountDictionary[watchedItem]);
                 }
                 else
                 {

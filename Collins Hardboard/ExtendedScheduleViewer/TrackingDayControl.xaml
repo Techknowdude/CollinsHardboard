@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExtendedScheduleViewer"
              mc:Ignorable="d" 
-             d:DesignHeight="300"
+             d:DesignHeight="300" MinWidth="100"
              DataContext="{Binding Path=Day, RelativeSource={RelativeSource Self}}"
              >
     <Grid>
@@ -18,7 +18,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding Path=Day, StringFormat='ddd, MMM dd'}"></TextBlock>
-        <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ShiftNameListView" ItemsSource="{Binding Path=Shifts}" MinHeight="30">
+        <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ShiftNameListView" ItemsSource="{Binding Path=ShiftControls, RelativeSource={RelativeSource AncestorType=UserControl}}" MinHeight="30">
             
         </ListView>
     </Grid>

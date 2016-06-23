@@ -407,9 +407,9 @@ namespace CoatingScheduler
 
                 if (config?.ItemInID == item.MasterID)
                 {
-                    //TODO: fix this
-                   // consumed = (config.ItemsIn/(double) config.ItemsOut*(product.Units*product.PiecesPerUnit))/
-                     //          item.PiecesPerUnit;
+                    double temp = 0;
+                    Double.TryParse(product.Units, out temp);
+                    consumed += temp;
                 }
             }
 

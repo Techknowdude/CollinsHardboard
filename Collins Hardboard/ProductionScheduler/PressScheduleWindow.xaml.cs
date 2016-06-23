@@ -38,6 +38,7 @@ namespace ProductionScheduler
             InitializeComponent();
             PressManager.Window = this;
             DataContext = this;
+            PressManager.Load();
         }
 
 

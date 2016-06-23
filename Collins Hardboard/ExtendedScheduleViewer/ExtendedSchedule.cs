@@ -14,14 +14,16 @@ namespace ExtendedScheduleViewer
     public class ExtendedSchedule
     {
         private ObservableCollection<TrackingDay> _trackingDays = new ObservableCollection<TrackingDay>();
-        private List<ProductMasterItem> _watches = new List<ProductMasterItem>();
+        private ObservableCollection<ProductMasterItem> _watches = new ObservableCollection<ProductMasterItem>();
         private static ExtendedSchedule _instance;
         public static ExtendedSchedule Instance
         {
             get { return _instance ?? (_instance = new ExtendedSchedule()); }
         }
 
-        public List<ProductMasterItem> Watches
+        public static Dictionary<ProductMasterItem, double> runningTotalsDictionary = new Dictionary<ProductMasterItem, double>();
+
+        public ObservableCollection<ProductMasterItem> Watches
         {
             get { return _watches; }
             set { _watches = value; }
@@ -42,7 +44,9 @@ namespace ExtendedScheduleViewer
 
         public void Update()
         {
-            Watches.Add(StaticInventoryTracker.PressMasterList[0]);
+            runningTotalsDictionary.Clear();
+            AddWatch(StaticInventoryTracker.PressMasterList[0]);
+            AddWatch(StaticInventoryTracker.ProductMasterList[1]);
             TrackingDays.Clear();
             Window.DayControls.Clear();
 
@@ -114,6 +118,14 @@ namespace ExtendedScheduleViewer
         public void RemoveDay(TrackingDay day)
         {
             TrackingDays.Remove(day);
+        }
+
+        public static void AddWatch(ProductMasterItem item)
+        {
+            if (!Instance.Watches.Contains(item))
+            {
+                Instance.Watches.Add(item);
+            }
         }
 
         public Dictionary<ProductMasterItem, double> GetPreviousInventory( TrackingDay day)

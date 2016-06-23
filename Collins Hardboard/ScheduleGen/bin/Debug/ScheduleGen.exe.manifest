@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CoatingScheduler.exe" size="123904">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CoatingScheduler.exe" size="122880">
       <assemblyIdentity name="CoatingScheduler" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>lpkBmA2VAoM1ByF8Xa9kSp8BTkLl7HnEirNur8+Vcfg=</dsig:DigestValue>
+        <dsig:DigestValue>1c0iFVjPljDxjBJpWNqlK9bmmAI5dsQm4EvhIn3EcCQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ccpKBIoq3fEOlEPETsV1LvWRsXfLUIVzJL0MsdsvNcI=</dsig:DigestValue>
+        <dsig:DigestValue>MXcb4w4QcT68kmxEE2sHiGQiSkp6axINvjGIqLNzeos=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -85,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2vPUglREgWqdW+vq41s9ajs1LaVNUQ+NGSqcvXiKZ3o=</dsig:DigestValue>
+        <dsig:DigestValue>dgapmm4nTCKubddx2ol01KA6VM7+fa6GsTUW0WaBH5s=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -114,14 +114,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProductionScheduler.exe" size="69632">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProductionScheduler.exe" size="70144">
       <assemblyIdentity name="ProductionScheduler" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>1tFeG1yXoDPJ76ENa2skyGdSzYmwl4Zab0LhArZFCOY=</dsig:DigestValue>
+        <dsig:DigestValue>xQ3j1fw0RV0DoXVskcCoPryhcyF4Uy+1d1tDHQOOeCM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -133,7 +133,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>6aiXuXmWUhPt648m+Q4LhL09VX1DI9QgXHDiOi74H+s=</dsig:DigestValue>
+        <dsig:DigestValue>dp3DgnYoAL4bhQ3ME1C6bM2O5EHRjTV7wSB4P60Xhc8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

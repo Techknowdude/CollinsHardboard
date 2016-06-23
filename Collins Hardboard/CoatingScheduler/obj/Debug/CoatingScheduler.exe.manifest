@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CoatingScheduler.exe" size="124872">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CoatingScheduler.exe" size="123848">
       <assemblyIdentity name="CoatingScheduler" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Tnagp8kslJOvWsZcBPlD/+yRwV5vPfiJ9hxr5Hj1FLY=</dsig:DigestValue>
+        <dsig:DigestValue>u8WvUOD2JPTXQrxk32p7oVV4A+6Z0689hPnfe4MXNjo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ccpKBIoq3fEOlEPETsV1LvWRsXfLUIVzJL0MsdsvNcI=</dsig:DigestValue>
+        <dsig:DigestValue>MXcb4w4QcT68kmxEE2sHiGQiSkp6axINvjGIqLNzeos=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

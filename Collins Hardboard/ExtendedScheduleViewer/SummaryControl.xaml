@@ -4,12 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
-             DataContext="{Binding Path=Summary, RelativeSource={RelativeSource Self}}">
-    
-    <WrapPanel>
+             d:DesignHeight="300" d:DesignWidth="145"
+    >
+    <WrapPanel Margin="10,0">
             <Border BorderThickness="1" BorderBrush="Black">
-                <TextBlock Width="40" Text="{Binding Path=RunningUnits}" TextAlignment="Center" ></TextBlock>
+            <TextBlock Width="40" Text="{Binding Path=RunningUnits}" TextAlignment="Center" ></TextBlock>
             </Border>
             <Border BorderThickness="1" BorderBrush="Black">
             <TextBlock Width="40" Text="{Binding Path=AddedUnits}" TextAlignment="Center"></TextBlock>

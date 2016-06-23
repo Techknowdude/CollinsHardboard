@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CoatingScheduler.exe" size="123904">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CoatingScheduler.exe" size="122880">
       <assemblyIdentity name="CoatingScheduler" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>lpkBmA2VAoM1ByF8Xa9kSp8BTkLl7HnEirNur8+Vcfg=</dsig:DigestValue>
+        <dsig:DigestValue>1c0iFVjPljDxjBJpWNqlK9bmmAI5dsQm4EvhIn3EcCQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ccpKBIoq3fEOlEPETsV1LvWRsXfLUIVzJL0MsdsvNcI=</dsig:DigestValue>
+        <dsig:DigestValue>MXcb4w4QcT68kmxEE2sHiGQiSkp6axINvjGIqLNzeos=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -102,14 +102,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProductionScheduler.exe" size="70600">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProductionScheduler.exe" size="71112">
       <assemblyIdentity name="ProductionScheduler" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MZauRiwKYAk6jP+oxyVTMumMtErkjSQYyrWlRf7LdDw=</dsig:DigestValue>
+        <dsig:DigestValue>8JYhB2tUF9G6xiNb/pyvWTpN7dt45UfMnLr2oUU++Z8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

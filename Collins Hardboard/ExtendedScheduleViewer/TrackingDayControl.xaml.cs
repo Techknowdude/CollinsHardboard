@@ -17,7 +17,6 @@ namespace ExtendedScheduleViewer
             set
             {
                 _day = value;
-                DataContext = value;
             }
         }
 
@@ -38,7 +37,7 @@ namespace ExtendedScheduleViewer
 
         public void ClearShifts()
         {
-         _shiftControls.Clear();   
+            _shiftControls.Clear();   
         }
 
         public void AddControl(TrackingShift shift)
