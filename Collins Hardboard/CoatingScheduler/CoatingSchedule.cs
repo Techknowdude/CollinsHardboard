@@ -36,6 +36,7 @@ namespace CoatingScheduler
             {
                 InstructionSets.Add(new CoatingLineInstructionSet(line));
             }
+            CurrentSchedule = this;
         }
 
         private CoatingSchedule(string dateRange, ObservableCollection<CoatingLineInstructionSet> instructions, ObservableCollection<ICoatingScheduleLogic> days)
@@ -51,6 +52,7 @@ namespace CoatingScheduler
                     InstructionSets.Add(new CoatingLineInstructionSet(line));
                 }
             }
+            CurrentSchedule = this;
         }
 
         public ObservableCollection<CoatingLineInstructionSet> InstructionSets
@@ -83,7 +85,8 @@ namespace CoatingScheduler
                 DateTime dateTime = ((CoatingScheduleDay) ChildrenLogic[0]).Date;
                 DateRange = String.Format("{0} through {0}",
                     dateTime.ToString("ddd, MMM d"));
-                ((CoatingScheduleWindow) Control).UpdateDateRange(DateRange);
+
+                ((CoatingScheduleWindow) Control)?.UpdateDateRange(DateRange);
             }
             else
             {
@@ -99,7 +102,7 @@ namespace CoatingScheduler
                 DateRange = String.Format("{0} through {1}",
                     dateTimeMin.ToString("ddd, MMM d"), dateTimeMax.ToString("ddd, MMM d"));
 
-                ((CoatingScheduleWindow) Control).UpdateDateRange(DateRange);
+                ((CoatingScheduleWindow) Control)?.UpdateDateRange(DateRange);
             }
         }
 
@@ -253,7 +256,7 @@ namespace CoatingScheduler
             }
 
             var schedule = new CoatingSchedule(dateRange, instructions, days);
-
+            CurrentSchedule = schedule;
             return schedule;
         }
 
@@ -394,6 +397,8 @@ namespace CoatingScheduler
         }
 
         public bool Exporting { get; set; }
+
+        public static CoatingSchedule CurrentSchedule { get; set; }
 
         public DateTime GetNextDay()
         {

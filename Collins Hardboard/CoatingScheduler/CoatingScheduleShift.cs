@@ -115,7 +115,7 @@ namespace CoatingScheduler
                 foreach (var logic in ChildrenLogic)
                 {
                     var product = logic as CoatingScheduleProduct;
-                    if (product != null)
+                    if (product != null && product.Units != String.Empty)
                     {
                         var units = Double.Parse(product.Units);
                         hours -= units / product.UnitsPerHour;
@@ -379,6 +379,24 @@ namespace CoatingScheduler
             return made;
         }
 
+        public double UnitsProduced(ProductMasterItem item)
+        {
+            double produced = 0;
+            foreach (var coatingScheduleLogic in ChildrenLogic.Where(l => l is CoatingScheduleProduct))
+            {
+                var product = ((CoatingScheduleProduct)coatingScheduleLogic);
+
+                if (product.MasterID == item.MasterID)
+                {
+                    double temp = 0;
+                    Double.TryParse(product.Units, out temp);
+                    produced += temp;
+                }
+            }
+
+            return produced;
+        }
+
         public double UnitsConsumed(ProductMasterItem item)
         {
             double consumed = 0;
@@ -387,8 +405,9 @@ namespace CoatingScheduler
                 var product = ((CoatingScheduleProduct) coatingScheduleLogic);
                 var config = product.Config;
 
-                if (config.ItemInID == item.MasterID)
+                if (config?.ItemInID == item.MasterID)
                 {
+                    //TODO: fix this
                    // consumed = (config.ItemsIn/(double) config.ItemsOut*(product.Units*product.PiecesPerUnit))/
                      //          item.PiecesPerUnit;
                 }

@@ -243,7 +243,7 @@ namespace ProductionScheduler
 
             foreach (var pressShift in _shifts)
             {
-                if (pressShift.EndTime <= end && pressShift.EndTime >= start)
+                if (pressShift.EndTime + PressManager.Instance.DelayTime <= end && pressShift.EndTime + PressManager.Instance.DelayTime > start)
                 {
                     shift = pressShift;
                     break;

@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using CoatingScheduler.Annotations;
 using Configuration_windows;
 using Microsoft.Office.Interop.Excel;
+using ModelLib;
 using StaticHelpers;
 
 namespace CoatingScheduler
@@ -404,6 +405,32 @@ namespace CoatingScheduler
         public void AddProduct(CoatingScheduleProduct next, CoatingScheduleShift coatingScheduleShift)
         {
             
+        }
+
+        public double UnitsProduced(ProductMasterItem item)
+        {
+            double produced = 0;
+
+            foreach (var coatingScheduleLogic in ChildrenLogic)
+            {
+                CoatingScheduleShift shift = coatingScheduleLogic as CoatingScheduleShift;
+                produced += shift.UnitsProduced(item);
+            }
+
+            return produced;
+        }
+
+        public double UnitsConsumed(ProductMasterItem item)
+        {
+            double consumed = 0;
+            foreach (var coatingScheduleLogic in ChildrenLogic)
+            {
+                CoatingScheduleShift shift = coatingScheduleLogic as CoatingScheduleShift;
+                consumed += shift.UnitsConsumed(item);
+            }
+
+            return consumed;
+
         }
     }
 

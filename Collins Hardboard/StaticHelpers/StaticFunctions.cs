@@ -9,6 +9,11 @@ namespace StaticHelpers
 {
     public static class StaticFunctions
     {
+
+        public static DateTime GetDayAndTime(DateTime day, DateTime time)
+        {
+            return new DateTime(day.Year,day.Month,day.Day,time.Hour,time.Minute,time.Second);
+        }
         
         /// <summary>
         /// Returns the string equivalent for a 1 indexed location

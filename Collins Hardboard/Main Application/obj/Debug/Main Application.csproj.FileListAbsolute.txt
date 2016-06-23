@@ -83,6 +83,22 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\
 C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\Main Application.g.resources
 C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\Main_Application.Properties.Resources.resources
 C:\Users\Brandon\Documents\collins-hardboard-scheduler - Copy\Collins Hardboard\Main Application\obj\Debug\Main Application.csproj.GenerateResource.Cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.csprojResolveAssemblyReference.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\CoatingLineControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\GradeControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\MainWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\PlantSettingsWindow.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\TextureControl.baml
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\CoatingLineControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\GradeControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\MainWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\PlantSettingsWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\TextureControl.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\App.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application_MarkupCompile.cache
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.g.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main_Application.Properties.Resources.resources
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.csproj.GenerateResource.Cache
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ConversionFile.csv
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Main Application.exe.config
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Main Application.exe.manifest
@@ -91,6 +107,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Ap
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Main Application.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\CoatingScheduler.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Configuration windows.exe
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ExtendedScheduleViewer.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ImportLib.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\InventoryViewer.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ModelLib.dll
@@ -107,6 +124,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Ap
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\LumenWorks.Framework.IO.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\CoatingScheduler.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\Configuration windows.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ExtendedScheduleViewer.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ImportLib.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\InventoryViewer.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ModelLib.pdb
@@ -124,22 +142,6 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Ap
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.csprojResolveAssemblyReference.cache
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\CoatingLineControl.baml
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\GradeControl.baml
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\MainWindow.baml
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\PlantSettingsWindow.baml
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\TextureControl.baml
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\CoatingLineControl.g.cs
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\GradeControl.g.cs
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\MainWindow.g.cs
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\PlantSettingsWindow.g.cs
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\TextureControl.g.cs
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\App.g.cs
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application_MarkupCompile.cache
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.g.resources
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main_Application.Properties.Resources.resources
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.csproj.GenerateResource.Cache
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.exe.manifest
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Main Application\obj\Debug\Main Application.exe

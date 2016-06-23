@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using CoatingScheduler;
 using Configuration_windows;
+using ExtendedScheduleViewer;
 using ImportLib;
 using ProductionScheduler;
 using WarehouseManager;
@@ -163,6 +164,12 @@ namespace Main_Application
         private void BtnImportInternalAll_OnClick(object sender, RoutedEventArgs e)
         {
             InternalImport.GetInstance().ImportAll();
+        }
+
+        private void Extended_Click(object sender, RoutedEventArgs e)
+        {
+            ExtendedScheduleWindow window = new ExtendedScheduleWindow();
+            window.Show();
         }
     }
 }

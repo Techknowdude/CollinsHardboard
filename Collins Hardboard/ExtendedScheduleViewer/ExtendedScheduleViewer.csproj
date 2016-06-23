@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ExtendedScheduleViewer</RootNamespace>
     <AssemblyName>ExtendedScheduleViewer</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +34,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>ExtendedScheduleViewer.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -55,20 +59,42 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="TrackingPair.cs" />
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="ExtendedScheduleWindow.xaml.cs">
+      <DependentUpon>ExtendedScheduleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemSummary.cs" />
+    <Compile Include="SummaryControl.xaml.cs">
+      <DependentUpon>SummaryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TrackingDay.cs" />
+    <Compile Include="TrackingDayControl.xaml.cs">
+      <DependentUpon>TrackingDayControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TrackingShift.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ExtendedSchedule.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="TrackingShiftControl.xaml.cs">
+      <DependentUpon>TrackingShiftControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="ExtendedScheduleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SummaryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TrackingDayControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TrackingShiftControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -101,6 +127,14 @@
     <ProjectReference Include="..\CoatingScheduler\CoatingScheduler.csproj">
       <Project>{0319BCB2-275D-4B53-B321-68A8F38000B1}</Project>
       <Name>CoatingScheduler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Configuration windows\ConfigurationWindows.csproj">
+      <Project>{15ff810c-2aa5-49c9-86e2-c0d10a14a09c}</Project>
+      <Name>ConfigurationWindows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImportLib\ImportLib.csproj">
+      <Project>{F317F1C7-6DDC-4303-84BB-2A7A88F581FB}</Project>
+      <Name>ImportLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModelLib\ModelLib.csproj">
       <Project>{50998390-8BB5-4802-AF11-422A9F92CC51}</Project>

@@ -22,10 +22,19 @@ namespace ProductionScheduler
         private Int32 _numPlates = 0;
         private Int32 _numPlateChangesPerWeek = 1;
         private ObservableCollection<DayOfWeek> _plateChangeDays = new ObservableCollection<DayOfWeek>();
-        private List<PressItem> _pressItems = new List<PressItem>(); 
+        private List<PressItem> _pressItems = new List<PressItem>();
+        private TimeSpan _delayTime = TimeSpan.FromHours(16);
+
         #endregion
 
         #region Properties
+
+        public TimeSpan DelayTime
+        {
+            get { return _delayTime; }
+            set { _delayTime = value; }
+        }
+
         public Int32 NumPlates
         {
             get { return _numPlates; }
@@ -169,7 +178,7 @@ namespace ProductionScheduler
 
             foreach (var plateConfiguration in _plateConfigurations)
             {
-                if (plateConfiguration.EndTime <= end && plateConfiguration.EndTime > start)
+                if (start > plateConfiguration.StartTime && end < plateConfiguration.EndTime + DelayTime)
                 {
                     var shift = plateConfiguration.GetShift(start, end);
                     if(shift != null)
@@ -179,6 +188,7 @@ namespace ProductionScheduler
 
             return shifts;
         }
+
 
         /// <summary>
         /// Tries to add the item to the schedule

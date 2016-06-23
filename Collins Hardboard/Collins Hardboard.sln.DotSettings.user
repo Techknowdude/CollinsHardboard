@@ -57,6 +57,7 @@
 	
 	
 	
+	
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Extended WPF Toolkit Binaries\Xceed.Wpf.Toolkit.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>

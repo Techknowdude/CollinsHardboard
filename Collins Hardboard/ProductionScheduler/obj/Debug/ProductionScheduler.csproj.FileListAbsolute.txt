@@ -19,7 +19,6 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Product
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\bin\Debug\StaticHelpers.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\bin\Debug\WarehouseManager.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\ProductionScheduler.csprojResolveAssemblyReference.cache
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\ExtendedScheduleWindow.baml
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\MainWindow.baml
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\NewPressItemWindow.baml
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\PlateMixControl.baml
@@ -27,7 +26,6 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Product
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\PressSettingsWindow.baml
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\PressWeekControl.baml
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\PressItemControl.baml
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\ExtendedScheduleWindow.g.cs
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\MainWindow.g.cs
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\NewPressItemWindow.g.cs
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ProductionScheduler\obj\Debug\PlateMixControl.g.cs

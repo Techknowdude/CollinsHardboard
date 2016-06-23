@@ -148,7 +148,7 @@ namespace Configuration_windows
 
             int daysUntil = 1;
 
-            while (!Shifts.Any(shift => shift.DaysList.Contains(currentDay.AddDays(daysUntil).DayOfWeek)))
+            while (Shifts.Count > 0 && !Shifts.Any(shift => shift.DaysList.Contains(currentDay.AddDays(daysUntil).DayOfWeek)))
             {
                 daysUntil++;
             }
@@ -160,6 +160,34 @@ namespace Configuration_windows
         {
             return Shifts.FirstOrDefault(
                 shift => shift.DaysList.Contains(time.DayOfWeek) && shift.StartTime <= time && time <= shift.EndDate);
+        }
+
+        public DateTime GetPreviousShiftEnd(DateTime date, Shift currentShift)
+        {
+            Shift targetShift = GetPreviousShift(currentShift);
+
+            DateTime currentDateTime = date;
+            TimeSpan timeBack = currentShift.StartTime - targetShift.StartTime - targetShift.Duration;
+            var day = (currentDateTime - timeBack).DayOfWeek;
+            currentDateTime -= timeBack;
+            while (!targetShift.DaysList.Contains(day))
+            {
+                currentShift = targetShift;
+                targetShift = GetPreviousShift(targetShift);
+                timeBack = currentShift.StartTime - targetShift.StartTime - targetShift.Duration;
+                day = (currentDateTime - timeBack).DayOfWeek;
+                currentDateTime -= timeBack;
+            }
+
+            return currentDateTime;
+        }
+
+        private Shift GetPreviousShift(Shift current)
+        {
+            int index = Shifts.IndexOf(current);
+            if (index > 0)
+                return Shifts[index - 1];
+            return Shifts.Last();
         }
     }
 }

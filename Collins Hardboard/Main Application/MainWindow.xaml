@@ -7,6 +7,7 @@
         <Menu HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" Width="Auto" Height="Auto" >
             <MenuItem Header="_View">
                 <MenuItem Header="Product _Forecast" Click="Button_Click"/>
+                <MenuItem Header="_Extended Schedule" Click="Extended_Click"/>
                 <MenuItem Header="_WiP Inventory" Click="BtnWiPInventory_Click"/>
                 <MenuItem Header="_Inventory" Click="BtnOpenInventory_Click"></MenuItem>
                 <MenuItem Header="_Coating Schedule" Click="BtnOpenCoatingSchedule_Click"/>

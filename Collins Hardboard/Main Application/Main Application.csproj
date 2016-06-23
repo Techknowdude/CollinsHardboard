@@ -195,6 +195,10 @@
       <Project>{15ff810c-2aa5-49c9-86e2-c0d10a14a09c}</Project>
       <Name>ConfigurationWindows</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExtendedScheduleViewer\ExtendedScheduleViewer.csproj">
+      <Project>{d75a7c75-622d-499a-98d4-f517d35c4c7d}</Project>
+      <Name>ExtendedScheduleViewer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImportLib\ImportLib.csproj">
       <Project>{f317f1c7-6ddc-4303-84bb-2a7a88f581fb}</Project>
       <Name>ImportLib</Name>
