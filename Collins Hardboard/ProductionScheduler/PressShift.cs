@@ -162,5 +162,26 @@ namespace ProductionScheduler
 
             return totalHours;
         }
+
+        public void AddProductionToInventory()
+        {
+            foreach (var pressMasterItem in Produced)
+            {
+                double units = pressMasterItem.UnitsMade;
+                ProductMasterItem item = pressMasterItem.MasterItem;
+
+                InventoryItem inventoryItem =
+                    StaticInventoryTracker.AllInventoryItems.FirstOrDefault(x => x.MasterID == item.MasterID && x.Grade == "WiP");
+                if (inventoryItem != null)
+                {
+                    inventoryItem.AddUnits(units);
+                }
+                else
+                {
+                    StaticInventoryTracker.AddInventory(item.ProductionCode, item.PiecesPerUnit, units, "WiP",
+                        item.MasterID);
+                }
+            }
+        }
     }
 }

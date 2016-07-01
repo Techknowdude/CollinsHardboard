@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace StaticHelpers
 {
+    [Serializable]
     public class Texture : ObservableObject
     {
         static ObservableCollection<Texture> _textures = new ObservableCollection<Texture>();

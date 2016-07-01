@@ -17,9 +17,6 @@ namespace ImportLib
 
         private static List<Texture> _texturesList = new List<Texture>(){ Texture.GetTexture( "Old Mill"), Texture.GetTexture("Shake"), Texture.GetTexture("Smooth")}; 
 
-        private static Char _wipMarker = 'W';
-        public static Char WiPMarker { get { return _wipMarker; } set { _wipMarker = value; } }
-
         static StaticInventoryTracker _instance = new StaticInventoryTracker();
 
         static List<InventoryChange> _inventoryChanges = new List<InventoryChange>();
@@ -300,9 +297,7 @@ namespace ImportLib
                     {
                         ProductMasterList.Add(ProductMasterItem.Load(reader));
                     }
-                    
 
-                    WiPMarker = reader.ReadChar();
 
                     listLen = reader.ReadInt32();
                     InventoryItems.Clear();
@@ -338,7 +333,6 @@ namespace ImportLib
                         productMasterItem.Save(writer);
                     }
 
-                    writer.Write(WiPMarker);
                     writer.Write(WiPItems.Count);
                     foreach (var inventoryItem in WiPItems)
                     {

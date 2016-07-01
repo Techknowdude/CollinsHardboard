@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Windows;
 using Configuration_windows;
 using Microsoft.Win32;
 using Microsoft.Office.Interop.Excel;
-using ModelLib;
 using StaticHelpers;
 using Window = System.Windows.Window;
 
@@ -22,26 +16,23 @@ namespace ProductionScheduler
     /// </summary>
     public partial class PressScheduleWindow : Window
     {
-
-        //private static ObservableCollection<PressWeekControl> _weekControls = new ObservableCollection<PressWeekControl>();
-        //public static ObservableCollection<PressWeekControl> WeekControls
-        private static ObservableCollection<PressPlateConfigurationControl> _weekControls = new ObservableCollection<PressPlateConfigurationControl>(); 
-        public static ObservableCollection<PressPlateConfigurationControl> WeekControls 
+        private static ObservableCollection<PressPlateConfigurationControl> _weekControls = new ObservableCollection<PressPlateConfigurationControl>();
+        public static ObservableCollection<PressPlateConfigurationControl> WeekControls
         {
             get { return _weekControls; }
         }
 
-        private static bool IsLoaded = false;
-        
         public PressScheduleWindow()
         {
             InitializeComponent();
             PressManager.Window = this;
-            DataContext = this;
             PressManager.Load();
+            foreach (var plateConfiguration in PressManager.PlateConfigurations)
+            {
+                WeekControls.Add(new PressPlateConfigurationControl(plateConfiguration));
+            }
+            DataContext = this;
         }
-
-
 
         private Int32 WeekInYear(DateTime time)
         {
@@ -87,23 +78,7 @@ namespace ProductionScheduler
 
         private void AddItemButton_OnClick(object sender, RoutedEventArgs e)
         {
-            WeekControls.Add(new PressPlateConfigurationControl(PressManager.Instance.CreateNewConfig()));
-            return;
-            if (WeekControls.Count == 0)
-            {
-                DateTime weekTime = DateTime.Now;
-                while (weekTime.DayOfWeek != CalendarControl.StartOfWeek)
-                {
-                    weekTime = weekTime.AddDays(-1);
-                }
-                PressWeekControl newWeekControl = new PressWeekControl(weekTime, this);
-            }
-            else
-            {
-//                DateTime weekTime = WeekControls.Last().Week.AddDays(7);
-  //              PressWeekControl newWeekControl = new PressWeekControl(weekTime, this);
-    //            WeekControls.Add(newWeekControl);
-            }
+            WeekControls.Add( new PressPlateConfigurationControl( PressManager.Instance.CreateNewConfig()));
         }
 
         //public void MoveUp(PressItemControl pressItemControl, PressWeekControl pressWeekControl)
@@ -149,43 +124,46 @@ namespace ProductionScheduler
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                Save(saveFileDialog.FileName);
+                PressManager.Save(saveFileDialog.FileName);
             }
         }
 
-        private void Save(string fileName)
-        {
-            try
-            {
-                using (BinaryWriter writer = new BinaryWriter(new FileStream(fileName, FileMode.OpenOrCreate)))
-                {
-                    writer.Write(WeekControls.Count);
-                    foreach (var pressWeekControl in WeekControls)
-                    {
-      //                  pressWeekControl.Save(writer);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Save failed.");
-            }
-        }
+      //  private void Save(string fileName)
+      //  {
+      //      try
+      //      {
+      //          using (BinaryWriter writer = new BinaryWriter(new FileStream(fileName, FileMode.OpenOrCreate)))
+      //          {
+      //              writer.Write(WeekControls.Count);
+      //              foreach (var pressWeekControl in WeekControls)
+      //              {
+      ////                  pressWeekControl.Save(writer);
+      //              }
+      //          }
+      //      }
+      //      catch (Exception)
+      //      {
+      //          MessageBox.Show("Save failed.");
+      //      }
+      //  }
 
         private void LoadMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog(){Multiselect = false};
             var result = openFileDialog.ShowDialog();
-            if(result == true)
-                Load(openFileDialog.FileName,this);
+            if (result == true)
+            {
+                PressManager.Load();
+                WeekControls.Clear();
+                foreach (var plateConfiguration in PressManager.PlateConfigurations)
+                {
+                    WeekControls.Add(new PressPlateConfigurationControl(plateConfiguration));
+                }
+            }
         }
 
         public static void Attach(PressScheduleWindow window)
         {
-            foreach (var pressWeekControl in WeekControls)
-            {
-        //        pressWeekControl.Schedule = window;
-            }
         }
 
         public static void Load(string fileName,PressScheduleWindow window)
@@ -195,17 +173,7 @@ namespace ProductionScheduler
             {
                 using (BinaryReader reader = new BinaryReader(new FileStream(fileName, FileMode.Open)))
                 {
-                    WeekControls.Clear();
-                    Int32 numWeek = reader.ReadInt32();
-                    for (; numWeek > 0; --numWeek)
-                    {
-                        PressWeekControl newWeekControl = new PressWeekControl(reader);
-                        newWeekControl.Schedule = window;
-
-          //              WeekControls.Add(newWeekControl);
-                    }
-
-                    
+                   
                 }
             }
             catch (Exception)

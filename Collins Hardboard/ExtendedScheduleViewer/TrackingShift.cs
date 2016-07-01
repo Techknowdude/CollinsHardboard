@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using CoatingScheduler;
 using Configuration_windows;
+using ImportLib;
 using ModelLib;
 using ProductionScheduler;
 using StaticHelpers;
@@ -12,6 +13,7 @@ namespace ExtendedScheduleViewer
 {
     public class TrackingShift : ObservableObject
     {
+        public const int STANDARD_SHIFT_LENGTH = 8;
 
         public String ShiftTitle
         {
@@ -60,15 +62,21 @@ namespace ExtendedScheduleViewer
         private CoatingScheduleLine _coatingLine;
         private string _shiftTitle;
         private ObservableCollection<ItemSummary> _itemSummaries = new ObservableCollection<ItemSummary>();
+        private DateTime date { get; set; }
 
         private void SetPressShifts()
         {
             PressShifts.Clear();
-            DateTime lastShiftEnd = ShiftHandler.CoatingInstance.GetPreviousShiftEnd(StaticFunctions.GetDayAndTime(CoatingLine.Date,
+            DateTime lastShiftBegin = ShiftHandler.CoatingInstance.GetPreviousShiftStart(StaticFunctions.GetDayAndTime(CoatingLine.Date,
                 CoatingLine.Shift.StartTime),CoatingLine.Shift);
-            var timeAfterShift = StaticFunctions.GetDayAndTime(CoatingLine.Date, CoatingLine.Shift.StartTime) +
-                                 CoatingLine.Shift.Duration;
-            var pShifts = PressManager.Instance.GetPressShifts(lastShiftEnd, timeAfterShift);
+            var thisShiftStart = StaticFunctions.GetDayAndTime(CoatingLine.Date, CoatingLine.Shift.StartTime);
+
+            // Use previous day if this shift starts on the previous day
+            if ((new TimeSpan(CoatingLine.Shift.StartTime.Hour, CoatingLine.Shift.StartTime.Minute, CoatingLine.Shift.StartTime.Second) +
+                 CoatingLine.Shift.Duration).TotalHours > 24)
+                thisShiftStart = thisShiftStart.AddDays(-1);
+
+            var pShifts = PressManager.Instance.GetPressShifts(lastShiftBegin, thisShiftStart);
             foreach (var pressShift in pShifts)
             {
                 PressShifts.Add(pressShift);
@@ -84,8 +92,11 @@ namespace ExtendedScheduleViewer
         {
             _pressShifts = new ObservableCollection<PressShift>();
             _coatingLine = line;
+            date = line.Date + TimeSpan.FromHours(STANDARD_SHIFT_LENGTH); // add duration to snap to next day on GY shift
+            date = new DateTime(date.Year,date.Month,date.Day);
             SetPressShifts();
         }
+
 
         public double GetProduced(ProductMasterItem item)
         {
@@ -130,11 +141,6 @@ namespace ExtendedScheduleViewer
         /// <returns>Units in inventory after shift</returns>
         public double AddSummary(ProductMasterItem item, double running)
         {
-            if (ExtendedSchedule.runningTotalsDictionary.ContainsKey(item))
-            {
-                running = ExtendedSchedule.runningTotalsDictionary[item];
-            }
-
             double added = GetProduced(item);
             double removed = GetConsumed(item);
 
@@ -143,7 +149,7 @@ namespace ExtendedScheduleViewer
             ItemSummaries.Add(newSum);
             Control.AddSummary(newSum);
 
-            ExtendedSchedule.runningTotalsDictionary[item] = newSum.RunningUnits;
+            ExtendedSchedule.RunningTotalsDictionary[item] = newSum.RunningUnits;
 
             return newSum.RunningUnits;
         }
@@ -165,13 +171,13 @@ namespace ExtendedScheduleViewer
             return lastCountsDictionary;
         }
 
-        public void PopulateSummaries(Dictionary<ProductMasterItem, double> lastCountDictionary)
+        public void PopulateSummaries()
         {
             foreach (var watchedItem in ExtendedSchedule.Instance.Watches)
             {
-                if (lastCountDictionary!= null && lastCountDictionary.ContainsKey(watchedItem))
+                if (ExtendedSchedule.RunningTotalsDictionary != null && ExtendedSchedule.RunningTotalsDictionary.ContainsKey(watchedItem))
                 {
-                    lastCountDictionary[watchedItem] = AddSummary(watchedItem, lastCountDictionary[watchedItem]);
+                    ExtendedSchedule.RunningTotalsDictionary[watchedItem] = AddSummary(watchedItem, ExtendedSchedule.RunningTotalsDictionary[watchedItem]);
                 }
                 else
                 {
@@ -179,6 +185,36 @@ namespace ExtendedScheduleViewer
                 }
             }
         }
-        
+
+        public void RemoveSales()
+        {
+            List<SalesItem> soldYesterday = StaticInventoryTracker.SalesItems.Where(s => s.Date >= date.AddDays(-1) && s.Date < date).ToList();
+
+            foreach (var itemSummary in ItemSummaries)
+            {
+                foreach (var order in soldYesterday.Where(s => s.MasterID == itemSummary.Item.MasterID))
+                {
+                    itemSummary.RemovedUnits += order.Units;
+                }
+            }
+
+            //update the count dictionary
+            foreach (var salesItem in soldYesterday)
+            {
+                var master =
+                    StaticInventoryTracker.ProductMasterList.FirstOrDefault(m => m.MasterID == salesItem.MasterID);
+                if (master != null)
+                {
+                    if (ExtendedSchedule.RunningTotalsDictionary.ContainsKey(master))
+                    {
+                        ExtendedSchedule.RunningTotalsDictionary[master] -= salesItem.Units;
+                    }
+                    else
+                    {
+                        ExtendedSchedule.RunningTotalsDictionary[master] = -salesItem.Units;
+                    }
+                }
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ using StaticHelpers;
 
 namespace ModelLib
 {
+    [Serializable]
     public class ProductMasterItem
     {
 

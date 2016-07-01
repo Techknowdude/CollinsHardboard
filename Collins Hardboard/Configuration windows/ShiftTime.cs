@@ -3,6 +3,7 @@ using System.IO;
 
 namespace Configuration_windows
 {
+    [Serializable]
     public class ShiftTime
     {
         #region Fields

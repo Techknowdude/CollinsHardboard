@@ -6,6 +6,7 @@ using System.Windows.Media;
 
 namespace Configuration_windows
 {
+    [Serializable]
     public class Shift
     {
         #region Fields

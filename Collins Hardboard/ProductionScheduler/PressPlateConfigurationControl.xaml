@@ -26,7 +26,7 @@
 
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Path=StartTime, StringFormat={}{0:ddd, MMM dd}}"></TextBlock>
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="70,0,0,0" Text="{Binding Path=EndTime, StringFormat={}{0:'to' ddd, MMM dd}}"></TextBlock>
-        <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="10,0,10,0" Padding="10,2" Height="24" Width="80" Command="{Binding RemoveCommand}">Delete</Button>
+        <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="10,0,10,0" Padding="10,2" Height="24" Width="80" Command="{Binding Path=RemoveCommand}">Delete</Button>
         <TextBlock Grid.Row="1" Grid.Column="0">Available Plates:</TextBlock>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=NumAvailablePlates}" IsEnabled="False"></TextBox>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Plates:"></TextBlock>
@@ -35,7 +35,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <ComboBox ItemsSource="{Binding Path=Textures}" SelectedValue="{Binding Path=Tex}"></ComboBox>
+                        <ComboBox ItemsSource="{Binding Path=Textures}" SelectedValue="{Binding Path=Tex}" SelectedIndex="{Binding Path=TexIndex, Mode=OneWay}"></ComboBox>
                         <TextBox Text="{Binding Path=Count}"></TextBox>
                         <Button CommandParameter="{Binding}" Command="{Binding DataContext.DeletePlateCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}}">Delete</Button>
                     </WrapPanel>

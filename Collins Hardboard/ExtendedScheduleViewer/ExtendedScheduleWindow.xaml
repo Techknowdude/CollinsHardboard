@@ -12,7 +12,9 @@
             <RowDefinition Height="24"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button Width="100" Height="24" Grid.Row="0" Command="{Binding Path=Schedule.UpdateCommand}">Update</Button>
+        
+        <Button Grid.Row="0" HorizontalAlignment="Left" Padding="8,0" Command="{Binding Path=ChangeWatchCommand}">Change Watches</Button>
+        <Button Width="100" Height="24" Grid.Row="0" HorizontalAlignment="Left" Margin="120,0" Command="{Binding Path=Schedule.UpdateCommand}">Update</Button>
         <ListView Grid.Row="1" Margin="80,0,0,0" Name="TrackingNameListView" ItemsSource="{Binding Path=WatchItems}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

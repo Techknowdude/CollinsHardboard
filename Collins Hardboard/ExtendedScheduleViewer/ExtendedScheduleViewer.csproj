@@ -59,10 +59,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DoubleToBrushConverter.cs" />
     <Compile Include="ExtendedScheduleWindow.xaml.cs">
       <DependentUpon>ExtendedScheduleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ItemSummary.cs" />
+    <Compile Include="MasterToBrushConverter.cs" />
     <Compile Include="SummaryControl.xaml.cs">
       <DependentUpon>SummaryControl.xaml</DependentUpon>
     </Compile>
@@ -79,6 +81,9 @@
     <Compile Include="TrackingShiftControl.xaml.cs">
       <DependentUpon>TrackingShiftControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WatchWindow.xaml.cs">
+      <DependentUpon>WatchWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="ExtendedScheduleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -92,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TrackingShiftControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WatchWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,6 +8,8 @@
         <StackPanel Orientation="Horizontal">
             <Label>Total Plates:</Label>
             <TextBox Text="{Binding Path=NumPlates}" MinWidth="30"></TextBox>
+            <Label Content="Press Loads / Hour:"></Label>
+            <TextBox Width="50" Text="{Binding Path=PressLoadsPerHour}"></TextBox>
         </StackPanel>
         <Label>Days available for plate changes:</Label>
         <StackPanel Orientation="Horizontal">

@@ -30,8 +30,8 @@ namespace Main_Application
 
         public char WiPChar
         {
-            get { return StaticInventoryTracker.WiPMarker; }
-            set { StaticInventoryTracker.WiPMarker = value; }
+            get { return StaticFactoryValuesManager.WiPMarker; }
+            set { StaticFactoryValuesManager.WiPMarker = value; }
         }
 
         public string CurrentWaste

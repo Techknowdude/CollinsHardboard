@@ -13,15 +13,17 @@ namespace ExtendedScheduleViewer
     [Serializable]
     public class ExtendedSchedule
     {
+        [NonSerialized]
         private ObservableCollection<TrackingDay> _trackingDays = new ObservableCollection<TrackingDay>();
         private ObservableCollection<ProductMasterItem> _watches = new ObservableCollection<ProductMasterItem>();
+        [NonSerialized]
         private static ExtendedSchedule _instance;
         public static ExtendedSchedule Instance
         {
             get { return _instance ?? (_instance = new ExtendedSchedule()); }
         }
 
-        public static Dictionary<ProductMasterItem, double> runningTotalsDictionary = new Dictionary<ProductMasterItem, double>();
+        public static Dictionary<ProductMasterItem, double> RunningTotalsDictionary = new Dictionary<ProductMasterItem, double>();
 
         public ObservableCollection<ProductMasterItem> Watches
         {
@@ -44,9 +46,12 @@ namespace ExtendedScheduleViewer
 
         public void Update()
         {
-            runningTotalsDictionary.Clear();
-            AddWatch(StaticInventoryTracker.PressMasterList[0]);
-            AddWatch(StaticInventoryTracker.ProductMasterList[1]);
+            ProductMasterItem item = StaticInventoryTracker.ProductMasterList[1];
+            StaticInventoryTracker.SalesItems.Clear();
+            StaticInventoryTracker.AddSales(item.ProductionCode, "0001", DateTime.Today.AddDays(-1), 30, 0, "Dealer", item.MasterID);
+
+
+            RunningTotalsDictionary.Clear();
             TrackingDays.Clear();
             Window.DayControls.Clear();
 

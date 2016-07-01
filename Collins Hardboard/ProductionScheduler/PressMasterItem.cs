@@ -5,6 +5,7 @@ using StaticHelpers;
 
 namespace ProductionScheduler
 {
+    [Serializable]
     public class PressMasterItem : ObservableObject
     {
         private ProductMasterItem _masterItem;

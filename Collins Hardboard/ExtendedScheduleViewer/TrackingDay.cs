@@ -72,14 +72,25 @@ namespace ExtendedScheduleViewer
             Control.ClearShifts();
             _shifts.Clear();
 
-            foreach (var coatingScheduleLogic in CoatingDay.ChildrenLogic)
+            if (CoatingDay.ChildrenLogic.Count == 0) return;
+
+            var coatingScheduleLogic = CoatingDay.ChildrenLogic[0];
+            var line = coatingScheduleLogic as CoatingScheduleLine;
+            var newShift = new TrackingShift(line);
+            Control.ShiftControls.Add(new TrackingShiftControl(newShift));
+            _shifts.Add(newShift);
+            newShift.PopulateSummaries();
+            newShift.RemoveSales();
+            
+
+            for (int index = 1; index < CoatingDay.ChildrenLogic.Count; index++)
             {
-                var line = coatingScheduleLogic as CoatingScheduleLine;
-                var newShift = new TrackingShift(line);
+                coatingScheduleLogic = CoatingDay.ChildrenLogic[index];
+                line = coatingScheduleLogic as CoatingScheduleLine;
+                newShift = new TrackingShift(line);
                 Control.ShiftControls.Add(new TrackingShiftControl(newShift));
                 _shifts.Add(newShift);
-                var inventories = ExtendedSchedule.Instance.GetPreviousInventory(this);
-                newShift.PopulateSummaries(inventories);
+                newShift.PopulateSummaries();
             }
         }
         

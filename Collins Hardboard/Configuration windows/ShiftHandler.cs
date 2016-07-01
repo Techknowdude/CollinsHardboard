@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using StaticHelpers;
 
 namespace Configuration_windows
 {
@@ -162,35 +163,58 @@ namespace Configuration_windows
                 shift => shift.DaysList.Contains(time.DayOfWeek) && shift.StartTime <= time && time <= shift.EndDate);
         }
 
-        public DateTime GetPreviousShiftEnd(DateTime date, Shift currentShift)
+        public DateTime GetPreviousShiftStart(DateTime date, Shift currentShift)
         {
-            Shift targetShift = GetPreviousShift(currentShift);
+            DateTime startTime = StaticFunctions.GetDayAndTime(date, currentShift.StartTime);
 
-            DateTime currentDateTime = date;
-            TimeSpan timeBack = currentShift.StartTime - targetShift.StartTime;
-            if (timeBack < TimeSpan.Zero)
+            // account for shifts that span multiple days. Use the starting day...
+            if ((new TimeSpan(currentShift.StartTime.Hour, currentShift.StartTime.Minute, currentShift.StartTime.Second) +
+                 currentShift.Duration).TotalHours > 24)
+                startTime = startTime.AddDays(-1);
+
+            DateTime currentDateTime = startTime;
+            bool closer = true;
+            // Find the end time closest to the current shift start time while not going over - Welcome to The Shift is Right?
+            TimeSpan closestdif = TimeSpan.MaxValue;
+
+            int infinityPrevention = 356; // dont go back more than a year...
+
+            do
             {
-                timeBack = TimeSpan.Zero - timeBack;
-            }
-            var day = (currentDateTime - timeBack).DayOfWeek;
-            currentDateTime -= timeBack;
-            while (timeBack == TimeSpan.Zero || !targetShift.DaysList.Contains(day))
-            {
-                currentShift = targetShift;
-                targetShift = GetPreviousShift(targetShift);
-                timeBack = currentShift.StartTime - targetShift.StartTime;
-                if (timeBack < TimeSpan.Zero)
+                --infinityPrevention;
+
+                foreach (var shift in Shifts)
                 {
-                    timeBack = TimeSpan.Zero - timeBack;
-                }
-                day = (currentDateTime - timeBack).DayOfWeek;
-                currentDateTime -= timeBack;
-            }
+                    if (shift.DaysList.Contains(currentDateTime.DayOfWeek))
+                    {
+                        closer = false; // something runs on this day. If it's not closer, then quit
+                        var shiftStart = StaticFunctions.GetDayAndTime(currentDateTime, shift.StartTime);
+                        if ((new TimeSpan(shiftStart.Hour, shiftStart.Minute, shiftStart.Second) + shift.Duration).TotalHours > 24)
+                            shiftStart = shiftStart.AddDays(-1);
 
-            return currentDateTime;
+
+                        TimeSpan dif = startTime - shiftStart;
+                        if (dif.TotalHours > 0 && dif < closestdif)
+                        {
+                            closestdif = dif;
+                            closer = true;
+                        }
+                        else if(dif.TotalHours < 0)
+                        {
+                            closer = true;
+                        }
+                    }
+                }
+                currentDateTime = currentDateTime.AddDays(-1); // go back a day
+
+            } while (closer && infinityPrevention > 0);
+
+            if(infinityPrevention == 0) throw new ArgumentOutOfRangeException("No shifts before the given one.");
+            
+            return startTime - closestdif;
         }
 
-        private Shift GetPreviousShift(Shift current)
+        public Shift GetPreviousShift(Shift current)
         {
             int index = Shifts.IndexOf(current);
             if (index > 0)

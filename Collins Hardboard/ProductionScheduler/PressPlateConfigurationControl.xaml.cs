@@ -16,5 +16,10 @@ namespace ProductionScheduler
                 PlateConfiguration = configuration;
             DataContext = PlateConfiguration;
         }
+
+        public PressPlateConfigurationControl()
+        {
+            
+        }
     }
 }

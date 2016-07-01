@@ -1,9 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using StaticHelpers;
 
 namespace ProductionScheduler
 {
+    [Serializable]
     public class PlateCount : ObservableObject
     {
         private Texture _tex;
@@ -20,7 +22,7 @@ namespace ProductionScheduler
             get { return _tex; }
             set
             {
-                _tex = value; 
+                _tex = Texture.GetTexture(value.Name); 
                 RaisePropertyChangedEvent();
             }
         }
@@ -38,6 +40,11 @@ namespace ProductionScheduler
         public ObservableCollection<Texture> Textures
         {
             get { return Texture.TexturesCollection; }
+        }
+
+        public int TexIndex
+        {
+            get { return Texture.TexturesCollection.IndexOf(Texture.GetTexture(Tex.Name)); }
         }
     }
 }

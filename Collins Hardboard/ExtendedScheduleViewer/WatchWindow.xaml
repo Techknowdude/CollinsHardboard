@@ -1,0 +1,32 @@
+﻿<Window x:Class="ExtendedScheduleViewer.WatchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WatchWindow" Height="300" Width="483.061"
+        x:Name="ThisWindow"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="44" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Margin="10,13,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">Add new watch:</TextBlock>
+        <ComboBox Grid.Row="0" Width="200" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,10,0,0" x:Name="NewWatchSelectionBox" ItemsSource="{Binding Path=(MasterList)}" ></ComboBox>
+        <Button Grid.Row="0" Width="90" Height="24" Margin="310,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Command="{Binding Path=AddWatchCommand}" CommandParameter="{Binding SelectedItem, ElementName=NewWatchSelectionBox}">Add watch</Button>
+        
+        <ListView Grid.Row="1" x:Name="WatchListView" ItemsSource="{Binding Path=WatchList}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <TextBlock Width="150" Text="{Binding Path=Description}"></TextBlock>
+                        <Button Command="{Binding MoveUpCommand, ElementName=ThisWindow}" CommandParameter="{Binding}" Margin="5,0,0,0" FontFamily="Segoe UI Symbol" Content="&#xE110;"></Button>
+                        <Button Command="{Binding MoveDownCommand, ElementName=ThisWindow}" CommandParameter="{Binding}" Margin="5,0,0,0" FontFamily="Segoe UI Symbol" Content="&#xE1FD;"></Button>
+                        <Button Command="{Binding RemoveWatchCommand, ElementName=ThisWindow}" CommandParameter="{Binding}" Margin="5,0,0,0" Content="Delete"></Button>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>

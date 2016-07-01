@@ -56,7 +56,6 @@ namespace ProductionScheduler
             }
         }
 
-
         private ObservableCollection<Shift> ProductionShifts { get { return ShiftHandler.ProductionInstance.Shifts; } }
 
         public List<PressShift> Shifts
@@ -97,7 +96,7 @@ namespace ProductionScheduler
 
         void UpdateAvailablePlates()
         {
-            int availablePlates = PressManager.Instance.NumPlates;
+            int availablePlates = PressManager.NumPlates;
             foreach (var plateCount in Plates)
             {
                 availablePlates -= plateCount.Count;
@@ -131,7 +130,6 @@ namespace ProductionScheduler
             PressManager.Instance.Remove(this);
         }
 
-        // { get { return ShiftHandler.ProductionInstance.Shifts; } } 
 
         /// <summary>
         /// Constructor for xaml control
@@ -154,7 +152,7 @@ namespace ProductionScheduler
             _startTime = start;
             _endTime = end;
             CreateShifts();
-            NumAvailablePlates = PressManager.Instance.NumPlates;
+            NumAvailablePlates = PressManager.NumPlates;
         }
 
         private void CreateShifts()
@@ -187,7 +185,6 @@ namespace ProductionScheduler
 
         public bool SetPlates(String tex, int plates)
         {
-            //TODO: check if the change is possible
             bool changed = false;
             int current = 0;
             var plate = _plates.FirstOrDefault(t => t.Tex == Texture.GetTexture(tex));
@@ -199,14 +196,47 @@ namespace ProductionScheduler
             }
             else
             {
+                bool changePossible = true;
+
                 current = plate.Count;
+
+                // check usage if lowering
                 int change = plates - current;
 
                 if (change <= NumAvailablePlates)
                 {
-                    plate.Count = plates;
-                    NumAvailablePlates += change;
-                    changed = true;
+                    if (change > 0) // Adding plates, no need to check if this effects production
+                    {
+                        plate.Count = plates;
+                        NumAvailablePlates += change;
+                        changed = true;
+                    }
+                    else
+                    {
+                        // Note: Add press loads per hour. use as such: Shift potential output = (#plates of tex)*(pressLoadsPerHour)*(shift length)
+                        // remaining usage = potential output - current usage
+                        var potentialOutputPerHour = (plate.Count+change)*PressManager.PressLoadsPerHour;
+                        foreach (var pressShift in Shifts)
+                        {
+                            var potentialOutputLayers = potentialOutputPerHour*pressShift.Duration.TotalHours;
+
+                            var actualOutput =
+                                pressShift.Produced.Where(m => m.MasterItem.Texture.Contains(tex))
+                                    .Sum(i => i.UnitsMade*i.MasterItem.PiecesPerUnit);
+                            if (actualOutput > potentialOutputLayers)
+                            {
+                                changePossible = false;
+                                break;
+                            }
+                        }
+
+                        if (changePossible)
+                        {
+                            plate.Count = plates;
+                            NumAvailablePlates += change;
+                            changed = true;
+                        }
+                    }
                 }
             }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Input;
 using Configuration_windows;
 using ModelLib;
@@ -15,14 +17,22 @@ namespace ProductionScheduler
 
         #region Fields
         //New Stuff
-        private List<PlateConfiguration> _plateConfigurations = new List<PlateConfiguration>(); 
+        private static ObservableCollection<PlateConfiguration> _plateConfigurations = new ObservableCollection<PlateConfiguration>();
+
+        public static double PressLoadsPerHour
+        {
+            get { return _pressLoadsPerHour; }
+            set
+            {
+                _pressLoadsPerHour = value; 
+            }
+        }
 
         // Old Stuff
         private const string DatFile = "pressManager.dat";
-        private Int32 _numPlates = 0;
-        private Int32 _numPlateChangesPerWeek = 1;
-        private ObservableCollection<DayOfWeek> _plateChangeDays = new ObservableCollection<DayOfWeek>();
-        private List<PressItem> _pressItems = new List<PressItem>();
+        private static Int32 _numPlates = 0;
+        public Int32 NumPlateChangesPerWeek {get { return _plateChangeDays.Count; } }
+        private static ObservableCollection<DayOfWeek> _plateChangeDays = new ObservableCollection<DayOfWeek>();
         private TimeSpan _delayTime = TimeSpan.FromHours(16);
 
         #endregion
@@ -35,7 +45,7 @@ namespace ProductionScheduler
             set { _delayTime = value; }
         }
 
-        public Int32 NumPlates
+        public static Int32 NumPlates
         {
             get { return _numPlates; }
             set { _numPlates = value; }
@@ -45,30 +55,27 @@ namespace ProductionScheduler
         #region Singleton
 
         private static PressManager _instance = null;
+        private static double _pressLoadsPerHour;
+
         public static PressManager Instance
         {
             get { return _instance ?? (_instance = new PressManager()); }
         }
+        
 
-        public Int32 NumPlateChangesPerWeek
-        {
-            get { return _numPlateChangesPerWeek; }
-            set { _numPlateChangesPerWeek = value; }
-        }
-
-        public ObservableCollection<DayOfWeek> PlateChangeDays
+        public static ObservableCollection<DayOfWeek> PlateChangeDays
         {
             get { return _plateChangeDays; }
             set { _plateChangeDays = value; }
         }
 
-        public List<PressItem> PressItems
-        {
-            get { return _pressItems; }
-            set { _pressItems = value; }
-        }
-
         public static PressScheduleWindow Window { get; set; }
+
+        public static ObservableCollection<PlateConfiguration> PlateConfigurations
+        {
+            get { return _plateConfigurations; }
+            set { _plateConfigurations = value; }
+        }
 
         #endregion
 
@@ -78,34 +85,38 @@ namespace ProductionScheduler
             ShiftHandler.ProductionInstance.LoadShifts();
         }
 
-        public static bool Save()
+        public static bool Save(String filename = DatFile)
         {
-            try
-            {
-                using (BinaryWriter writer = new BinaryWriter(new FileStream(DatFile, FileMode.OpenOrCreate)))
-                {
-                    return Save(writer);
-                }
-            }
-            catch (Exception exception)
-            {
-                return false;
-            }
-        }
+            if (Instance == null) return false;
 
-        public static bool Save(BinaryWriter writer)
-        {
             bool success = true;
 
             try
             {
-                writer.Write(Instance.NumPlates);
-                writer.Write(Instance.NumPlateChangesPerWeek);
-                writer.Write(Instance.PlateChangeDays.Count);
-                foreach (var plateChangeDay in Instance.PlateChangeDays)
+                using (FileStream stream = File.OpenWrite(DatFile))
                 {
-                    writer.Write((Int32)plateChangeDay);
+                    BinaryFormatter formatter = new BinaryFormatter();
+
+                    formatter.Serialize(stream, PlateConfigurations.Count);
+                    foreach (var plateConfiguration in PlateConfigurations)
+                    {
+                        formatter.Serialize(stream,plateConfiguration);
+                    }
+                    formatter.Serialize(stream,PlateChangeDays.Count);
+                    foreach (var plateChangeDay in PlateChangeDays)
+                    {
+                        formatter.Serialize(stream,plateChangeDay);
+                    }
+                    formatter.Serialize(stream,NumPlates);
+                    formatter.Serialize(stream,PressLoadsPerHour);
                 }
+                //writer.Write(Instance.NumPlates);
+                //writer.Write(Instance.NumPlateChangesPerWeek);
+                //writer.Write(Instance.PlateChangeDays.Count);
+                //foreach (var plateChangeDay in Instance.PlateChangeDays)
+                //{
+                //    writer.Write((Int32)plateChangeDay);
+                //}
             }
             catch
             {
@@ -119,38 +130,45 @@ namespace ProductionScheduler
         {
             try
             {
-                using (BinaryReader reader = new BinaryReader(new FileStream(DatFile, FileMode.Open)))
+                using (FileStream stream = File.OpenRead(DatFile))
                 {
-                    return Load(reader);
+                    BinaryFormatter formatter = new BinaryFormatter();
+
+                    PlateConfigurations.Clear();
+                    PlateChangeDays.Clear();
+                    PressScheduleWindow.WeekControls?.Clear();
+
+                    int plateCount = (int) formatter.Deserialize(stream);
+
+                    for (; plateCount > 0; plateCount--)
+                    {
+                        PlateConfiguration plateConfiguration = (PlateConfiguration) formatter.Deserialize(stream);
+                        PlateConfigurations.Add(plateConfiguration);
+                    }
+
+                    int daysCount = (int) formatter.Deserialize(stream);
+                    for (; daysCount > 0; daysCount--)
+                    {
+                        DayOfWeek day = (DayOfWeek) formatter.Deserialize(stream);
+                        PlateChangeDays.Add(day);
+                    }
+
+                    NumPlates = (int) formatter.Deserialize(stream);
+                    PressLoadsPerHour = (double) formatter.Deserialize(stream);
+                    
                 }
+
+                    //using (BinaryReader reader = new BinaryReader(new FileStream(DatFile, FileMode.Open)))
+                    //{
+                    //    return Load(reader);
+                    //}
             }
             catch (Exception exception)
             {
                 return false;
             }
-        }
-        public static bool Load(BinaryReader reader)
-        {
-            bool success = true;
-            try
-            {
-                Instance.NumPlates = reader.ReadInt32();
-                Instance.NumPlateChangesPerWeek = reader.ReadInt32();
 
-                Instance.PlateChangeDays.Clear();
-                Int32 numChanges = reader.ReadInt32();
-                for (; numChanges > 0; --numChanges)
-                {
-                    DayOfWeek day = (DayOfWeek)reader.ReadInt32();
-                    Instance.PlateChangeDays.Add(day);
-                }
-            }
-            catch (Exception)
-            {
-                success = false;
-            }
-
-            return success;
+            return true;
         }
 
         public static DateTime ScheduleItem(ProductMasterItem item, double count)
@@ -158,7 +176,7 @@ namespace ProductionScheduler
             DateTime finishedDateTime = DateTime.MaxValue;
 
             // Find closest plate config
-            foreach (var plateConfiguration in Instance._plateConfigurations)
+            foreach (var plateConfiguration in PlateConfigurations)
             {
                 plateConfiguration.Add(item, ref count);
             }
@@ -176,7 +194,7 @@ namespace ProductionScheduler
         {
             List<PressShift> shifts = new List<PressShift>();
 
-            foreach (var plateConfiguration in _plateConfigurations)
+            foreach (var plateConfiguration in PlateConfigurations)
             {
                 if (start > plateConfiguration.StartTime && end < plateConfiguration.EndTime + DelayTime)
                 {
@@ -200,9 +218,9 @@ namespace ProductionScheduler
         public bool AddItem(ProductMasterItem item, ref double unitCount, DateTime dueDate)
         {
             bool added = false;
-            for (int index = 0; unitCount > 0 && index < _plateConfigurations.Count; index++)
+            for (int index = 0; unitCount > 0 && index < PlateConfigurations.Count; index++)
             {
-                var configuration = _plateConfigurations[index];
+                var configuration = PlateConfigurations[index];
                 // keep true that it was added. Check unit count for full completion.
                 added = added || configuration.Add(item, ref unitCount, dueDate);
             }
@@ -210,7 +228,7 @@ namespace ProductionScheduler
             {
                 var config = CreateNewConfig();
                 config.Add(item, ref unitCount, dueDate);
-                _plateConfigurations.Add(config);
+                PlateConfigurations.Add(config);
             }
 
             return added;
@@ -224,9 +242,9 @@ namespace ProductionScheduler
         {
             DateTime begin = DateTime.Today;
             DateTime end = begin;
-            if (_plateConfigurations != null && _plateConfigurations.Count > 0)
+            if (PlateConfigurations != null && PlateConfigurations.Count > 0)
             {
-                begin = _plateConfigurations.Last().EndTime.AddDays(1);
+                begin = PlateConfigurations.Last().EndTime.AddDays(1);
             }
 
             if(PlateChangeDays.Count > 0)
@@ -249,7 +267,7 @@ namespace ProductionScheduler
             }
 
             var plateChange = new PlateConfiguration(begin, end);
-            _plateConfigurations?.Add(plateChange);
+            PlateConfigurations?.Add(plateChange);
             return plateChange;
         }
         
@@ -257,13 +275,18 @@ namespace ProductionScheduler
         {
             if (configuration != null)
             {
-                int index = _plateConfigurations.IndexOf(configuration);
-                if (index >= 0)
+                int index = PlateConfigurations.IndexOf(configuration);
+                if (index >= 0 && index < PlateConfigurations.Count)
                 {
-                    _plateConfigurations.RemoveAt(index);
+                    PlateConfigurations.RemoveAt(index);
                     PressScheduleWindow.WeekControls.RemoveAt(index);
                 }
             }
+        }
+        
+        public void AddPlateConfig()
+        {
+            CreateNewConfig();
         }
     }
 }

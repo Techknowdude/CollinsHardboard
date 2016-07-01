@@ -26,9 +26,14 @@ namespace ProductionScheduler
     {
         public int NumPlates
         {
-            get { return PressManager.Instance.NumPlates; }
-            set { PressManager.Instance.NumPlates = value; }
+            get { return PressManager.NumPlates; }
+            set { PressManager.NumPlates = value; }
         }
+
+        public double PressLoadsPerHour { get { return PressManager.PressLoadsPerHour; } set
+        {
+            PressManager.PressLoadsPerHour = value;
+        } }
 
         public bool MondayChecked
         {
@@ -180,7 +185,7 @@ namespace ProductionScheduler
 
         public static ObservableCollection<DayOfWeek> ChangeDays
         {
-            get { return PressManager.Instance.PlateChangeDays; }
+            get { return PressManager.PlateChangeDays; }
         }
 
         public PressSettingsWindow()

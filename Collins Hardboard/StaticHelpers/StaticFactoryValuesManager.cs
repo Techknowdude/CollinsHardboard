@@ -20,6 +20,9 @@ namespace StaticHelpers
         private static List<Tuple<string, double>> _stringDoubleConversionList = new List<Tuple<string, double>>();
         private static double _productionMaxThickness = (double) 5/4;
 
+        private static Char _wipMarker = 'W';
+        public static Char WiPMarker { get { return _wipMarker; } set { _wipMarker = value; } }
+
         private static ObservableCollection<string> _coatingLines = new ObservableCollection<string>
         {
             "Lap Line",
@@ -169,6 +172,9 @@ namespace StaticHelpers
                     {
                         texture.Save(writer);
                     }
+
+                    // WiP Marker
+                    writer.Write(WiPMarker);
                 }
             }
             catch (Exception exception)
@@ -254,6 +260,10 @@ namespace StaticHelpers
                     {
                         TexturesList.Add(Texture.Load(reader));
                     }
+
+
+                    // WiP Marker
+                    WiPMarker = reader.ReadChar();
                 }
             }
             catch (Exception)

@@ -109,33 +109,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="NewPressItemWindow.xaml.cs">
-      <DependentUpon>NewPressItemWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PlateConfiguration.cs" />
-    <Compile Include="PlateMixControl.xaml.cs">
-      <DependentUpon>PlateMixControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PressSettingsWindow.xaml.cs">
       <DependentUpon>PressSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="PressShift.cs" />
-    <Compile Include="PressWeekControl.xaml.cs">
-      <DependentUpon>PressWeekControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PressItem.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NewPressItemWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PlateMixControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="PressMasterItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -152,23 +134,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PressWeekControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PressItemControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="PressScheduleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PressItemControl.xaml.cs">
-      <DependentUpon>PressItemControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PressManager.cs" />
     <Compile Include="PressScheduleWindow.xaml.cs">
       <DependentUpon>PressScheduleWindow.xaml</DependentUpon>
