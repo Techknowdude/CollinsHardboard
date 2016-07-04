@@ -45,6 +45,9 @@ namespace ExtendedScheduleViewer
             _worksheet.PageSetup.FitToPagesWide = 1;
             _worksheet.PageSetup.Orientation = XlPageOrientation.xlLandscape;
 
+            // output the title
+            
+            OutputText("Extended Schedule " + DateTime.Today.ToString("d"), 0,4,_curRow++,_worksheet);
             // output each day
             foreach (var trackingDay in _schedule.TrackingDays)
             {
@@ -55,8 +58,8 @@ namespace ExtendedScheduleViewer
         private void Export(TrackingDay day, Worksheet worksheet)
         {
             // output the day
-            OutputText(day.Day.ToString("ddd, MMM dd"),1,1,_curRow,worksheet);
-            ++_curRow;
+            OutputText(day.Day.ToString("ddd, MMM dd"),0,1,_curRow,worksheet);
+            
 
             // output each shift
             foreach (var trackingShift in day.Shifts)
@@ -68,7 +71,7 @@ namespace ExtendedScheduleViewer
 
         private void Export(TrackingShift shift, Worksheet worksheet)
         {
-            int currentCol = 2;
+            int currentCol = 1;
 
             // output shift name
             OutputText(shift.ShiftTitle,currentCol++,1,_curRow,worksheet);
@@ -76,8 +79,9 @@ namespace ExtendedScheduleViewer
             // output each summary
             foreach (var itemSummary in shift.ItemSummaries)
             {
-                var color = DoubleToBrushConverter.GetBrushColor(itemSummary.RunningUnits);
-                OutputText(itemSummary.RunningUnits.ToString("N1"),currentCol++,1,_curRow,worksheet,color);   
+                var foreground = DoubleToBrushConverter.GetBrushColor(itemSummary.RunningUnits);
+                var background = MasterToBrushConverter.GetExcelColor(itemSummary.item);
+                OutputText(itemSummary.RunningUnits.ToString("N1"),currentCol++,1,_curRow,worksheet,foreground,background);   
                 OutputText(itemSummary.AddedUnits.ToString("N1"),currentCol++,1,_curRow,worksheet);   
                 OutputText(itemSummary.RemovedUnits.ToString("-N1"),currentCol++,1,_curRow,worksheet);
             }
@@ -111,7 +115,7 @@ namespace ExtendedScheduleViewer
         /// <param name="columns">Total number of columns the text takes</param>
         /// <param name="row"></param>
         /// <param name="worksheet"></param>
-        private static void OutputText(string text, int startColumn, int columns, int row, Worksheet worksheet, XlRgbColor color = XlRgbColor.rgbBlack)
+        private static void OutputText(string text, int startColumn, int columns, int row, Worksheet worksheet, XlRgbColor color = XlRgbColor.rgbBlack, XlRgbColor bg = XlRgbColor.rgbWhite)
         {
             columns--;
             Range rng = GetRange(_minCol + startColumn, row, _minCol + startColumn + columns, row, worksheet);
@@ -122,6 +126,7 @@ namespace ExtendedScheduleViewer
             rng.Value = text;
 
             rng.Font.Color = color; // text color
+            rng.somethingForBackground = bg;
         }
     }
 }
