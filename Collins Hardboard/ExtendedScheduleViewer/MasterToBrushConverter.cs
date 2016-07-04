@@ -1,7 +1,9 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Windows.Data;
 using System.Windows.Media;
+using Microsoft.Office.Interop.Excel;
 using ModelLib;
 
 namespace ExtendedScheduleViewer
@@ -39,6 +41,29 @@ namespace ExtendedScheduleViewer
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotSupportedException();
+        }
+
+        public static XlRgbColor GetExcelColor(ProductMasterItem item)
+        {
+            XlRgbColor color = XlRgbColor.rgbWhite;
+
+            if (MasterBrushDictionary.ContainsKey(item))
+            {
+                Brush brush = MasterBrushDictionary[item];
+
+                if(Equals(brush, Brushes.Aquamarine))
+                    color = XlRgbColor.rgbAquamarine;
+                else if(Equals(brush, Brushes.LightGreen))
+                    color = XlRgbColor.rgbLightGreen;
+                else if(Equals(brush, Brushes.DarkSalmon))
+                    color = XlRgbColor.rgbDarkSalmon;
+                else if(Equals(brush,Brushes.CadetBlue))
+                    color = XlRgbColor.rgbCadetBlue;
+                else if(Equals(brush, Brushes.BurlyWood))
+                    color = XlRgbColor.rgbBurlyWood;
+            }
+
+            return color;
         }
     }
 }
