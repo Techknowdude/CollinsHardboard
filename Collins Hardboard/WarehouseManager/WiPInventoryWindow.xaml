@@ -8,11 +8,6 @@
         <Grid.Resources>
         </Grid.Resources>
         <StackPanel>
-            <Menu>
-                <MenuItem Name="SaveItem" Header="Save" Click="SaveItem_OnClick"></MenuItem>
-                <MenuItem Name="LoadItem" Header="Load" Click="LoadItem_OnClick"></MenuItem>
-                <MenuItem Name="ImportItem" Header="Import" Click="ImportItem_OnClick"></MenuItem>
-            </Menu>
 
             <StackPanel Orientation="Horizontal">
                 <Label Width="120">Product Code</Label>

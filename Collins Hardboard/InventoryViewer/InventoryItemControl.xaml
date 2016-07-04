@@ -10,7 +10,7 @@
         <Label Margin="3,0,0,0">Units:</Label>
         <TextBox Name="UnitsTextBox" BorderThickness="2" BorderBrush="Red" Width="80"></TextBox>
         <Label Margin="3,0,0,0">Grade: </Label>
-        <ComboBox Name="GradeComboBox" Width="80"></ComboBox>
+        <ComboBox Name="GradeComboBox" Width="80" SelectionChanged="GradeComboBox_OnSelectionChanged"></ComboBox>
         <Button Name="DeleteButton" Margin="5,0" Click="DeleteButton_OnClick">Delete</Button>
     </StackPanel>
 </UserControl>

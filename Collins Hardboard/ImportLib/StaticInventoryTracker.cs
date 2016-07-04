@@ -300,7 +300,7 @@ namespace ImportLib
 
 
                     listLen = reader.ReadInt32();
-                    InventoryItems.Clear();
+                    WiPItems.Clear();
                     for (; listLen > 0; --listLen)
                     {
                         WiPItems.Add(InventoryItem.LoadItem(reader));

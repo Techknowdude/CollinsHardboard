@@ -70,9 +70,8 @@ namespace InventoryViewer
             UnitsTextBox.Text = Units.ToString();
 
             // get master item
-            //ProductMasterItem master = StaticInventoryTracker.ProductMasterList.FirstOrDefault(x => x.MasterID == ID);
             ProductMasterItem master =
-                StaticInventoryTracker.ProductMasterList.FirstOrDefault(x => x.ProductionCode == InvItem.ProductCode);
+                StaticInventoryTracker.ProductMasterList.FirstOrDefault(x => x.MasterID == InvItem.MasterID);
             MasterComboBox.SelectedIndex = StaticInventoryTracker.ProductMasterList.IndexOf(master);
 
             int gradeIndex = StaticFactoryValuesManager.GradesList.IndexOf(Grade);
@@ -105,6 +104,11 @@ namespace InventoryViewer
             {
                 ID = ((ProductMasterItem) MasterComboBox.SelectedItem).MasterID;
             }
+        }
+
+        private void GradeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Grade = (string) GradeComboBox.SelectedItem;
         }
     }
 }

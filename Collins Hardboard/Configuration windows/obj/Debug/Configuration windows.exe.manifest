@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Configuration windows.exe" size="111048">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Configuration windows.exe" size="110024">
       <assemblyIdentity name="Configuration windows" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Ae2+oQIL/FrG+FI0bB0aCaQVOyT/xRescsIuOr2xA1U=</dsig:DigestValue>
+        <dsig:DigestValue>nd+q9t9TFEb/ty1QJM50zV84+fLCT1mPCulCLXMa0VQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>oOHQFCWinyLSgdYdAQfghT1UrXRtBHjAOQb9leXOdJY=</dsig:DigestValue>
+        <dsig:DigestValue>5PvGlbLnTEM+yKqeTGe7k9G3gGSn660fUZciB9cjXqU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
