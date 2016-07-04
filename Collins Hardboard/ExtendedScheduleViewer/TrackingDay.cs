@@ -109,15 +109,15 @@ namespace ExtendedScheduleViewer
         }
         
 
-        public Dictionary<ProductMasterItem, double> GetCounts()
-        {
-            Dictionary<ProductMasterItem, double> lastCountDictionary = null;
-            var lastShift = Shifts.LastOrDefault();
-            if (lastShift != null)
-            {
-                lastCountDictionary = lastShift.GetCounts();
-            }
-            return lastCountDictionary;
-        }
+        //public Dictionary<ProductMasterItem, double> GetCounts()
+        //{
+        //    Dictionary<ProductMasterItem, double> lastCountDictionary = null;
+        //    var lastShift = Shifts.LastOrDefault();
+        //    if (lastShift != null)
+        //    {
+        //        lastCountDictionary = lastShift.GetCounts();
+        //    }
+        //    return lastCountDictionary;
+        //}
     }
 }

@@ -106,7 +106,7 @@ namespace ExtendedScheduleViewer
 
             foreach (var pressShift in _pressShifts)
             {
-                foreach (var prod in pressShift.Produced.Where(i => i.MasterItem == item))
+                foreach (var prod in pressShift.Produced.Where(i => i.MasterItem.Equals(item)))
                 {
                     modification += prod.UnitsMade;
                 }
@@ -154,22 +154,22 @@ namespace ExtendedScheduleViewer
             return newSum.RunningUnits;
         }
 
-        public Dictionary<ProductMasterItem, double> GetCounts()
-        {
-            Dictionary<ProductMasterItem,double> lastCountsDictionary = new Dictionary<ProductMasterItem, double>();
+        //public Dictionary<ProductMasterItem, double> GetCounts()
+        //{
+        //    Dictionary<ProductMasterItem,double> lastCountsDictionary = new Dictionary<ProductMasterItem, double>();
 
-            foreach (var itemSummary in ItemSummaries)
-            {
-                if(!lastCountsDictionary.ContainsKey(itemSummary.Item))
-                    lastCountsDictionary.Add(itemSummary.Item,itemSummary.RunningUnits);
-                else
-                {
-                    lastCountsDictionary[itemSummary.Item] = itemSummary.RunningUnits;
-                }
-            }
+        //    foreach (var itemSummary in ItemSummaries)
+        //    {
+        //        if(!lastCountsDictionary.ContainsKey(itemSummary.Item))
+        //            lastCountsDictionary.Add(itemSummary.Item,itemSummary.RunningUnits);
+        //        else
+        //        {
+        //            lastCountsDictionary[itemSummary.Item] = itemSummary.RunningUnits;
+        //        }
+        //    }
 
-            return lastCountsDictionary;
-        }
+        //    return lastCountsDictionary;
+        //}
 
         public void PopulateSummaries()
         {

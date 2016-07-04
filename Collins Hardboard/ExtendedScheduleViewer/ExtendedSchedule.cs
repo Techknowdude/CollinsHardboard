@@ -44,18 +44,61 @@ namespace ExtendedScheduleViewer
         public ICommand UpdateCommand { get { return new DelegateCommand(Update);} }
         public ExtendedScheduleWindow Window { get; set; }
 
+        public ICommand ExportCommand
+        {
+            get { return new DelegateCommand(ExportToExcel);}
+        }
+
+        private void ExportToExcel()
+        {
+            ExtendedScheduleExcelExporter exporter = new ExtendedScheduleExcelExporter(this);
+            exporter.Export();
+        }
+
         public void Update()
         {
             ProductMasterItem item = StaticInventoryTracker.ProductMasterList[1];
             StaticInventoryTracker.SalesItems.Clear();
             StaticInventoryTracker.AddSales(item.ProductionCode, "0001", DateTime.Today.AddDays(-1), 30, 0, "Dealer", item.MasterID);
 
-
+            
             RunningTotalsDictionary.Clear();
             TrackingDays.Clear();
             Window.DayControls.Clear();
 
-            if(CoatingSchedule.CurrentSchedule == null) return;
+            // update inventory data
+            foreach (var inventoryItem in StaticInventoryTracker.AllInventoryItems)
+            {
+                if (Watches.Any(w => w.MasterID == inventoryItem.MasterID))
+                {
+                    ProductMasterItem keyMasterItem = null;
+
+                    keyMasterItem = StaticInventoryTracker.ProductMasterList.FirstOrDefault(
+                                m => m.MasterID == inventoryItem.MasterID);
+
+                    // if master item exists.
+                    if (keyMasterItem != null)
+                        RunningTotalsDictionary[keyMasterItem] = inventoryItem.Units;
+                }
+            }
+            // update WiP data
+            foreach (var inventoryItem in StaticInventoryTracker.WiPItems)
+            {
+                if (Watches.Any(w => w.MasterID == inventoryItem.MasterID))
+                {
+                    ProductMasterItem keyMasterItem = null;
+
+                    keyMasterItem = StaticInventoryTracker.ProductMasterList.FirstOrDefault(
+                                m => m.MasterID == inventoryItem.MasterID);
+
+                    // if master item exists.
+                    if (keyMasterItem != null)
+                        RunningTotalsDictionary[keyMasterItem] = inventoryItem.Units;
+                }
+            }
+
+
+            if (CoatingSchedule.CurrentSchedule == null) return;
 
             foreach (var coatingScheduleLogic in CoatingSchedule.CurrentSchedule.ChildrenLogic)
             {
@@ -133,18 +176,18 @@ namespace ExtendedScheduleViewer
             }
         }
 
-        public Dictionary<ProductMasterItem, double> GetPreviousInventory( TrackingDay day)
-        {
-            Dictionary<ProductMasterItem, double> current = null;
+        //public Dictionary<ProductMasterItem, double> GetPreviousInventory( TrackingDay day)
+        //{
+        //    Dictionary<ProductMasterItem, double> current = null;
 
-            int index = TrackingDays.IndexOf(day);
+        //    int index = TrackingDays.IndexOf(day);
 
-            if (index > 0)
-            {
-                current = TrackingDays[index - 1].GetCounts();
-            }
+        //    if (index > 0)
+        //    {
+        //        current = TrackingDays[index - 1].GetCounts();
+        //    }
 
-            return current;
-        }
+        //    return current;
+        //}
     }
 }

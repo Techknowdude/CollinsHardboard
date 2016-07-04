@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Windows.Media;
 using Microsoft.Office.Interop.Excel;
 using ProductionScheduler;
@@ -80,7 +81,7 @@ namespace ExtendedScheduleViewer
             foreach (var itemSummary in shift.ItemSummaries)
             {
                 var foreground = DoubleToBrushConverter.GetBrushColor(itemSummary.RunningUnits);
-                var background = MasterToBrushConverter.GetExcelColor(itemSummary.item);
+                var background = MasterToBrushConverter.GetExcelColor(itemSummary.Item);
                 OutputText(itemSummary.RunningUnits.ToString("N1"),currentCol++,1,_curRow,worksheet,foreground,background);   
                 OutputText(itemSummary.AddedUnits.ToString("N1"),currentCol++,1,_curRow,worksheet);   
                 OutputText(itemSummary.RemovedUnits.ToString("-N1"),currentCol++,1,_curRow,worksheet);
@@ -126,7 +127,7 @@ namespace ExtendedScheduleViewer
             rng.Value = text;
 
             rng.Font.Color = color; // text color
-            rng.somethingForBackground = bg;
+            rng.Interior.Color = bg;
         }
     }
 }
