@@ -66,14 +66,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ExtendedScheduleViewer.exe" size="50176">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ExtendedScheduleViewer.exe" size="51712">
       <assemblyIdentity name="ExtendedScheduleViewer" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>kdexBAXCQysjqLlDkaxOZe1I8/lOwVUNGGc87rMZXBs=</dsig:DigestValue>
+        <dsig:DigestValue>1/+nI58Ea1MxMefW4ZhTG3p0LUPU9dGIz8SBxN36DsI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -121,7 +121,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>YzO+Vxf4sMXqMVHRl8bEBaGEAFgf6LDSAkZJPisTkMM=</dsig:DigestValue>
+        <dsig:DigestValue>wGajKrV2typFo57Ugb6TZ4/kzlI+kyXErM7CPdZ3m0g=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

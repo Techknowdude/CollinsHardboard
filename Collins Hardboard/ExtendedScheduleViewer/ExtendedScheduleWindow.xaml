@@ -4,32 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Extended Schedule" Height="350" Width="525"
+        Title="Extended Schedule" Height="350" MinWidth="600"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="24" />
-            <RowDefinition Height="24"/>
-            <RowDefinition />
+            <RowDefinition/>
         </Grid.RowDefinitions>
+
+        <ListView Grid.Row="1">
+            <ListView Margin="80,0,0,0"  Height="24" Name="TrackingNameListView" ItemsSource="{Binding Path=WatchItems}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Description}" Width="145" TextAlignment="Center"></TextBlock>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ListView x:Name="ScheduleListView" ItemsSource="{Binding Path=DayControls}">
+            </ListView>
+        </ListView>
         
         <Button Grid.Row="0" HorizontalAlignment="Left" Padding="8,0" Command="{Binding Path=ChangeWatchCommand}">Change Watches</Button>
         <Button Width="100" Height="24" Grid.Row="0" HorizontalAlignment="Left" Margin="120,0" Command="{Binding Path=Schedule.UpdateCommand}">Update</Button>
         <Button Width="100" Height="24" Grid.Row="0" HorizontalAlignment="Left" Margin="240,0" Command="{Binding Path=Schedule.ExportCommand}">Excel Export</Button>
-        <ListView Grid.Row="1" Margin="80,0,0,0" Name="TrackingNameListView" ItemsSource="{Binding Path=WatchItems}">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"></StackPanel>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=Description}" Width="145" TextAlignment="Center"></TextBlock>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <ListView Grid.Row="2" x:Name="ScheduleListView" ItemsSource="{Binding Path=DayControls}">
-            
-        </ListView>
+
     </Grid>
 </Window>

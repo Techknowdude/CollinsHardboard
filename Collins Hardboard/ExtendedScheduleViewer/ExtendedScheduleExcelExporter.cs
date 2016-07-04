@@ -24,11 +24,9 @@ namespace ExtendedScheduleViewer
         private static int _columnWidth = 16;
         private static int _lastCol = _maxCol - _minCol + 1;
         private int _curRow = 1;
-        private DoubleToBrushConverter converter;
 
         public ExtendedScheduleExcelExporter(ExtendedSchedule schedule)
         {
-            converter = new DoubleToBrushConverter();
             _schedule = schedule;
         }
 
@@ -46,9 +44,21 @@ namespace ExtendedScheduleViewer
             _worksheet.PageSetup.FitToPagesWide = 1;
             _worksheet.PageSetup.Orientation = XlPageOrientation.xlLandscape;
 
+            // set day column width
+            SetWidth(0, 15, _worksheet);
+
             // output the title
             
             OutputText("Extended Schedule " + DateTime.Today.ToString("d"), 0,4,_curRow++,_worksheet);
+
+            //output the watch list
+            int curCol = 2;
+            foreach (var watch in _schedule.Watches )
+            {
+                OutputText(watch.Description,curCol,3,_curRow,_worksheet);
+                curCol += 3;
+            }
+            ++_curRow;
             // output each day
             foreach (var trackingDay in _schedule.TrackingDays)
             {
@@ -56,11 +66,19 @@ namespace ExtendedScheduleViewer
             }
         }
 
+        private void SetWidth(int column,int width, Worksheet worksheet)
+        {
+            // set day column width
+            var range = GetRange(column, 1, column, 1, worksheet);
+            range.ColumnWidth = width;
+        }
+
         private void Export(TrackingDay day, Worksheet worksheet)
         {
             // output the day
             OutputText(day.Day.ToString("ddd, MMM dd"),0,1,_curRow,worksheet);
             
+
 
             // output each shift
             foreach (var trackingShift in day.Shifts)
@@ -73,6 +91,7 @@ namespace ExtendedScheduleViewer
         private void Export(TrackingShift shift, Worksheet worksheet)
         {
             int currentCol = 1;
+            int colWidth = 4;
 
             // output shift name
             OutputText(shift.ShiftTitle,currentCol++,1,_curRow,worksheet);
@@ -82,9 +101,13 @@ namespace ExtendedScheduleViewer
             {
                 var foreground = DoubleToBrushConverter.GetBrushColor(itemSummary.RunningUnits);
                 var background = MasterToBrushConverter.GetExcelColor(itemSummary.Item);
-                OutputText(itemSummary.RunningUnits.ToString("N1"),currentCol++,1,_curRow,worksheet,foreground,background);   
-                OutputText(itemSummary.AddedUnits.ToString("N1"),currentCol++,1,_curRow,worksheet);   
-                OutputText(itemSummary.RemovedUnits.ToString("-N1"),currentCol++,1,_curRow,worksheet);
+                SetWidth(currentCol, colWidth, worksheet);
+                OutputText(itemSummary.RunningUnits.ToString("N1"),currentCol++,1,_curRow,worksheet,foreground,background);
+                SetWidth(currentCol, colWidth, worksheet);
+                OutputText(itemSummary.AddedUnits.ToString("N1"),currentCol++,1,_curRow,worksheet);
+                SetWidth(currentCol, colWidth, worksheet);
+                OutputText("-" +itemSummary.RemovedUnits.ToString("N1"),currentCol++,1,_curRow,worksheet);
+
             }
 
         }
@@ -100,11 +123,26 @@ namespace ExtendedScheduleViewer
         /// <returns></returns>
         public static Range GetRange(int startCol, int startRow, int endCol, int endRow, Worksheet worksheet)
         {
-            string first = $"{(char)('A' + startCol)}{startRow}";
-            string second = $"{(char)('A' + endCol)}{endRow}";
+            string first = $"{GetCol(startCol)}{startRow}";
+            string second = $"{GetCol(endCol)}{endRow}";
             Range rng = worksheet.Range[first, second];
             rng.Merge();
             return rng;
+        }
+
+        private static String GetCol(int column)
+        {
+            string col = String.Empty;
+
+            int offsets = column/26;
+            int remainder = column%26;
+            for (; offsets > 0; --offsets)
+            {
+                col += "A";
+            }
+            col += $"{(char)('A' + remainder)}";
+
+            return col;
         }
 
 

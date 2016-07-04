@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using ImportLib;
@@ -19,6 +21,13 @@ namespace ExtendedScheduleViewer
         public WatchWindow()
         {
             InitializeComponent();
+            Closing += OnClosing;
+        }
+
+        private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
+        {
+            // save the watches
+            ExtendedSchedule.Instance.Save();
         }
 
         public ICommand AddWatchCommand { get { return new DelegateCommand(AddWatch);} }

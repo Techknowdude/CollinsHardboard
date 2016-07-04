@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Input;
 using CoatingScheduler;
 using ImportLib;
@@ -13,6 +15,7 @@ namespace ExtendedScheduleViewer
     [Serializable]
     public class ExtendedSchedule
     {
+        private const string saveFile = "extendedScheduleWatchList.dat";
         [NonSerialized]
         private ObservableCollection<TrackingDay> _trackingDays = new ObservableCollection<TrackingDay>();
         private ObservableCollection<ProductMasterItem> _watches = new ObservableCollection<ProductMasterItem>();
@@ -39,6 +42,7 @@ namespace ExtendedScheduleViewer
 
         private ExtendedSchedule()
         {
+            Load();
         }
 
         public ICommand UpdateCommand { get { return new DelegateCommand(Update);} }
@@ -189,5 +193,56 @@ namespace ExtendedScheduleViewer
 
         //    return current;
         //}
+        public void Save()
+        {
+            try
+            {
+
+            using (FileStream stream = File.OpenWrite(saveFile))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                formatter.Serialize(stream, Watches.Count);
+                foreach (var watch in Watches)
+                {
+                    formatter.Serialize(stream, watch);
+                }
+            }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public void Load()
+        {
+            try
+            {
+
+            using (FileStream stream = File.OpenRead(saveFile))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+
+               Watches.Clear();
+
+                int watchCount = (int)formatter.Deserialize(stream);
+
+                for (; watchCount > 0; watchCount--)
+                {
+                    ProductMasterItem watch = (ProductMasterItem)formatter.Deserialize(stream);
+                    Watches.Add(watch);
+                }
+                
+
+            }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
     }
 }
