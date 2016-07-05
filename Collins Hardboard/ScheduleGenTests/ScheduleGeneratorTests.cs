@@ -26,16 +26,17 @@ namespace ScheduleGen.Tests
 
 
             // Mock masters
-            ProductMasterItem mItem1 = new ProductMasterItem(1, "CODE1", "Test master 1", 48, 92, .5, "OM", 20, 100, "D,W", true, "", "T", 2, 4, 3, 5);
-            ProductMasterItem mItem2 = new ProductMasterItem(2, "CODE2", "Test master 2", 50, 92, .5, "OM", 20, 100, "D,W", true, "", "T", 2, 4, 3, 5);
-            ProductMasterItem mItem3 = new ProductMasterItem(3, "CODE3", "Test master 3", 49, 92, .5, "OM", 20, 100, "D,W", true, "", "T", 2, 4, 3, 5);
-            ProductMasterItem mItem4 = new ProductMasterItem(4, "CODE4", "Test master 4", 40, 92, .5, "OM", 20, 100, "D,W", true, "", "U", 20, 100, 60, 5);
-            ProductMasterItem mItemR = new ProductMasterItem(5, "Rough", "Test master 5", 40, 92, .5, "OM", 20, 100, "D,W", true, "", "U", 20, 100, 60, 5);
+            ProductMasterItem mItem1 = new ProductMasterItem(1, "CODE1", "Test master 1", 48, 92, .5, "OM", 20, 100, "D,W", true, "", "T", 2, 4, 3, 5) {MadeIn = "Coating"};
+            ProductMasterItem mItem2 = new ProductMasterItem(2, "CODE2", "Test master 2", 50, 92, .5, "OM", 20, 100, "D,W", true, "", "T", 2, 4, 3, 5) { MadeIn = "Coating" };
+            ProductMasterItem mItem3 = new ProductMasterItem(3, "CODE3", "Test master 3", 49, 92, .5, "OM", 20, 100, "D,W", true, "", "T", 2, 4, 3, 5) { MadeIn = "Coating" };
+            ProductMasterItem mItem4 = new ProductMasterItem(4, "CODE4", "Test master 4", 40, 92, .5, "OM", 20, 100, "D,W", true, "", "U", 20, 100, 60, 5) { MadeIn = "Coating" };
+            ProductMasterItem mItemR = new ProductMasterItem(5, "Rough", "Test master 5", 40, 92, .5, "OM", 20, 100, "D,W", true, "", "U", 20, 100, 60, 5) { MadeIn = "Press" };
 
             StaticInventoryTracker.ProductMasterList.Add(mItem1);
             StaticInventoryTracker.ProductMasterList.Add(mItem2);
             StaticInventoryTracker.ProductMasterList.Add(mItem3);
             StaticInventoryTracker.ProductMasterList.Add(mItem4);
+            StaticInventoryTracker.ProductMasterList.Add(mItemR);
 
             // mock inventory
             InventoryItem iItem1 = new InventoryItem(mItem1, 100, "D");
@@ -122,7 +123,7 @@ namespace ScheduleGen.Tests
             ScheduleGenerator.EndGen = DateTime.Today.AddDays(1);
             ScheduleGenerator.SalesOutlook = DateTime.Today.AddDays(14);
 
-            ScheduleGenerator.GenerateSchedule(true);
+            ScheduleGenerator.GeneratePredictionSchedule(DateTime.Today.AddDays(14),DateTime.Today, DateTime.Today.AddDays(1));
 
             Console.ReadLine();
         }

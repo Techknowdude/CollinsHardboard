@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="24" d:DesignWidth="480">
     <StackPanel Orientation="Horizontal" Height="24">
-        <TextBox Name="PriorityTextBox" Text="{Binding Path=PriorityText}" Width="80"/>
-        <Button Name="DeleteButton" Width="50" Margin="5,0" Click="DeleteButton_OnClick">Delete</Button>
+        <!--<TextBox Name="PriorityTextBox" Text="{Binding Path=PriorityText}" Width="80"/>-->
+        <!--<Button Name="DeleteButton" Width="50" Margin="5,0" Click="DeleteButton_OnClick">Delete</Button>-->
         <Label>Prioritize sales trends from</Label>
         <ComboBox Name="PastSalesComboBox" SelectionChanged="PastSalesComboBox_OnSelectionChanged" Width="140" SelectedIndex="4">
             <ComboBoxItem>Last Month</ComboBoxItem>

@@ -171,17 +171,25 @@ namespace ProductionScheduler
             return true;
         }
 
-        public static DateTime ScheduleItem(ProductMasterItem item, double count)
+        public static bool ScheduleItem(ProductMasterItem item, double count, DateTime targetTime)
         {
             DateTime finishedDateTime = DateTime.MaxValue;
+
+            if (PlateConfigurations.Count == 0)
+            {
+                Instance.CreateNewConfig();
+            }
 
             // Find closest plate config
             foreach (var plateConfiguration in PlateConfigurations)
             {
-                plateConfiguration.Add(item, ref count);
+                if (plateConfiguration.Add(item, count, ref finishedDateTime))
+                {
+                    break;
+                }
             }
 
-            return finishedDateTime;
+            return finishedDateTime <= targetTime;
         }
 
         /// <summary>
@@ -222,12 +230,12 @@ namespace ProductionScheduler
             {
                 var configuration = PlateConfigurations[index];
                 // keep true that it was added. Check unit count for full completion.
-                added = added || configuration.Add(item, ref unitCount, dueDate);
+                added = added || configuration.Add(item, unitCount, ref dueDate);
             }
             if (unitCount > 0)
             {
                 var config = CreateNewConfig();
-                config.Add(item, ref unitCount, dueDate);
+                config.Add(item, unitCount, ref dueDate);
                 PlateConfigurations.Add(config);
             }
 

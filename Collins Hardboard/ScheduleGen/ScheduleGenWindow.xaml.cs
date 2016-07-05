@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Microsoft.Win32;
 
 namespace ScheduleGen
 {
@@ -20,30 +9,39 @@ namespace ScheduleGen
     /// </summary>
     public partial class ScheduleGenWindow : Window
     {
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public DateTime SaleDate { get; set; }
 
         public ScheduleGenWindow()
         {
             InitializeComponent();
 
             ScheduleGenerator.Window = this;
+            StartDate = DateTime.Today;
+            EndDate = DateTime.Today.AddDays(7);
+            SaleDate = DateTime.Today.AddDays(2*7);
             ControlsListView.ItemsSource = ScheduleGenerator.ControlsList;
 
-            Closing += ScheduleGenWindow_Closing;
+            //Closing += ScheduleGenWindow_Closing;
+            if(!ScheduleGenerator.ControlsList.Any(c => c is SalesPrediction))
+                ScheduleGenerator.ControlsList.Add(new SalesPrediction(this,200));
+
         }
 
-        void ScheduleGenWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (!SaveSettings())
-            {
-                if (MessageBox.Show("Saving failed. Close anyway?", "", MessageBoxButton.YesNo) == MessageBoxResult.No)
-                    e.Cancel = true;
-            }
-        }
+        //void ScheduleGenWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    if (!SaveSettings())
+        //    {
+        //        if (MessageBox.Show("Saving failed. Close anyway?", "", MessageBoxButton.YesNo) == MessageBoxResult.No)
+        //            e.Cancel = true;
+        //    }
+        //}
 
-        private bool SaveSettings()
-        {
-            return ScheduleGenerator.SaveSettings();
-        }
+        //private bool SaveSettings()
+        //{
+        //    return ScheduleGenerator.SaveSettings();
+        //}
 
         public void Remove(GenControl control)
         {
@@ -55,77 +53,82 @@ namespace ScheduleGen
             ScheduleGenerator.UpdateControlOrder();
         }
 
-        private void GenerateButton_OnClick(object sender, RoutedEventArgs e)
+        private void GenerateSalesButton_OnClick(object sender, RoutedEventArgs e)
         {
-            ScheduleGenerator.GenerateSchedule();
+            ScheduleGenerator.GenerateSalesSchedule(SaleDate, StartDate, EndDate);
         }
 
-        private void AddControlButton_Click(object sender, RoutedEventArgs e)
+        private void GeneratePredictionButton_OnClick(object sender, RoutedEventArgs e)
         {
 
-            switch (NewControlComboBox.SelectedIndex)
-            {
-                case 0:
-                    ScheduleGenerator.ControlsList.Add(new LineControl(this));
-                    break;
-                case 1:
-                    ScheduleGenerator.ControlsList.Add(new PurgeWiPControl(this));
-                    break;
-                case 2:
-                    ScheduleGenerator.ControlsList.Add(new RunBeforeControl(this));
-                    break;
-                case 3:
-                    ScheduleGenerator.ControlsList.Add(new SalesNumbersControl(this));
-                    break;
-                case 4:
-                    ScheduleGenerator.ControlsList.Add(new SalesPrediction(this));
-                    break;
-                case 5:
-                    ScheduleGenerator.ControlsList.Add(new TextureControl(this));
-                    break;
-                case 6:
-                    ScheduleGenerator.ControlsList.Add(new WasteControl(this));
-                    break;
-                case 7:
-                    ScheduleGenerator.ControlsList.Add(new WidthControl(this));
-                    break;
-            }
+            ScheduleGenerator.GeneratePredictionSchedule(SaleDate,StartDate,EndDate);
         }
 
-        private void SaveButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (SaveSettings())
-            {
-                MessageBox.Show("Save succeeded.");
-            }
-            else
-            {
-                MessageBox.Show("Save failed.");
-            }
-        }
+        //private void AddControlButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    switch (NewControlComboBox.SelectedIndex)
+        //    {
+        //        case 0:
+        //            ScheduleGenerator.ControlsList.Add(new LineControl(this));
+        //            break;
+        //        case 1:
+        //            ScheduleGenerator.ControlsList.Add(new PurgeWiPControl(this));
+        //            break;
+        //        case 2:
+        //            ScheduleGenerator.ControlsList.Add(new RunBeforeControl(this));
+        //            break;
+        //        case 3:
+        //            ScheduleGenerator.ControlsList.Add(new SalesNumbersControl(this));
+        //            break;
+        //        case 4:
+        //            ScheduleGenerator.ControlsList.Add(new SalesPrediction(this));
+        //            break;
+        //        case 5:
+        //            ScheduleGenerator.ControlsList.Add(new TextureControl(this));
+        //            break;
+        //        case 6:
+        //            ScheduleGenerator.ControlsList.Add(new WasteControl(this));
+        //            break;
+        //        case 7:
+        //            ScheduleGenerator.ControlsList.Add(new WidthControl(this));
+        //            break;
+        //    }
+        //}
 
-        private void LoadButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (ScheduleGenerator.LoadSettings())
-            {
-                MessageBox.Show("Load successful.");
-            }
-            else
-            {
-                MessageBox.Show("Load failed. Please select file to load.");
-                OpenFileDialog fileDialog = new OpenFileDialog();
-                fileDialog.FileName = ScheduleGenerator.datFile;
-                fileDialog.Multiselect = false;
+        //private void SaveButton_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    if (SaveSettings())
+        //    {
+        //        MessageBox.Show("Save succeeded.");
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Save failed.");
+        //    }
+        //}
 
-                if (fileDialog.ShowDialog() == true)
-                {
-                    if (ScheduleGenerator.LoadSettings(fileDialog.FileName))
-                        MessageBox.Show("Load successful.");
-                    else
-                        MessageBox.Show("Load failed.");
-                }
-            }
+        //private void LoadButton_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    if (ScheduleGenerator.LoadSettings())
+        //    {
+        //        MessageBox.Show("Load successful.");
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Load failed. Please select file to load.");
+        //        OpenFileDialog fileDialog = new OpenFileDialog();
+        //        fileDialog.FileName = ScheduleGenerator.datFile;
+        //        fileDialog.Multiselect = false;
 
-        }
+        //        if (fileDialog.ShowDialog() == true)
+        //        {
+        //            if (ScheduleGenerator.LoadSettings(fileDialog.FileName))
+        //                MessageBox.Show("Load successful.");
+        //            else
+        //                MessageBox.Show("Load failed.");
+        //        }
+        //    }
+
+        //}
     }
 }

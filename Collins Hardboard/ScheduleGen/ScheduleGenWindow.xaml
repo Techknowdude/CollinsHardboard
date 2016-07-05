@@ -1,16 +1,33 @@
 ﻿<Window x:Class="ScheduleGen.ScheduleGenWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ScheduleGenWindow" Height="300" Width="578.2">
+        Title="ScheduleGenWindow" Height="300" Width="578.2"
+        x:Name="ThisWindow"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        >
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Button Name="GenerateButton" Width="110" Click="GenerateButton_OnClick" >Generate Schedule</Button>
-            <Button Name="SaveButton" Width="80" Click="SaveButton_OnClick" Margin="5,0">Save Settings</Button>
-            <Button Name="LoadButton" Width="80" Click="LoadButton_OnClick" >Load Settings</Button>
-            
+            <Label>Starting day:</Label>
+            <DatePicker Name="StartDatePicker" SelectedDate="{Binding Path=StartDate}"></DatePicker>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label>Ending day:</Label>
+            <DatePicker Name="EndDatePicker" SelectedDate="{Binding Path=EndDate}"></DatePicker>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label>Consider sales due before:</Label>
+            <DatePicker Name="SalesDatePicker"  SelectedDate="{Binding Path=SalesDate}"></DatePicker>
         </StackPanel>
         <ListView Name="ControlsListView"></ListView>
         <StackPanel Orientation="Horizontal">
+            <Button Name="GenerateFromPredictionButton" Padding="8,2" Click="GeneratePredictionButton_OnClick" >Generate schedule from prediction</Button>
+            <Button Name="GenerateFromSalesButton" Padding="8,2" Click="GenerateSalesButton_OnClick" >Generate schedule from sales</Button>
+            <!--<Button Name="SaveButton" Width="80" Click="SaveButton_OnClick" Margin="5,0">Save Settings</Button>
+            <Button Name="LoadButton" Width="80" Click="LoadButton_OnClick" >Load Settings</Button>-->
+
+        </StackPanel>
+
+        <!--<StackPanel Orientation="Horizontal">
             <ComboBox Name="NewControlComboBox" SelectedIndex="0" >
                 <ComboBoxItem>Coating Line Conflict</ComboBoxItem>
                 <ComboBoxItem>Purge WiP</ComboBoxItem>
@@ -22,6 +39,6 @@
                 <ComboBoxItem>Width Order</ComboBoxItem>
             </ComboBox>
             <Button Name="AddControlButton" Width="30" Click="AddControlButton_Click">Add</Button>
-        </StackPanel>
+        </StackPanel>-->
     </StackPanel>
 </Window>

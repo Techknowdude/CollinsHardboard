@@ -138,13 +138,18 @@ namespace ProductionScheduler
             return added;
         }
 
-        public void Remove(ProductMasterItem item)
+        public void Remove(ProductMasterItem item, ref double scheduledCount)
         {
-            PressMasterItem pressItem = Produced.FirstOrDefault(p => p.MasterItem == item);
+            PressMasterItem pressItem = Produced.FirstOrDefault(p => p.MasterItem.Equals( item ));
 
             if (pressItem != null)
             {
-                Produced.Remove(pressItem);
+                if (scheduledCount >= pressItem.UnitsMade)
+                {
+                    Produced.Remove(pressItem);
+                }
+
+                scheduledCount -= pressItem.UnitsMade;
                 RaisePropertyChangedEvent("Produced");
             }
         }

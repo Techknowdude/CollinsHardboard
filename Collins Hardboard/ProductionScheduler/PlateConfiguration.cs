@@ -250,14 +250,39 @@ namespace ProductionScheduler
         /// <param name="count">Number of units to make. Altered by the function.</param>
         /// <param name="time">The time the item must be completed.</param>
         /// <returns></returns>
-        public bool Add(ProductMasterItem item, ref double count, DateTime time)
+        public bool Add(ProductMasterItem item, double count, ref DateTime time)
         {
             bool added = false;
+            double scheduledCount = count;
+            bool undo = false;
+            DateTime currentTime = DateTime.MinValue;
 
+            // Add the items to shifts until either all items are made, or the time has past
             for (int index = 0; count > 0 && index < _shifts.Count; index++)
             {
+                if (_shifts[index].EndTime + PressManager.Instance.DelayTime > time)
+                {
+                    undo = true;
+                    break;
+                }
+
+                currentTime = _shifts[index].EndTime + PressManager.Instance.DelayTime;
                 added = added || _shifts[index].Add(item, ref count);
             }
+
+            // if time has past or not all items could be made
+            if (undo || count > 0)
+            {
+                scheduledCount = scheduledCount - count;
+
+                for (int index = _shifts.Count -1; index >= 0; --index)
+                {
+                    var shift = _shifts[index];
+                    shift.Remove(item, ref scheduledCount);
+                }
+            }
+
+            time = currentTime;
 
             return added;
         }

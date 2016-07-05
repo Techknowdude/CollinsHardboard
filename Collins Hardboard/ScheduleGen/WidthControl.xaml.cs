@@ -47,8 +47,6 @@ namespace ScheduleGen
             {
                 return -(int) ((ScheduleGenerator.LastWidth/item.Width)*Priority);
             }
-
-            return 0;
         }
 
         public override bool Save(BinaryWriter writer)

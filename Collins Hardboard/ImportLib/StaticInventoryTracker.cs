@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Windows;
 using ModelLib;
-using StaticHelpers;
 
 namespace ImportLib
 {
@@ -14,8 +12,6 @@ namespace ImportLib
         #region DataMembers
 
         private const string datFile = "InventoryTrack.dat";
-
-        private static List<Texture> _texturesList = new List<Texture>(){ Texture.GetTexture( "Old Mill"), Texture.GetTexture("Shake"), Texture.GetTexture("Smooth")}; 
 
         static StaticInventoryTracker _instance = new StaticInventoryTracker();
 
@@ -119,7 +115,7 @@ namespace ImportLib
             }
         }
 
-        static void ReCalcForecastItems()
+        static public void ReCalcForecastItems()
         {
             forecastItems.Clear();
 

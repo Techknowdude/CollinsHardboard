@@ -57,7 +57,7 @@ namespace ScheduleGen
 
         public override int GetCost(ProductMasterItem item)
         {
-            var inv = StaticInventoryTracker.InventoryItems.FirstOrDefault(x => x.MasterID == item.MasterID);
+            var inv = ScheduleGenerator.CurrentInventory.FirstOrDefault(x => x.MasterID == item.MasterID);
             if (item.TurnType == "U")
             {
                 if (inv != null && item.MinSupply > inv.Units)
@@ -66,7 +66,7 @@ namespace ScheduleGen
             else
             {
                 var forecast =
-                    StaticInventoryTracker.ForecastItems.FirstOrDefault(x => x.ProductCode == item.ProductionCode);
+                    StaticInventoryTracker.ForecastItems.FirstOrDefault(x => x.MasterID == item.MasterID);
                 if (inv != null && forecast != null)
                 {
                     double available;
@@ -91,7 +91,7 @@ namespace ScheduleGen
                             throw new ArgumentOutOfRangeException();
                     }
                     if (available < item.MinSupply)
-                        return Priority; // TODO: account for time -> decrement the inventory as time goes on
+                        return Priority; 
                 }
             }
             return 0;
