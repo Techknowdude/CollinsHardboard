@@ -26,7 +26,7 @@ namespace ScheduleGen.Tests
 
 
             // Mock masters
-            ProductMasterItem mItem1 = new ProductMasterItem(1, "CODE1", "Test master 1", 48, 92, .5, "OM", 20, 100, "D,W", true, "", "T", 2, 4, 3, 5) {MadeIn = "Coating"};
+            ProductMasterItem mItem1 = new ProductMasterItem(1, "CODE1", "Test master 1", 48, 92, .5, "OM", 20, 100, "D,W", true, "", "T", 2, 4, 3, 5) { MadeIn = "Coating" };
             ProductMasterItem mItem2 = new ProductMasterItem(2, "CODE2", "Test master 2", 50, 92, .5, "OM", 20, 100, "D,W", true, "", "T", 2, 4, 3, 5) { MadeIn = "Coating" };
             ProductMasterItem mItem3 = new ProductMasterItem(3, "CODE3", "Test master 3", 49, 92, .5, "OM", 20, 100, "D,W", true, "", "T", 2, 4, 3, 5) { MadeIn = "Coating" };
             ProductMasterItem mItem4 = new ProductMasterItem(4, "CODE4", "Test master 4", 40, 92, .5, "OM", 20, 100, "D,W", true, "", "U", 20, 100, 60, 5) { MadeIn = "Coating" };
@@ -48,10 +48,10 @@ namespace ScheduleGen.Tests
             StaticInventoryTracker.InventoryItems.Add(iItem3);
 
             // mock sales
-            SalesItem sItem1 = new SalesItem(mItem1, "1001", 50, 0, "D", DateTime.Today.AddDays(8));
-            SalesItem sItem11 = new SalesItem(mItem1, "1011", 150, 0, "D", DateTime.Today.AddDays(6));
-            SalesItem sItem2 = new SalesItem(mItem2, "1002", 50, 0, "D", DateTime.Today.AddDays(8));
-            SalesItem sItem4 = new SalesItem(mItem4, "1004", 50, 0, "D", DateTime.Today.AddDays(8));
+            SalesItem sItem1 = new SalesItem(mItem1, "1001", 50, 50*mItem1.PiecesPerUnit, "D", DateTime.Today.AddDays(8));
+            SalesItem sItem11 = new SalesItem(mItem1, "1011", 150, 150*mItem1.PiecesPerUnit, "D", DateTime.Today.AddDays(6));
+            SalesItem sItem2 = new SalesItem(mItem2, "1002", 50, 50*mItem2.PiecesPerUnit, "D", DateTime.Today.AddDays(8));
+            SalesItem sItem4 = new SalesItem(mItem4, "1004", 50, 50*mItem4.PiecesPerUnit, "D", DateTime.Today.AddDays(8));
 
             StaticInventoryTracker.SalesItems.Add(sItem1);
             StaticInventoryTracker.SalesItems.Add(sItem11);
@@ -73,10 +73,14 @@ namespace ScheduleGen.Tests
             StaticInventoryTracker.ForecastItems.Add(fItem4);
 
             // factory config
-            Configuration cI1 = Configuration.CreateConfiguration("Make item 1", mItemR.MasterID, 1, mItem1.MasterID, 2, 60);
-            Configuration cI2 = Configuration.CreateConfiguration("Make item 2", mItemR.MasterID, 1, mItem2.MasterID, 2, 40);
-            Configuration cI3 = Configuration.CreateConfiguration("Make item 3", mItemR.MasterID, 1, mItem3.MasterID, 2, 50);
-            Configuration cI4 = Configuration.CreateConfiguration("Make item 4", mItemR.MasterID, 1, mItem4.MasterID, 2, 80);
+            Configuration cI1 = Configuration.CreateConfiguration("Make item 1", mItemR.MasterID, 1, mItem1.MasterID, 2, 15);
+            Configuration cI2 = Configuration.CreateConfiguration("Make item 2", mItemR.MasterID, 1, mItem2.MasterID, 2, 12);
+            Configuration cI3 = Configuration.CreateConfiguration("Make item 3", mItemR.MasterID, 1, mItem3.MasterID, 2, 12);
+            Configuration cI4 = Configuration.CreateConfiguration("Make item 4", mItemR.MasterID, 1, mItem4.MasterID, 2, 13);
+            ConfigurationsHandler.GetInstance().AddConfiguration(cI1);
+            ConfigurationsHandler.GetInstance().AddConfiguration(cI2);
+            ConfigurationsHandler.GetInstance().AddConfiguration(cI3);
+            ConfigurationsHandler.GetInstance().AddConfiguration(cI4);
 
             Machine machineLap = Machine.CreateMachine("LapMachine"); // runs lap, cant run w/ panel. Makes 1 and 2
             machineLap.LinesCanRunOn.Add("Lap");
@@ -123,7 +127,7 @@ namespace ScheduleGen.Tests
             ScheduleGenerator.EndGen = DateTime.Today.AddDays(1);
             ScheduleGenerator.SalesOutlook = DateTime.Today.AddDays(14);
 
-            ScheduleGenerator.GeneratePredictionSchedule(DateTime.Today.AddDays(14),DateTime.Today, DateTime.Today.AddDays(1));
+            ScheduleGenerator.GenerateSalesSchedule(DateTime.Today.AddDays(14), DateTime.Today, DateTime.Today.AddDays(1));
 
             Console.ReadLine();
         }
@@ -159,6 +163,32 @@ namespace ScheduleGen.Tests
 
             Assert.AreEqual(100, sale.Fulfilled);
             Assert.AreEqual(160, sale2.Fulfilled);
+        }
+
+        [TestMethod()]
+        public void GenerateSalesScheduleTest()
+        {
+            // setup
+            ProductMasterItem master1 = new ProductMasterItem(1, "Code1", "", 48, 92, .5, "OM", 40, 100, "", true, "", "", 0, 0, 0, 0);
+            ProductMasterItem master2 = new ProductMasterItem(2, "Code2", "", 48, 92, .5, "OM", 40, 100, "", true, "", "", 0, 0, 0, 0);
+            ProductMasterItem master3 = new ProductMasterItem(3, "Code3", "", 48, 92, .5, "OM", 40, 100, "", true, "", "", 0, 0, 0, 0);
+
+            StaticInventoryTracker.ProductMasterList.Add(master1);
+            StaticInventoryTracker.ProductMasterList.Add(master2);
+            StaticInventoryTracker.ProductMasterList.Add(master3);
+
+            Configuration config1 = Configuration.CreateConfiguration("Make 1",10,1,master1.MasterID,4,14,TimeSpan.FromHours(8));
+
+            ConfigurationsHandler.GetInstance().AddConfiguration(config1);
+
+            SalesItem sell1 = new SalesItem(master1,"001",20,92,"A",DateTime.Today.AddDays(4));
+            StaticInventoryTracker.SalesItems.Add(sell1);
+
+            // get sales
+            var sales = ProductRequirements.GetMakeOrders(DateTime.Today.AddDays(14));
+
+            Assert.AreEqual(1,sales.Count);
+            // check output
         }
     }
 }

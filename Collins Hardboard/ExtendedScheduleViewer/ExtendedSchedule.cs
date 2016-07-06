@@ -61,11 +61,6 @@ namespace ExtendedScheduleViewer
 
         public void Update()
         {
-            ProductMasterItem item = StaticInventoryTracker.ProductMasterList[1];
-            StaticInventoryTracker.SalesItems.Clear();
-            StaticInventoryTracker.AddSales(item.ProductionCode, "0001", DateTime.Today.AddDays(-1), 30, 0, "Dealer", item.MasterID);
-
-            
             RunningTotalsDictionary.Clear();
             TrackingDays.Clear();
             Window.DayControls.Clear();

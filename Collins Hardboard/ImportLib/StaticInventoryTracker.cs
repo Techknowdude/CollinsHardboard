@@ -284,15 +284,15 @@ namespace ImportLib
                     {
                         InventoryChanges.Add(InventoryChange.LoadFromBin(reader));
                     }
-                    
-                    
-                    listLen = reader.ReadInt32();
 
-                    ProductMasterList.Clear();
-                    for(;listLen > 0; --listLen)
-                    {
-                        ProductMasterList.Add(ProductMasterItem.Load(reader));
-                    }
+
+                    //listLen = reader.ReadInt32();
+
+                    //ProductMasterList.Clear();
+                    //for(;listLen > 0; --listLen)
+                    //{
+                    //    ProductMasterList.Add(ProductMasterItem.Load(reader));
+                    //}
 
 
                     listLen = reader.ReadInt32();
@@ -317,17 +317,17 @@ namespace ImportLib
             {
                 using (BinaryWriter writer = new BinaryWriter(new FileStream(fileName, FileMode.OpenOrCreate)))
                 {
-                    // Order: Changes,Master,Texture,WiP Marker,WiP,
                     writer.Write(InventoryChanges.Count);
                     foreach (var inventoryChange in InventoryChanges)
                     {
                         inventoryChange.SaveToBin(writer);
                     }
-                    writer.Write(ProductMasterList.Count);
-                    foreach (var productMasterItem in ProductMasterList)
-                    {
-                        productMasterItem.Save(writer);
-                    }
+
+                    //writer.Write(ProductMasterList.Count);
+                    //foreach (var productMasterItem in ProductMasterList)
+                    //{
+                    //    productMasterItem.Save(writer);
+                    //}
 
                     writer.Write(WiPItems.Count);
                     foreach (var inventoryItem in WiPItems)

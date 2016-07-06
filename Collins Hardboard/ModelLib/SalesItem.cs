@@ -31,7 +31,7 @@ namespace ModelLib
 
         private double _pcs;
         /// <summary>
-        /// Total number of pieces for the order.
+        /// Pieces per whole unit
         /// </summary>
         public double Pieces
         {

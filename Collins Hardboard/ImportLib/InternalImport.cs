@@ -24,7 +24,7 @@ namespace ImportLib
 
         #region DataMembers/Properties
 
-        public static bool CSVImport = true;
+        public static bool CSVImport = false;
 
         public String OutputDebugFile = Path.GetFullPath("debugFile" + DateTime.Today.ToString("yy-MM-dd") + ".dat");
         public const String ExcelProvider = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source='";

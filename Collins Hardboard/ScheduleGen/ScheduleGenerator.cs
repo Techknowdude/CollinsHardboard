@@ -145,10 +145,10 @@ namespace ScheduleGen
                             var takeOff = unitsMade;
                             foreach (var makeOrder in orders.Where(m => m.MasterID == nextItem.MasterID))
                             {
-                                if (takeOff > makeOrder.PiecesToMake/nextItem.PiecesPerUnit)
+                                if (takeOff > makeOrder.PiecesToMake/(double)nextItem.PiecesPerUnit)
                                 {
-                                    takeOff = takeOff - makeOrder.PiecesToMake/nextItem.PiecesPerUnit;
-                                    makeOrder.PiecesToMake = 0; // remove this
+                                    takeOff = takeOff - makeOrder.PiecesToMake/(double)nextItem.PiecesPerUnit;
+                                    makeOrder.PiecesToMake = 0;
                                 }
                                 else
                                 {
@@ -159,7 +159,7 @@ namespace ScheduleGen
                             // factor in waste created
                             CurrentWaste += nextItem.Waste * unitsMade;
 
-                            if (unitsMade*nextItem.PiecesPerUnit >= nextOrder.PiecesToMake)// change to nextOrder.PiecesToMake == 0
+                            if (nextOrder.PiecesToMake == 0)
                                 orders.Dequeue();
                             else
                             {

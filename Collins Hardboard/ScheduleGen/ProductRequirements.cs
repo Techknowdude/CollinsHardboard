@@ -320,7 +320,7 @@ namespace ScheduleGen
             foreach (var salesItem in StaticInventoryTracker.SalesItems.Where(x => x.Date < day))
             {
                 var requirement = _allRequirements.FirstOrDefault(x => x.MasterID == salesItem.MasterID);
-                requirement?.AddSale(salesItem.Date,(int) salesItem.Pieces);
+                requirement?.AddSale(salesItem.Date,(int) (salesItem.Pieces));
             }
         }
 
