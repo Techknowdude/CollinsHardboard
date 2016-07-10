@@ -7,6 +7,7 @@
     <Grid>
         <Grid.Resources>
         </Grid.Resources>
+        <ScrollViewer>
         <StackPanel>
 
             <StackPanel Orientation="Horizontal">
@@ -15,11 +16,11 @@
                 <Label Width="80">Grade</Label>
                 <Label Width="40">Purge</Label>
             </StackPanel>
-            <ListView Name="WiPItemView" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" >
-
-
-            </ListView>
+            
+                <ListView Name="WiPItemView" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Stretch" >
+                </ListView>
             <Button Name="AddWiPButton" Content="Add WiP Item" HorizontalAlignment="Left" Width="100" Margin="5" Click="AddWiPButton_OnClick"></Button>
         </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

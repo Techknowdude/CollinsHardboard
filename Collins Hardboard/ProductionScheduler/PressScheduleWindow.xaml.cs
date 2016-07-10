@@ -34,6 +34,15 @@ namespace ProductionScheduler
             DataContext = this;
         }
 
+        public void UpdateControls()
+        {
+            WeekControls.Clear();
+            foreach (var plateConfiguration in PressManager.PlateConfigurations)
+            {
+                WeekControls.Add(new PressPlateConfigurationControl(plateConfiguration));
+            }
+        }
+
         private Int32 WeekInYear(DateTime time)
         {
             return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time, CalendarWeekRule.FirstDay,

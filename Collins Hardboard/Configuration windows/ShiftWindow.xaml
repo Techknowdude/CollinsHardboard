@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:configurationWindows="clr-namespace:Configuration_windows"
         Title="ShiftWindow" Height="485.8" Width="934.8">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        
     <Grid>
         <StackPanel Orientation="Horizontal" CanVerticallyScroll="True" CanHorizontallyScroll="True">
             <StackPanel>
@@ -17,4 +19,5 @@
             <configurationWindows:CalendarControl x:Name="ShiftCalendar"></configurationWindows:CalendarControl>
         </StackPanel>
     </Grid>
+    </ScrollViewer>
 </Window>

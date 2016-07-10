@@ -24,7 +24,7 @@ namespace ImportLib
 
         #region DataMembers/Properties
 
-        public static bool CSVImport = false;
+        public static bool CSVImport = true;
 
         public String OutputDebugFile = Path.GetFullPath("debugFile" + DateTime.Today.ToString("yy-MM-dd") + ".dat");
         public const String ExcelProvider = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source='";
@@ -604,7 +604,7 @@ Brandon: here are some quick notes for you -
 				, OH.reltolocn AS OrderReleasedToLocation-- 0 = 'No', 1 = 'Yes'
 				, OI.volumequantity AS OrderItemVolumeQuantity
 				, OI.volumeunit AS OrderItemVolumeUOM
-				, OI.piecesquantity - ((OI.piecesquantity / OI.desc3) *OI.desc3) AS Pieces
+				, OI.piecesquantity AS Pieces
 				, OI.piecesquantity / OI.desc3 AS Units
 				, OI.piecesquantity AS TotalPieces
 				, OI.piecesunit AS OrderItemPiecesUOM
@@ -938,8 +938,6 @@ ORDER BY        OrderNum, PD.Product;
                                 }
                                 catch (Exception rowException)
                                 {
-                                    if (CSVImport)
-                                        MessageBox.Show($"Row isssue on line {curRow}: {rowException.Message}");
                                     Console.WriteLine(@"Row isssue on line {0}: {1}", curRow, rowException.Message);
                                 }
                             }

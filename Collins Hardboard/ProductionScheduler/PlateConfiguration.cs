@@ -267,7 +267,7 @@ namespace ProductionScheduler
                 }
 
                 currentTime = _shifts[index].EndTime + PressManager.Instance.DelayTime;
-                added = added || _shifts[index].Add(item, ref count);
+                added = _shifts[index].Add(item, ref count) || added;
             }
 
             // if time has past or not all items could be made

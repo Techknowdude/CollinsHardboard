@@ -49,7 +49,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>hjC1kUo/cKhv0c8YvlPJT38G3NkY+JbYEoged7Ee+rU=</dsig:DigestValue>
+        <dsig:DigestValue>PTdR/DOVhaJiNV5WwaFQzLevVl74g6Keo93q+pg8krA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>slJvJRwgV6f89NaKONTYx6QQ2u3eLyLOAi9VsJIs7RU=</dsig:DigestValue>
+        <dsig:DigestValue>3TPcfcp7J9DSo8VhIQE9n1Fz28uJrt2TEdlZ9CDONug=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -73,7 +73,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>hipk1qJAG9qfpDD7nEWerWrYSGYsx9pi9OrnkXeJTL4=</dsig:DigestValue>
+        <dsig:DigestValue>3zyFQEZ2J+s+2+m2LLFDAla86oBVjj6wbl/sFvfiBAo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -85,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>aQrYNvr+gg//GlMM9HKkPaJ15abg0JFyfm8uxVMLgFw=</dsig:DigestValue>
+        <dsig:DigestValue>gM2qnyW+OQB4DZn6TOVUdfI/dani4tbQWeyV/QTDi+I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -114,26 +114,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProductionScheduler.exe" size="49152">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProductionScheduler.exe" size="50176">
       <assemblyIdentity name="ProductionScheduler" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>lqMTkfIHFylJCr+sVMIGpuPA+uh9xkn4OUuU/4xrocQ=</dsig:DigestValue>
+        <dsig:DigestValue>Rk7Uz2cmbm6/3YcqC1S2cS46bs6h7arFIGallKUw1fE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ScheduleGen.exe" size="76744">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ScheduleGen.exe" size="78280">
       <assemblyIdentity name="ScheduleGen" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>bQOwuoIQsSrMHmQ2SLG6xRVZZxR2JvDE1qaOMI8XGd8=</dsig:DigestValue>
+        <dsig:DigestValue>HbBGXiLbmYjTa9siPW8gyOR/lg10yC0kk7Gtlyg3D0c=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -157,7 +157,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>QAkFokjXCF2itG8R0yu9Fv3dnEVo84HFdoLz6H1PGyo=</dsig:DigestValue>
+        <dsig:DigestValue>hPHu6/eFPDlhSN0gwkoAnQRcxr5Nd1t5OpAmTwt0XJg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

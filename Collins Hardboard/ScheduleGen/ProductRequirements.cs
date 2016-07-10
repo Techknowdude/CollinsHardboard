@@ -142,9 +142,13 @@ namespace ScheduleGen
             posDay.PurchaseOrderPieces += pieces;
 
             // set required number of items to make this product.
-            int numToMake = pieces*(Input.Item2/OutPieces);
-            if (Input.Item2%OutPieces != 0)
-                numToMake++;
+            int numToMake = (int)(pieces*(Input.Item2/(double)OutPieces));
+
+            // round up pieces to make
+            while(numToMake*(OutPieces/(double)Input.Item2) < pieces)
+            {
+                ++numToMake;
+            }
 
             // add required number to gross for required item.
             var reqItem = GetRequirements(Input.Item1);

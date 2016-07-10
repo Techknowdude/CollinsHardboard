@@ -124,7 +124,7 @@ namespace ProductionScheduler
 
                 if (pressItem == null)
                 {
-                    Produced.Add(new PressMasterItem(item,count));
+                    Produced.Add(new PressMasterItem(item,numToAdd));
                 }
                 else
                 {
