@@ -90,3 +90,5 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Warehou
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\obj\Debug\WarehouseManager.application
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\obj\Debug\WarehouseManager.exe
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\obj\Debug\WarehouseManager.pdb
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\obj\Debug\PendingSalesWindow.g.cs
+C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\WarehouseManager\obj\Debug\PendingSalesWindow.baml

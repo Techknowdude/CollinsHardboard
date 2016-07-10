@@ -50,7 +50,7 @@ namespace ScheduleGen.Tests
 
             // make sure there is another day ahead of it.
             var nextDay = req.GetRequirementDay(DateTime.Today.AddDays(10));
-            req.AddOnHandInventory(DateTime.Today, onHand);
+            req.AddOnHandInventory(onHand);
 
             Assert.AreEqual(nextDay.OnHandPieces, onHand);
         }
@@ -64,7 +64,7 @@ namespace ScheduleGen.Tests
 
             // make sure there is another day ahead of it.
             var nextDay = req.GetRequirementDay(DateTime.Today.AddDays(1));
-            req.AddOnHandInventory(DateTime.Today, onHand);
+            req.AddOnHandInventory(onHand);
 
             Assert.AreEqual(nextDay.OnHandPieces, onHand);
         }
@@ -137,7 +137,7 @@ namespace ScheduleGen.Tests
             int pieces = 100;
             int onHand = 50;
 
-            requirement.AddOnHandInventory(day, onHand);
+            requirement.AddOnHandInventory(onHand);
             requirement.AddSale(day, pieces);
 
             var checkReq = requirement.GetRequirementDay(day);

@@ -5,7 +5,7 @@ using StaticHelpers;
 
 namespace ModelLib
 {
-    public class SalesItem
+    public class SalesItem : ObservableObject
     {
         #region DataMembers
 

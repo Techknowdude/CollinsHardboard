@@ -9,18 +9,15 @@ namespace ScheduleGen
     /// </summary>
     public partial class ScheduleGenWindow : Window
     {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public DateTime SaleDate { get; set; }
+        public DateTime StartDate { get; set; } = DateTime.Today;
+        public DateTime EndDate { get; set; } = DateTime.Today.AddDays(7);
+        public DateTime SaleDate { get; set; } = DateTime.Today.AddDays(14);
 
         public ScheduleGenWindow()
         {
             InitializeComponent();
 
             ScheduleGenerator.Window = this;
-            StartDate = DateTime.Today;
-            EndDate = DateTime.Today.AddDays(7);
-            SaleDate = DateTime.Today.AddDays(2*7);
             ControlsListView.ItemsSource = ScheduleGenerator.ControlsList;
 
             //Closing += ScheduleGenWindow_Closing;

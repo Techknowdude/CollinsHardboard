@@ -81,9 +81,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DateSelectionWindow.xaml.cs">
-      <DependentUpon>DateSelectionWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GenControl.cs" />
     <Compile Include="LineControl.xaml.cs">
       <DependentUpon>LineControl.xaml</DependentUpon>
@@ -116,10 +113,6 @@
     <Compile Include="WidthControl.xaml.cs">
       <DependentUpon>WidthControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="DateSelectionWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="LineControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

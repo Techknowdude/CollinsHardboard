@@ -85,6 +85,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BoolToVisabilityConverter.cs" />
+    <Compile Include="PendingSalesWindow.xaml.cs">
+      <DependentUpon>PendingSalesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WiPInventoryWindow.xaml.cs">
       <DependentUpon>WiPInventoryWindow.xaml</DependentUpon>
     </Compile>
@@ -103,6 +106,10 @@
       <DependentUpon>ForcastWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PendingSalesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WiPInventoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

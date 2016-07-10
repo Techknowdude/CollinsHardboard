@@ -171,5 +171,11 @@ namespace Main_Application
             ExtendedScheduleWindow window = new ExtendedScheduleWindow();
             window.Show();
         }
+
+        private void BtnSales_Click(object sender, RoutedEventArgs e)
+        {
+            PendingSalesWindow salesWindow = new PendingSalesWindow();
+            salesWindow.Show();
+        }
     }
 }

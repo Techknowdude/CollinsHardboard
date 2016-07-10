@@ -58,6 +58,10 @@
       <Project>{50998390-8BB5-4802-AF11-422A9F92CC51}</Project>
       <Name>ModelLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\StaticHelpers\StaticHelpers.csproj">
+      <Project>{A7025254-A2A3-47F3-B589-BA10CDD4045B}</Project>
+      <Name>StaticHelpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -160,10 +160,10 @@ namespace ScheduleGen
         /// </summary>
         /// <param name="day"></param>
         /// <param name="pieces"></param>
-        public void AddOnHandInventory(DateTime day, int pieces)
+        public void AddOnHandInventory(int pieces)
         {
             // Validate day
-            var validDate = ValidateDay(day);
+            var validDate = ValidateDay(_earliestDay);
 
 
             // Update earliest and latest days
@@ -173,6 +173,7 @@ namespace ScheduleGen
                 _earliestDay = validDate;
 
             RequirementsDay reqDay = null;
+            RequirementsDay prevDay = null;
 
             // Safe Access.
             if (RequiredPieces.ContainsKey(validDate))
@@ -188,15 +189,20 @@ namespace ScheduleGen
 
             int daysAhead = 1;
 
-            int extraPieces = reqDay.OnHandPieces - reqDay.NetRequiredPieces; // netRequired is 0 if onHand fills the requirement
+            int extraPieces = reqDay.OnHandPieces - reqDay.PurchaseOrderPieces; // remove used pieces
             while (extraPieces > 0)
             { 
                 // Safe Access.
                 if (RequiredPieces.Any(x => x.Key >= validDate.AddDays(daysAhead)))
                 {
                     reqDay = GetRequirementDay(validDate.AddDays(daysAhead++));
-                    reqDay.AddOnHand(pieces);
-                    extraPieces = reqDay.OnHandPieces - reqDay.NetRequiredPieces; // netRequired is 0 if onHand fills the requirement
+                    reqDay.AddOnHand(extraPieces);
+
+                    extraPieces -= reqDay.PurchaseOrderPieces;  // remove used pieces
+                    if (prevDay != null)
+                        prevDay.PurchaseOrderPieces = reqDay.NetRequiredPieces;
+
+                    prevDay = reqDay;
                 }
                 else
                 {
@@ -268,7 +274,7 @@ namespace ScheduleGen
             foreach (var item in StaticInventoryTracker.AllInventoryItems)
             {
                 var requirement = _allRequirements.FirstOrDefault(x => x.MasterID == item.MasterID);
-                requirement?.AddOnHandInventory(DateTime.Today, (int) (item.Units*item.PiecesPerUnit));
+                requirement?.AddOnHandInventory((int) (item.Units*item.PiecesPerUnit));
             }
         }
 

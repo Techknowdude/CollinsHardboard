@@ -10,6 +10,7 @@
                 <MenuItem Header="_Extended Schedule" Click="Extended_Click"/>
                 <MenuItem Header="_WiP Inventory" Click="BtnWiPInventory_Click"/>
                 <MenuItem Header="_Inventory" Click="BtnOpenInventory_Click"></MenuItem>
+                <MenuItem Header="_Sales" Click="BtnSales_Click"></MenuItem>
                 <MenuItem Header="_Coating Schedule" Click="BtnOpenCoatingSchedule_Click"/>
                 <MenuItem Header="_Press Schedule" Click="BtnOpenPressSchedule_Click"/>
                 <MenuItem Header="Schedule _Generator" Click="BtnOpenGenerator_Click"/>

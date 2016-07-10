@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using LumenWorks.Framework.IO.Csv;
 using Microsoft.Win32;
 using ModelLib;
 using StaticHelpers;
-using static System.Int32;
 
 namespace ImportLib
 {
@@ -24,7 +20,7 @@ namespace ImportLib
 
         #region DataMembers/Properties
 
-        public static bool CSVImport = true;
+        public static bool CSVImport = false;
 
         public String OutputDebugFile = Path.GetFullPath("debugFile" + DateTime.Today.ToString("yy-MM-dd") + ".dat");
         public const String ExcelProvider = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source='";
@@ -593,7 +589,7 @@ Brandon: here are some quick notes for you -
                 OutputDebugLine("Creating command.");
                 string command = @"SELECT DISTINCT OH.branch AS Branch
 				, OH.loc AS Location
-				, OH.orddate AS OrderDate-- original sales order date
+				--, OH.orddate AS OrderDate-- original sales order date
                , OH.ordnum AS OrderNum
 				, OI.dispnum AS OrderItemDispNum-- purely a display number from LT on the Order Item tab / screen...
 				, CH.cust AS CustomerCode
@@ -645,6 +641,7 @@ Brandon: here are some quick notes for you -
 				, SH.arrdate AS ShipArrivalDate
 				, UF.udfdate02 AS ShipEstimatedPickupDate
 				, OH.ordfunction AS SalesOrderFunction
+				, SH.invoicable
 
 FROM            dbo.ord_hdr OH (NOLOCK)
 INNER JOIN      dbo.cus_hdr CH(NOLOCK)
@@ -666,8 +663,8 @@ ON              OH.udffieldskey = UF.udffieldskey
 LEFT OUTER JOIN dbo.cde_codes CC(NOLOCK)
 ON              OH.shiptoctry = CC.code
 
-WHERE           PD.protype = N'HB' AND OH.ordstatus = 'R'
-ORDER BY        OrderNum, PD.Product;
+WHERE           PD.protype = N'HB' AND OH.ordstatus = 'R' AND (SH.shpstatus IS NULL OR (SH.shpstatus <> 'O' AND SH.shpstatus <> 'D'))
+ORDER BY        DueDate,OrderNum, PD.Product;
 ";
 
                 OutputDebugLine("Opening connection...");

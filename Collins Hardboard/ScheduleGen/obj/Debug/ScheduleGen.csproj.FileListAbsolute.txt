@@ -23,9 +23,7 @@ C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\Schedul
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\bin\Debug\StaticHelpers.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\bin\Debug\WarehouseManager.pdb
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Debug\ScheduleGen.csprojResolveAssemblyReference.cache
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Debug\DateSelectionWindow.baml
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Debug\ScheduleGenWindow.baml
-C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Debug\DateSelectionWindow.g.cs
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Debug\LineControl.g.cs
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Debug\PurgeWiPControl.g.cs
 C:\Users\Brandon\Documents\collins-hardboard-scheduler\Collins Hardboard\ScheduleGen\obj\Debug\RunBeforeControl.g.cs

@@ -16,7 +16,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label>Consider sales due before:</Label>
-            <DatePicker Name="SalesDatePicker"  SelectedDate="{Binding Path=SalesDate}"></DatePicker>
+            <DatePicker Name="SalesDatePicker"  SelectedDate="{Binding Path=SaleDate}"></DatePicker>
         </StackPanel>
         <ListView Name="ControlsListView"></ListView>
         <StackPanel Orientation="Horizontal">

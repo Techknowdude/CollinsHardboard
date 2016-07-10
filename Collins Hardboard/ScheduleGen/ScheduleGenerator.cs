@@ -61,8 +61,10 @@ namespace ScheduleGen
         public static double LastWidth { get; set; }
         public static String CurrentLine { get; set; }
         static Queue<MakeOrder> _orders = new Queue<MakeOrder>();
+        static Queue<MakeOrder> _waitOrders = new Queue<MakeOrder>();
 
         private static Dictionary<ProductMasterItem, double> _fulfilled;
+        private static Queue<String> _errors = new Queue<string>();
 
         public static void GenerateSalesSchedule(DateTime salesOutlook, DateTime startGen, DateTime endGen, bool testing = false)
         {
@@ -83,6 +85,8 @@ namespace ScheduleGen
             SalesOutlook = salesOutlook;
             StartGen = startGen;
             EndGen = endGen;
+
+            int lastWaitItems = 0;
 
             ProductItems = new List<ProductMasterItem>();
             ScheduledItems = new List<ProductMasterItem>();
@@ -110,7 +114,6 @@ namespace ScheduleGen
 
 
             _orders = ProductRequirements.GetMakeOrders(SalesOutlook);
-            var unsuccessfulOrders = new Queue<MakeOrder>();
 
             while (CurrentDay <= EndGen && _orders.Count > 0)
             {
@@ -119,6 +122,8 @@ namespace ScheduleGen
                 while (nextOrder != null && nextOrder.PiecesToMake < 1) // get rid of empty orders
                 {
                     _orders.Dequeue();
+                    if (_orders.Count == 0)
+                        break;
                     nextOrder = _orders.Peek();
                 }
 
@@ -129,32 +134,59 @@ namespace ScheduleGen
 
                 if(nextItem == null) continue;
 
-                var added = ScheduleSaleItem(nextItem,nextOrder.PiecesToMake);
-                if(!added)
-                    unsuccessfulOrders.Enqueue(_orders.Dequeue());
 
-                if (added || _orders.Count == 0)
+                //// Check inventory
+                //InventoryItem inventoryItem =
+                //    currentInventoryItems.FirstOrDefault(i => i.MasterID == nextItem.MasterID);
+                //if (inventoryItem != null)
+                //{
+                //    if (inventoryItem.Units >= nextOrder.PiecesToMake/(double)nextItem.PiecesPerUnit)
+                //    {
+                //        inventoryItem.Units -= nextOrder.PiecesToMake / (double)nextItem.PiecesPerUnit;
+                //        // no need to schedule
+                //        _orders.Dequeue();
+                //        continue;
+                //    }
+                //    else
+                //    {
+                        
+                //    }
+                //}
+
+                ScheduleSaleItem(nextItem,nextOrder.PiecesToMake);
+
+
+                if (_orders.Count == 0)
                 {
-                    while (_orders.Count > 0)
+                    if(lastWaitItems == _waitOrders.Count)
+                        AddControl(); // Making no progress, advance a shift
+
+                    lastWaitItems = _waitOrders.Count;
+                    while (_waitOrders.Count > 0)
                     {
-                        unsuccessfulOrders.Enqueue(_orders.Dequeue());
+                        _orders.Enqueue(_waitOrders.Dequeue());
                     }
-
-                    // swap queues
-                    var swap = _orders;
-                    _orders = unsuccessfulOrders;
-                    unsuccessfulOrders = swap;
-
-                    // Can't make anything, go to next shift
-                    AddControl();
                 }
             }
 
             scheduleWindow.LoadTrackingItems();
             pressScheduleWindow.UpdateControls();
+
+
+            while (_errors.Count > 0)
+            {
+                MessageBox.Show(_errors.Dequeue());
+            }
+
             MessageBox.Show("Schedule done generating");
         }
 
+        /// <summary>
+        /// Schedules the prerequisite ASAP
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="unitsToMake"></param>
+        /// <returns>True if the entire amount is made in time -- The parent item can now be scheduled</returns>
         private static bool ScheduleSalesPrerequisite(Configuration config, double unitsToMake)
         {
             double unitsRequired = unitsToMake;
@@ -179,7 +211,7 @@ namespace ScheduleGen
             }
             else if (prevItem.MadeIn == "Press")
             {
-                scheduled = PressManager.ScheduleItem(prevItem, unitsRequired, scheduleLine.Date);
+                scheduled = PressManager.ScheduleSalesItem(prevItem, unitsRequired, scheduleLine.Date);
 
                 // update waste
                 if (scheduled)
@@ -205,6 +237,7 @@ namespace ScheduleGen
                 scheduleShift = (CoatingScheduleShift)scheduleLine.ChildrenLogic[lineIndex];
 
                 double unitsToMake = pieces / (double)nextItem.PiecesPerUnit;
+
 
                 if (Math.Abs(unitsToMake % nextItem.UnitsPerHour * 8) > 0.0000001) // if not filling a shift, add enough to do so
                 {
@@ -244,14 +277,10 @@ namespace ScheduleGen
                         //AddControl(); // All production uses up at least one shift.
                         return true;
                     }
-
-                    return false;
                 }
             }
-            else
-            {
-                _orders.Dequeue(); // skips things we can't make. This is most likely an error by the operator's configuration of the plant.
-            }
+
+            _waitOrders.Enqueue(_orders.Dequeue());
 
             return false;
         }
@@ -374,6 +403,13 @@ namespace ScheduleGen
                 }
             } // until all days are filled
 
+
+            while (_errors.Count > 0)
+            {
+                MessageBox.Show(_errors.Dequeue());
+            }
+
+
             scheduleWindow.LoadTrackingItems();
             pressWindow.UpdateControls();
             MessageBox.Show("Schedule done generating");
@@ -456,6 +492,7 @@ namespace ScheduleGen
                 }
                 else
                 {
+
                     ProductItems.Remove(nextItem); // remove item.  no prediction
                 }
             }
@@ -597,6 +634,13 @@ namespace ScheduleGen
 
             // get machines that can make
             List<Machine> machines = MachineHandler.Instance.MachineList.Where(machine => machine.ConfigurationList.Any(conf => conf.ItemOutID == nextItem.MasterID)).ToList();
+
+            if (machines.Count == 0)
+            {
+                if(!_errors.Contains($"No machine can make {nextItem}. Please add a configuration to make this item to a machine."))
+                    _errors.Enqueue(
+                    $"No machine can make {nextItem}. Please add a configuration to make this item to a machine.");
+            }
             foreach (var machine in machines)
             {
                 if (otherMachines.Any(mac => mac.MachineConflicts.Contains(machine.Name))) continue; // if other machines conflict with this, continue

@@ -287,6 +287,31 @@ namespace ProductionScheduler
             return added;
         }
 
+
+        /// <summary>
+        /// Try to add the item into the press schedule within this config. 
+        /// </summary>
+        /// <param name="item">Product Master Item to make</param>
+        /// <param name="count">Number of units to make. Altered by the function.</param>
+        /// <param name="time">The time the item must be completed.</param>
+        /// <returns></returns>
+        public bool AddSale(ProductMasterItem item, ref double count, ref DateTime time)
+        {
+            DateTime currentTime = DateTime.MinValue;
+
+            // Add the items to shifts until either all items are made, or the time has past
+            for (int index = 0; count > 0 && index < _shifts.Count; index++)
+            {
+                currentTime = _shifts[index].EndTime + PressManager.Instance.DelayTime;
+                _shifts[index].Add(item, ref count);
+            }
+
+            var byTime = time;
+            time = currentTime;
+
+            return currentTime < byTime;
+        }
+
         public bool IsFull()
         {
             return _shifts.All(pressShift => pressShift.IsFull());

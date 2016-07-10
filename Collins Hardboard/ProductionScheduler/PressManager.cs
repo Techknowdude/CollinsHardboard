@@ -296,5 +296,36 @@ namespace ProductionScheduler
         {
             CreateNewConfig();
         }
+
+        /// <summary>
+        /// Schedules the item needed ASAP. 
+        /// </summary>
+        /// <param name="item">Item to make</param>
+        /// <param name="units">Units to make</param>
+        /// <param name="date">Time to complete</param>
+        /// <returns>Check if the completion time is before the needed time</returns>
+        public static bool ScheduleSalesItem(ProductMasterItem item, double units, DateTime date)
+        {
+            DateTime finishedDateTime = DateTime.MaxValue;
+
+            if (PlateConfigurations.Count == 0)
+            {
+                Instance.CreateNewConfig();
+            }
+
+            // Find closest plate config
+            foreach (var plateConfiguration in PlateConfigurations)
+            {
+                if (plateConfiguration.AddSale(item, ref units, ref finishedDateTime))
+                {
+                    if (units <= 0) // if done making
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return finishedDateTime <= date;
+        }
     }
 }
