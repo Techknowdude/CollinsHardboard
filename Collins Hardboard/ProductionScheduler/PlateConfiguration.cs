@@ -260,13 +260,14 @@ namespace ProductionScheduler
             // Add the items to shifts until either all items are made, or the time has past
             for (int index = 0; count > 0 && index < _shifts.Count; index++)
             {
-                if (_shifts[index].EndTime + PressManager.Instance.DelayTime > time)
+                currentTime = _shifts[index].EndTime + PressManager.Instance.DelayTime;
+
+                if (currentTime > time)
                 {
                     undo = true;
                     break;
                 }
 
-                currentTime = _shifts[index].EndTime + PressManager.Instance.DelayTime;
                 added = _shifts[index].Add(item, ref count) || added;
             }
 
@@ -275,11 +276,12 @@ namespace ProductionScheduler
             {
                 scheduledCount = scheduledCount - count;
 
-                for (int index = _shifts.Count -1; index >= 0; --index)
+                for (int index = _shifts.Count -1; index >= 0 && scheduledCount > 0; --index)
                 {
                     var shift = _shifts[index];
                     shift.Remove(item, ref scheduledCount);
                 }
+                added = false; // did not completed
             }
 
             time = currentTime;

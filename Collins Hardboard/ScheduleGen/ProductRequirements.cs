@@ -189,16 +189,16 @@ namespace ScheduleGen
 
             int daysAhead = 1;
 
-            int extraPieces = reqDay.OnHandPieces - reqDay.PurchaseOrderPieces; // remove used pieces
-            while (extraPieces > 0)
+            int currentPieces = reqDay.OnHandPieces - reqDay.PurchaseOrderPieces; // remove used pieces
+            while (currentPieces > 0)
             { 
                 // Safe Access.
                 if (RequiredPieces.Any(x => x.Key >= validDate.AddDays(daysAhead)))
                 {
                     reqDay = GetRequirementDay(validDate.AddDays(daysAhead++));
-                    reqDay.AddOnHand(extraPieces);
+                    reqDay.AddOnHand(currentPieces);
 
-                    extraPieces -= reqDay.PurchaseOrderPieces;  // remove used pieces
+                    currentPieces -= reqDay.GrossPieces;  // remove used pieces
                     if (prevDay != null)
                         prevDay.PurchaseOrderPieces = reqDay.NetRequiredPieces;
 

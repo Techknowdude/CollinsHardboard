@@ -35,6 +35,7 @@ namespace ScheduleGen
         public const string datFile = "ScheduleGenSettings.dat";
         static List<InventoryItem> currentInventoryItems = new List<InventoryItem>();
         public static List<InventoryItem> CurrentInventory { get { return currentInventoryItems; } }
+        private static Dictionary<Machine, LastConfigTime> _runningMachines = new Dictionary<Machine, LastConfigTime>(); 
 
         public static DateTime CurrentDay
         {
@@ -90,12 +91,16 @@ namespace ScheduleGen
 
             ProductItems = new List<ProductMasterItem>();
             ScheduledItems = new List<ProductMasterItem>();
+
+            CoatingSchedule.CurrentSchedule?.ChildrenLogic.Clear();
+
             CoatingScheduleWindow scheduleWindow = new CoatingScheduleWindow(schedule);
             scheduleWindow.Show();
             PressScheduleWindow pressScheduleWindow = new PressScheduleWindow();
             pressScheduleWindow.Show();
             PressManager.PlateConfigurations.Clear();
             pressScheduleWindow.UpdateControls();
+
 
             // get list of all items that are made
             ProductItems.AddRange(StaticInventoryTracker.ProductMasterList.Where(x => x.MadeIn == "Coating"));
@@ -236,6 +241,9 @@ namespace ScheduleGen
                 //set shift to add to
                 scheduleShift = (CoatingScheduleShift)scheduleLine.ChildrenLogic[lineIndex];
 
+                // update running machine availability. Date is the time it will be available again
+                _runningMachines[machine] = new LastConfigTime( StaticFunctions.GetDayAndTime(scheduleLine.Date,scheduleLine.Shift.StartTime) + scheduleLine.Shift.Duration, config);
+
                 double unitsToMake = pieces / (double)nextItem.PiecesPerUnit;
 
 
@@ -252,7 +260,9 @@ namespace ScheduleGen
 
                     // try to make any required items
                     if (!hasPrereqs)
+                    {
                         hasPrereqs = ScheduleSalesPrerequisite(config, unitsToMake);
+                    }
 
                     if (hasPrereqs)
                     {
@@ -274,13 +284,13 @@ namespace ScheduleGen
                         // factor in waste created
                         CurrentWaste += nextItem.Waste * unitsMade;
 
-                        //AddControl(); // All production uses up at least one shift.
+                        AddControl(); // All production uses up at least one shift.
                         return true;
                     }
                 }
             }
-
-            _waitOrders.Enqueue(_orders.Dequeue());
+            if(_orders.Count > 0)
+                _waitOrders.Enqueue(_orders.Dequeue());
 
             return false;
         }
@@ -288,6 +298,7 @@ namespace ScheduleGen
         public static void GeneratePredictionSchedule(DateTime salesOutlook, DateTime startGen, DateTime endGen, bool testing = false)
         {
             currentInventoryItems.Clear();
+            _runningMachines.Clear();
 
             foreach (var allInventoryItem in StaticInventoryTracker.AllInventoryItems)
             {
@@ -446,6 +457,9 @@ namespace ScheduleGen
             {
                 //set shift to add to
                 scheduleShift = (CoatingScheduleShift)scheduleLine.ChildrenLogic[lineIndex];
+
+                // update running machine availability. Date is the time it will be available again
+                _runningMachines[machine] = new LastConfigTime( StaticFunctions.GetDayAndTime(scheduleLine.Date,scheduleLine.Shift.StartTime) + scheduleLine.Shift.Duration, config);
 
                 //CoatingScheduleProduct product = new CoatingScheduleProduct(nextItem);
                 double unitsToMake = GetUnitsToMake(nextItem, machine);
@@ -641,6 +655,9 @@ namespace ScheduleGen
                     _errors.Enqueue(
                     $"No machine can make {nextItem}. Please add a configuration to make this item to a machine.");
             }
+
+           
+
             foreach (var machine in machines)
             {
                 if (otherMachines.Any(mac => mac.MachineConflicts.Contains(machine.Name))) continue; // if other machines conflict with this, continue
@@ -690,13 +707,41 @@ namespace ScheduleGen
                 }
 
 
-                if (options.Count != 0)
+                foreach (var lineOption in options)
                 {
                     bestMachine = machine;
                     //get option that works
-                    lineIndex = StaticFactoryValuesManager.CoatingLines.IndexOf(options[0]);
+                    lineIndex = StaticFactoryValuesManager.CoatingLines.IndexOf(lineOption);
                     config = machine.GetBestConfig(nextItem);
-                    break;
+
+                    // check if machine config is not the same
+                    if (_runningMachines.ContainsKey(bestMachine))
+                    {
+                        var lastRun = _runningMachines.FirstOrDefault(r => r.Key == machine);
+                        if (!Equals(lastRun.Value.LastConfiguration, config))
+                        {
+                            // check if the machine will be ready on time
+                            if (lastRun.Value.LastShiftTime + config.ChangeTime <= StaticFunctions.GetDayAndTime(scheduleLine.Date, scheduleLine.Shift.StartTime))
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                // can't use the config yet - not ready
+                                bestMachine = null;
+                                lineIndex = 0;
+                                config = null;
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else // no last use. No change time assumed.
+                    {
+                        break;
+                    }
                 }
                 // if machine can make, and shift is not full, add to shift
             }
@@ -1101,5 +1146,17 @@ namespace ScheduleGen
             // outdated
             //ScheduleGenerator.GenerateSchedule(true);
         }
+    }
+
+    internal class LastConfigTime
+    {
+        public LastConfigTime(DateTime date, Configuration config)
+        {
+            LastShiftTime = date;
+            LastConfiguration = config;
+        }
+
+        public DateTime LastShiftTime { get; set; }
+        public Configuration LastConfiguration { get; set; }
     }
 }

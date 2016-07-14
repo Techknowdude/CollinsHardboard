@@ -163,6 +163,7 @@ namespace Configuration_windows
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.DefaultExt = "dat";
                 saveFileDialog.Filter = "Data Files (.dat)|*.dat|All Files|*";
+                saveFileDialog.Title = "Save machine data file";
                 bool? accept = saveFileDialog.ShowDialog();
                 if (accept == true)
                 {
@@ -196,6 +197,7 @@ namespace Configuration_windows
                 openFileDialog.DefaultExt = "dat";
                 openFileDialog.Filter = "Data Files (.dat)|*.dat|All Files|*";
                 openFileDialog.Multiselect = false;
+                openFileDialog.Title = "Open machine data file";
 
                 bool? accept = openFileDialog.ShowDialog();
                 if (accept == true)

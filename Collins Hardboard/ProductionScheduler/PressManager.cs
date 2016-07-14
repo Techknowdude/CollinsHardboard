@@ -173,21 +173,35 @@ namespace ProductionScheduler
 
         public static bool ScheduleItem(ProductMasterItem item, double count, DateTime targetTime)
         {
-            DateTime finishedDateTime = DateTime.MaxValue;
+            DateTime finishedDateTime = DateTime.MinValue;
+
+            bool completed = false;
 
             if (PlateConfigurations.Count == 0)
             {
                 Instance.CreateNewConfig();
             }
 
-            // Find closest plate config
-            foreach (var plateConfiguration in PlateConfigurations)
+            while (!completed && finishedDateTime < targetTime)
             {
-                if (plateConfiguration.Add(item, count, ref finishedDateTime))
+                // Find closest plate config
+                foreach (var plateConfiguration in PlateConfigurations)
                 {
-                    break;
+                    // try to fill
+                    if (plateConfiguration.Add(item, count, ref finishedDateTime))
+                    {
+                        completed = true;
+                        break;
+                    }
+                }
+
+                if (!completed && finishedDateTime < targetTime)
+                {
+                    // add another config
+                    Instance.CreateNewConfig();
                 }
             }
+
 
             return finishedDateTime <= targetTime;
         }

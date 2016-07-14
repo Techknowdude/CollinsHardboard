@@ -17,10 +17,16 @@ namespace Main_Application
 
         #region Fields
         private ObservableCollection<CoatingLineControl> _coatingLineControls = new ObservableCollection<CoatingLineControl>();
-        private ObservableCollection<TextureControl> _textureControls = new ObservableCollection<TextureControl>(); 
+        private ObservableCollection<TextureControl> _textureControls = new ObservableCollection<TextureControl>();
         #endregion
 
         #region Properties
+
+        public bool IsDevImport
+        {
+            get { return InternalImport.CSVImport; }
+            set { InternalImport.CSVImport = value; }
+        }
 
         public ObservableCollection<CoatingLineControl> CoatingLineControls
         {
@@ -126,9 +132,9 @@ namespace Main_Application
             UpdateLineControls();
             UpdateTexControls();
 
-            WasteMaxTextBox.Text = WasteMax;
-            WasteMinTextBox.Text = WasteMin;
-            WasteCurrentTextBox.Text = CurrentWaste;
+            //WasteMaxTextBox.Text = WasteMax;
+            //WasteMinTextBox.Text = WasteMin;
+            //WasteCurrentTextBox.Text = CurrentWaste;
         }
 
 
