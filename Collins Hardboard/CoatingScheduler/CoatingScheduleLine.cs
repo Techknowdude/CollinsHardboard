@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using CoatingScheduler.Annotations;
 using Configuration_windows;
 using Microsoft.Office.Interop.Excel;
@@ -13,6 +14,7 @@ using StaticHelpers;
 
 namespace CoatingScheduler
 {
+    [Serializable]
     public class CoatingScheduleLine : ICoatingScheduleLogic, INotifyPropertyChanged
     {
         #region Fields
@@ -129,36 +131,14 @@ namespace CoatingScheduler
             }
         }
 
-        public override void Save(BinaryWriter writer)
+        public override void Save(Stream stream, IFormatter formatter)
         {
-            writer.Write(ShiftName);
-            writer.Write(CoatingLine);
-            writer.Write(Date.ToString());
-            Shift.Save(writer);
-            writer.Write(ChildrenLogic.Count);
-            foreach (var logic in ChildrenLogic)
-            {
-                logic.Save(writer);
-            }
+            formatter.Serialize(stream,this);
         }
 
-        public static CoatingScheduleLine Load(BinaryReader reader)
+        public static CoatingScheduleLine Load(Stream stream, IFormatter formatter)
         {
-            string name = reader.ReadString();
-            string coatingLine = reader.ReadString();
-            string datestring = reader.ReadString();
-            DateTime date;
-            DateTime.TryParse(datestring, out date);
-            Shift shift = Shift.Load(reader,true);
-            ObservableCollection<ICoatingScheduleLogic> shifts = new ObservableCollection<ICoatingScheduleLogic>();
-
-            int numShifts = reader.ReadInt32();
-            for (; numShifts > 0; --numShifts)
-            {
-                shifts.Add(CoatingScheduleShift.Load(reader));
-            }
-
-            return new CoatingScheduleLine(shifts,name,coatingLine,date,shift);
+            return (CoatingScheduleLine) formatter.Deserialize(stream);
         }
 
 

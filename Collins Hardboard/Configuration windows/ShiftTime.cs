@@ -1,14 +1,21 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace Configuration_windows
 {
     [Serializable]
     public class ShiftTime
     {
+        private ShiftTime()
+        {
+            // For serialization
+        }
         #region Fields
 
         private DateTime _startTime;
+        [XmlIgnore]
         private TimeSpan _duration;
         private bool _isActive = true;
         private bool _isOvertime = false;
@@ -17,6 +24,14 @@ namespace Configuration_windows
         #endregion
 
         #region Properties
+
+        [Browsable(false)]
+        [XmlElement("Duration")]
+        public long DurationTicks
+        {
+            get { return _duration.Ticks; }
+            set { _duration = new TimeSpan(value); }
+        }
 
         public DayOfWeek Day
         {
@@ -29,6 +44,7 @@ namespace Configuration_windows
             set { _startTime = value; }
         }
 
+        [XmlIgnore]
         public TimeSpan Duration
         {
             get { return _duration; }

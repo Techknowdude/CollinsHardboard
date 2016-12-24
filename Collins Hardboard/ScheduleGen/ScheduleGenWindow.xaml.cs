@@ -52,13 +52,29 @@ namespace ScheduleGen
 
         private void GenerateSalesButton_OnClick(object sender, RoutedEventArgs e)
         {
+            try
+            { 
             ScheduleGenerator.GenerateSalesSchedule(SaleDate, StartDate, EndDate);
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Schedule generator encountered an error:\n" + exception.Message);
+            }
         }
 
         private void GeneratePredictionButton_OnClick(object sender, RoutedEventArgs e)
         {
+            try
+            {
 
             ScheduleGenerator.GeneratePredictionSchedule(SaleDate,StartDate,EndDate);
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Schedule generator encountered an error:\n"+exception.Message);
+            }
         }
 
         //private void AddControlButton_Click(object sender, RoutedEventArgs e)

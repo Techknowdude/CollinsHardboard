@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using Microsoft.Office.Interop.Excel;
 using Font = Microsoft.Office.Interop.Excel.Font;
@@ -9,6 +10,7 @@ namespace StaticHelpers
 {
     public static class StaticFunctions
     {
+        public static String OutputDebugFile = Path.GetFullPath("debugFile" + DateTime.Today.ToString("yy-MM-dd") + ".dat");
 
         public static DateTime GetDayAndTime(DateTime day, DateTime time)
         {
@@ -24,6 +26,20 @@ namespace StaticHelpers
         public static string GetRangeIndex(Int32 column, Int32 row)
         {
             return (char)('A' + column - 1) + row.ToString();
+        }
+
+
+        /// <summary>
+        /// Used for debug logs in release builds.
+        /// </summary>
+        /// <param name="line"></param>
+        public static void OutputDebugLine(String line)
+        {
+            using (StreamWriter file = new StreamWriter(OutputDebugFile, true))
+            {
+                //MessageBox.Show("Error detected. Outputpath: " + OutputDebugFile);
+                file.WriteLine(line);
+            }
         }
 
         /// <summary>

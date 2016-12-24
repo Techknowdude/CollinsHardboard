@@ -1,11 +1,87 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
+using Configuration_windows.Annotations;
+using StaticHelpers;
 
 namespace Configuration_windows
 {
+    class ShiftViewModel : INotifyPropertyChanged
+    {
+        private ObservableCollection<string> _runOnLines = new ObservableCollection<string>();
+        private Shift _shift;
+        public ObservableCollection<string> CoatingLines { get { return StaticFactoryValuesManager.CoatingLines; } }
+
+        public ObservableCollection<string> RunOnLines
+        {
+            get { return _runOnLines; }
+            set
+            {
+                _runOnLines = value;
+            }
+        }
+
+        public ICommand AddLineCommand
+        {
+            get { return new DelegateCommand(AddLine); }
+        }
+        public ICommand RemoveLineCommand
+        {
+            get { return new DelegateCommand(RemoveLine); }
+        }
+
+        public Shift Shift
+        {
+            get { return _shift; }
+            set
+            {
+                _shift = value;
+                if (_shift?.LinesCanRunOn != null)
+                {
+                    foreach (var line in _shift?.LinesCanRunOn)
+                    {
+                        RunOnLines.Add(line);
+                    }
+                }
+            }
+        }
+
+        private void RemoveLine(object obj)
+        {
+            string line = obj as string;
+            if (line != null)
+            {
+                RunOnLines.Remove(line);
+                Shift?.LinesCanRunOn.Remove(line);
+            }
+        }
+
+        private void AddLine(object obj)
+        {
+            string line = obj as string;
+            if (line != null && !RunOnLines.Contains(line))
+            {
+                RunOnLines.Add(line);
+                Shift?.LinesCanRunOn.Add(line);
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+
     /// <summary>
     /// Interaction logic for NewShiftWindow.xaml
     /// </summary>
@@ -22,6 +98,7 @@ namespace Configuration_windows
             _shift = shift;
             if (shift != null)
                 LoadShiftInfo();
+            ViewModel.Shift = shift;
             _isCoating = isCoating;
         }
 
@@ -127,6 +204,7 @@ namespace Configuration_windows
                 }
                 Shift.ForegroundColor = ForegroundColorPicker.SelectedColor;
                 Shift.BackgroundColor = BackgroundColorPicker.SelectedColor;
+                Shift.LinesCanRunOn = new List<string>(ViewModel.RunOnLines);
             }
             catch(Exception exception)
             {

@@ -22,7 +22,6 @@ namespace ImportLib
 
         public static bool CSVImport = false;
 
-        public String OutputDebugFile = Path.GetFullPath("debugFile" + DateTime.Today.ToString("yy-MM-dd") + ".dat");
         public const String ExcelProvider = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source='";
         public const String ExcelExtended = @"';Extended Properties=""Excel 12.0 Xml;HDR=YES"";";
         public const String FileFilter = "Excel Spreadsheets (" + ExcelExtention + ")|*" + ExcelExtention;
@@ -350,7 +349,7 @@ namespace ImportLib
                         else
                         {
 
-                            OutputDebugLine("## Inventory Import ## " +
+                            StaticFunctions.OutputDebugLine("## Inventory Import ## " +
                                             String.Format(
                                                 "No Matching Master Found:: Code: {0}, Tex: {1}, Thickness: {2}, Width: {3}, Length: {4}",
                                                 prodCode, tex, thick, width, length));
@@ -380,7 +379,7 @@ namespace ImportLib
             }
 
             MessageBox.Show("Inventory import finished with " + numImported + " imported");
-
+             
             try
             {
                 using (StreamWriter writer = new StreamWriter(Path.GetFullPath("ImportInfo/ImportedInventory.txt")))
@@ -583,10 +582,10 @@ Brandon: here are some quick notes for you -
         etc.
 ------------------------------------------------------------------------- */
 
-                OutputDebugLine("Creating connection...");
+                StaticFunctions.OutputDebugLine("Creating connection...");
                 SqlConnection sqlConnection = new SqlConnection(LTSalesConn.ToString());
 
-                OutputDebugLine("Creating command.");
+                StaticFunctions.OutputDebugLine("Creating command.");
                 string command = @"SELECT DISTINCT OH.branch AS Branch
 				, OH.loc AS Location
 				--, OH.orddate AS OrderDate-- original sales order date
@@ -667,16 +666,16 @@ WHERE           PD.protype = N'HB' AND OH.ordstatus = 'R' AND (SH.shpstatus IS N
 ORDER BY        DueDate,OrderNum, PD.Product;
 ";
 
-                OutputDebugLine("Opening connection...");
+                StaticFunctions.OutputDebugLine("Opening connection...");
                 sqlConnection.Open(); // try to connect
 
-                OutputDebugLine("Creating command.");
+                StaticFunctions.OutputDebugLine("Creating command.");
                 SqlCommand getSalesCommand = new SqlCommand(command, sqlConnection);
 
-                OutputDebugLine("Executing read");
+                StaticFunctions.OutputDebugLine("Executing read");
                 var result = getSalesCommand.ExecuteReader();
                 bool ignore = false;
-                OutputDebugLine("Starting read");
+                StaticFunctions.OutputDebugLine("Starting read");
                 // remove any old data.
                 StaticInventoryTracker.SalesItems.Clear();
 
@@ -706,7 +705,7 @@ ORDER BY        DueDate,OrderNum, PD.Product;
                         }
                         else
                         {
-                            OutputDebugLine("## Sales Import ## " +
+                            StaticFunctions.OutputDebugLine("## Sales Import ## " +
                                             String.Format(
                                                 "No Matching Master Found:: Code: {0}, Thickness: {1}, Width: {2}, Length: {3}",
                                                 prodCode, thick, width, length));
@@ -723,7 +722,7 @@ ORDER BY        DueDate,OrderNum, PD.Product;
                     }
                     catch (Exception exception) // bad record
                     {
-                        OutputDebugLine("## Import Sales Exception ## " + exception.Message);
+                        StaticFunctions.OutputDebugLine("## Import Sales Exception ## " + exception.Message);
                         //Console.WriteLine(exception.Message);
                         //MessageBox.Show("Encountered an error: " + exception.Message);
                     }
@@ -732,7 +731,7 @@ ORDER BY        DueDate,OrderNum, PD.Product;
             }
             catch (Exception exception) // issue with connection
             {
-                OutputDebugLine(" ## Import Sales File Exception ##" + exception.Message);
+                StaticFunctions.OutputDebugLine(" ## Import Sales File Exception ##" + exception.Message);
                 //Console.WriteLine(exception.Message);
                 //MessageBox.Show("Encountered an error: " + exception.Message);
                 successful = false;
@@ -849,13 +848,13 @@ ORDER BY        DueDate,OrderNum, PD.Product;
                         }
                         else
                         {
-                            OutputDebugLine("## Forecast Import ## " +
+                            StaticFunctions.OutputDebugLine("## Forecast Import ## " +
                                             $"No Matching Master Found:: Code: {prodCode}, Tex: {tex}, Thickness: {thick}, Width: {width}, Length: {length}");
                         }
                     }
                     catch (Exception exception) // bad record
                     {
-                        OutputDebugLine("## Forecast Import ## " + exception.Message);
+                        StaticFunctions.OutputDebugLine("## Forecast Import ## " + exception.Message);
                         Console.WriteLine(exception.Message);
                     }
                 }
@@ -864,7 +863,7 @@ ORDER BY        DueDate,OrderNum, PD.Product;
 
             catch (Exception exception) // issue with connection
             {
-                OutputDebugLine("## Forecast File Import ## " + exception.Message);
+                StaticFunctions.OutputDebugLine("## Forecast File Import ## " + exception.Message);
                 Console.WriteLine(exception.Message);
                 successful = false;
             }
@@ -1035,18 +1034,6 @@ ORDER BY        DueDate,OrderNum, PD.Product;
             return thickness;
         }
 
-        /// <summary>
-        /// Used for debug logs in release builds.
-        /// </summary>
-        /// <param name="line"></param>
-        private void OutputDebugLine(String line)
-        {
-            using (StreamWriter file = new StreamWriter(OutputDebugFile, true))
-            {
-                //MessageBox.Show("Error detected. Outputpath: " + OutputDebugFile);
-                file.WriteLine(line);
-            }
-        }
 
     }
 

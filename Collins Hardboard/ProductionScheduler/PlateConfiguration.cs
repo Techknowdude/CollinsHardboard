@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using Configuration_windows;
+using ImportLib;
 using ModelLib;
 using StaticHelpers;
 
@@ -213,17 +214,14 @@ namespace ProductionScheduler
                     }
                     else
                     {
-                        // Note: Add press loads per hour. use as such: Shift potential output = (#plates of tex)*(pressLoadsPerHour)*(shift length)
-                        // remaining usage = potential output - current usage
-                        var potentialOutputPerHour = (plate.Count+change)*PressManager.PressLoadsPerHour;
                         foreach (var pressShift in Shifts)
                         {
-                            var potentialOutputLayers = potentialOutputPerHour*pressShift.Duration.TotalHours;
+                            var potentialOutputUnits = 30; // normally 30 units of output, but depends on the thickness in the press
 
                             var actualOutput =
                                 pressShift.Produced.Where(m => m.MasterItem.Texture.Contains(tex))
                                     .Sum(i => i.UnitsMade*i.MasterItem.PiecesPerUnit);
-                            if (actualOutput > potentialOutputLayers)
+                            if (actualOutput > potentialOutputUnits)
                             {
                                 changePossible = false;
                                 break;

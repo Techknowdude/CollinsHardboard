@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using Configuration_windows;
 using Microsoft.Office.Interop.Excel;
 using ModelLib;
@@ -10,6 +11,7 @@ using StaticHelpers;
 
 namespace CoatingScheduler
 {
+    [Serializable]
     public class CoatingScheduleShift : ICoatingScheduleLogic
     {
         private static int _excelWidth = CoatingScheduleProductBase.ExcelWidth;
@@ -36,6 +38,11 @@ namespace CoatingScheduler
         {
             get { return _excelWidth; }
             set { _excelWidth = value; }
+        }
+
+        public override void Save(Stream stream, IFormatter formatter)
+        {
+            formatter.Serialize(stream,this);
         }
 
         public override Tuple<int, int> ExportToExcel(_Worksheet sheet, int column, int row)
@@ -78,30 +85,10 @@ namespace CoatingScheduler
             }
         }
 
-        public override void Save(BinaryWriter writer)
+
+        public static CoatingScheduleShift Load(Stream stream, IFormatter formatter)
         {
-            writer.Write(CoatingLine);
-            // save # of products
-            writer.Write(ChildrenLogic.Count);
-            // foreach product, call save
-            foreach (var logic in ChildrenLogic)
-            {
-                logic.Save(writer);
-            }
-        }
-
-        public static CoatingScheduleShift Load(BinaryReader reader)
-        {
-            string coatingLine = reader.ReadString();
-
-            int numChildren = reader.ReadInt32();
-            ObservableCollection<ICoatingScheduleLogic> children = new ObservableCollection<ICoatingScheduleLogic>();
-            for (; numChildren > 0; numChildren--)
-            {
-                children.Add(CoatingScheduleProductBase.Load(reader));
-            }
-
-            return new CoatingScheduleShift(coatingLine,children);
+            return (CoatingScheduleShift) formatter.Deserialize(stream);
         }
 
 
@@ -369,7 +356,7 @@ namespace CoatingScheduler
             var productController = ChildrenLogic.Last() as CoatingScheduleProduct;
 
             // find the maximum units that can be scheduled.
-            made = hours*config.ItemsOutPerMinute*60/item.PiecesPerUnit;
+            made = config.UnitsToMakeInHours(item,hours);
             made = Math.Ceiling(made);
 
             productController.Machine = machine;
@@ -404,13 +391,9 @@ namespace CoatingScheduler
             {
                 var product = ((CoatingScheduleProduct) coatingScheduleLogic);
                 var config = product.Config;
-
-                if (config?.ItemInID == item.MasterID)
-                {
-                    double temp = 0;
-                    Double.TryParse(product.Units, out temp);
-                    consumed += temp;
-                }
+                
+                //TODO: fix this
+                //consumed += config.GetUnitsConsumed(item, product.Units,product.MasterID);
             }
 
             return consumed;

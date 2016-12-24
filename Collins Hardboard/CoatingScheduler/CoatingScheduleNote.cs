@@ -2,12 +2,14 @@
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using CoatingScheduler.Annotations;
 using Microsoft.Office.Interop.Excel;
 using StaticHelpers;
 
 namespace CoatingScheduler
 {
+    [Serializable]
     public class CoatingScheduleNote : CoatingScheduleProductBase, INotifyPropertyChanged
     {
         #region Fields
@@ -49,19 +51,16 @@ namespace CoatingScheduler
             throw new NotImplementedException();
         }
 
-        public override void Save(BinaryWriter writer)
+        public override void Save(Stream stream, IFormatter formatter)
         {
-            writer.Write("Note");
-            writer.Write(Text);  
-            writer.Write(CoatingLine); 
+            formatter.Serialize(stream,this);
         }
 
-        public static CoatingScheduleNote Load(BinaryReader reader)
+        public static CoatingScheduleNote Load(Stream stream, IFormatter formatter)
         {
-            string text = reader.ReadString();
-            string coatingLine = reader.ReadString();
-            return new CoatingScheduleNote(text,coatingLine);
+            return (CoatingScheduleNote) formatter.Deserialize(stream);
         }
+
         public override Tuple<int, int> ExportToExcel(_Worksheet sheet, Int32 column, Int32 row)
         {
             Int32 nextRow = row;

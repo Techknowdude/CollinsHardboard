@@ -59,10 +59,10 @@
     <StartupObject>Main_Application.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>C5B06990F16E3A110283DE967ABEE21C878E61A1</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>F499213A07869CE5E4B9E0049ACF7F75FBF69DB2</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Main Application_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Main Application_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -175,6 +175,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Main Application_1_TemporaryKey.pfx" />
     <None Include="Main Application_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -2,14 +2,24 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 using StaticHelpers;
 
 namespace Configuration_windows
 {
+    [Serializable]
     public class ShiftHandler
     {
+        protected XmlSerializer Serializer = new XmlSerializer(typeof(ShiftHandler));
+
+        protected ShiftHandler()
+        {
+            // used for serialization
+        }
         // Singleton
+        [NonSerialized]
         private static ShiftHandler _coatingInstance;
+        [NonSerialized]
         private static ShiftHandler _productionInstance;
 
         public static ShiftHandler ProductionInstance
@@ -48,15 +58,15 @@ namespace Configuration_windows
 
             try
             {
-                using (BinaryReader reader = new BinaryReader(new FileStream(fileName, FileMode.Open)))
+                using (Stream stream = new FileStream(fileName, FileMode.Open))
                 {
+                    ShiftHandler loadedHandler = (ShiftHandler)Serializer.Deserialize(stream);
                     Shifts.Clear();
-                    for (Int32 numShifts = reader.ReadInt32(); numShifts > 0; --numShifts)
+                    foreach (var shift in loadedHandler.Shifts)
                     {
-                        Shift.Load(reader,_isCoating);
+                        Shifts.Add(shift);
                     }
                 }
-
             }
             catch
             {
@@ -71,18 +81,14 @@ namespace Configuration_windows
                 fileName = DatFileName;
             try
             {
-
-                using (BinaryWriter writer = new BinaryWriter(new FileStream(fileName, FileMode.OpenOrCreate)))
+                // clear file
+                File.Create(fileName).Close();
+                using (Stream stream = new FileStream(fileName, FileMode.OpenOrCreate))
                 {
-                    writer.Write(Shifts.Count);
-                    foreach (var shift in Shifts)
-                    {
-                        shift.Save(writer);
-                    }
+                    Serializer.Serialize(stream,this);
                 }
-
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 return false;
             }

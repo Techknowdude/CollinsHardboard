@@ -50,10 +50,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>A79506D03CA47B6525FD3641B1C93C9F5701C9EB</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B4BEA71536EE3234CDB11632E6303C01A9C5157F</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>CoatingScheduler_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>CoatingScheduler_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -199,6 +199,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="CoatingScheduler_1_TemporaryKey.pfx" />
     <None Include="CoatingScheduler_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

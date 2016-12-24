@@ -19,15 +19,6 @@ namespace ProductionScheduler
         //New Stuff
         private static ObservableCollection<PlateConfiguration> _plateConfigurations = new ObservableCollection<PlateConfiguration>();
 
-        public static double PressLoadsPerHour
-        {
-            get { return _pressLoadsPerHour; }
-            set
-            {
-                _pressLoadsPerHour = value; 
-            }
-        }
-
         // Old Stuff
         private const string DatFile = "pressManager.dat";
         private static Int32 _numPlates = 0;
@@ -108,7 +99,6 @@ namespace ProductionScheduler
                         formatter.Serialize(stream,plateChangeDay);
                     }
                     formatter.Serialize(stream,NumPlates);
-                    formatter.Serialize(stream,PressLoadsPerHour);
                 }
                 //writer.Write(Instance.NumPlates);
                 //writer.Write(Instance.NumPlateChangesPerWeek);
@@ -154,7 +144,6 @@ namespace ProductionScheduler
                     }
 
                     NumPlates = (int) formatter.Deserialize(stream);
-                    PressLoadsPerHour = (double) formatter.Deserialize(stream);
                     
                 }
 

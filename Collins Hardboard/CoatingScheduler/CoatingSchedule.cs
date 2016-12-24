@@ -4,6 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using Configuration_windows;
 using Microsoft.Office.Interop.Excel;
@@ -13,6 +15,7 @@ using Application = Microsoft.Office.Interop.Excel.Application;
 
 namespace CoatingScheduler
 {
+    [Serializable]
     public class CoatingSchedule : ICoatingScheduleLogic
     {
         private const string datFile = "DefaultSchedule.sch";
@@ -237,45 +240,16 @@ namespace CoatingScheduler
             }
         }
 
-        public static CoatingSchedule Load(BinaryReader reader)
+        public override void Save(Stream stream, IFormatter formatter)
         {
-            string dateRange = reader.ReadString();
-
-            ObservableCollection<CoatingLineInstructionSet> instructions = new ObservableCollection<CoatingLineInstructionSet>();
-            int numInstructions = reader.ReadInt32();
-            for (; numInstructions > 0; --numInstructions)
-            {
-                instructions.Add(CoatingLineInstructionSet.Load(reader));
-            }
-
-            ObservableCollection<ICoatingScheduleLogic> days = new ObservableCollection<ICoatingScheduleLogic>();
-            int numDays = reader.ReadInt32();
-            for (; numDays > 0; --numDays)
-            {
-                days.Add(CoatingScheduleDay.Load(reader));
-            }
-
-            var schedule = new CoatingSchedule(dateRange, instructions, days);
-            CurrentSchedule = schedule;
-            return schedule;
+            formatter.Serialize(stream,this);
         }
 
-        public override void Save(BinaryWriter writer)
+        public CoatingSchedule Load(Stream stream, IFormatter formatter)
         {
-            writer.Write(DateRange);
-
-            writer.Write(InstructionSets.Count);
-            foreach (var instructionSet in InstructionSets)
-            {
-                instructionSet.Save(writer);
-            }
-
-            writer.Write(ChildrenLogic.Count);
-            foreach (var logic in ChildrenLogic)
-            {
-                logic.Save(writer);
-            }
+            return (CoatingSchedule) formatter.Deserialize(stream);
         }
+        
 
         public override Tuple<int, int> ExportToExcel(_Worksheet sheet, int column, int row)
         {
@@ -505,9 +479,10 @@ namespace CoatingScheduler
         {
             try
             {
-                using (BinaryWriter writer = new BinaryWriter(new FileStream(file,FileMode.OpenOrCreate)))
+                using (FileStream stream = new FileStream(file,FileMode.OpenOrCreate))
                 {
-                    Save(writer);
+                    IFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(stream,this);
                 }
             }
             catch (Exception)
@@ -553,9 +528,10 @@ namespace CoatingScheduler
             CoatingSchedule schedule = null;
             try
             {
-                using (BinaryReader reader = new BinaryReader(new FileStream(file,FileMode.Open)))
+                using (FileStream stream = new FileStream(file,FileMode.Open))
                 {
-                    schedule = Load(reader);
+                    IFormatter formatter = new BinaryFormatter();
+                    schedule = (CoatingSchedule)formatter.Deserialize(stream);
                 }
             }
             catch (Exception exception)

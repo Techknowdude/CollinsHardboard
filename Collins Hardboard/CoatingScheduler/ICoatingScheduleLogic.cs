@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Windows;
 using Microsoft.Office.Interop.Excel;
 
 namespace CoatingScheduler
 {
+    [Serializable]
     public abstract class ICoatingScheduleLogic : DependencyObject
     {
 
@@ -46,7 +48,7 @@ namespace CoatingScheduler
 
         public abstract void ReconnectToControls();
 
-        public abstract void Save(BinaryWriter writer);
+        public abstract void Save(Stream stream, IFormatter formatter);
         public abstract Tuple<int, int> ExportToExcel(_Worksheet sheet, Int32 column, Int32 row);
 
         public abstract bool IsFull();

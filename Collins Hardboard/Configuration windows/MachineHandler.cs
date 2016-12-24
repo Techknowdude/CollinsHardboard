@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
+using System.Xml.Serialization;
 using Configuration_windows.Annotations;
 using Microsoft.Win32;
 using ModelLib;
@@ -14,11 +18,19 @@ namespace Configuration_windows
     public class MachineHandler : INotifyPropertyChanged
     {
         #region Fields
+        ObservableCollection<Configuration> _allConfigurations;
+
+        private bool _hasLoaded = false;
+        private static bool _instanceLoaded = false;
+        [NonSerialized]
         private static MachineHandler _inner;
         private ObservableCollection<Machine> _machineList;
-        private ObservableCollection<string> _machineNames;
+        [NonSerialized]
         private MachineConfigWindow _configWindow;
-        private string _saveName = @".\machines.dat";
+        [NonSerialized]
+        private string _saveName = @"machines.dat";
+        [NonSerialized]
+        XmlSerializer formatter = new XmlSerializer(typeof(ObservableCollection<Machine>));
         #endregion
 
         #region Properties
@@ -30,7 +42,7 @@ namespace Configuration_windows
             get { return _saveName; }
             set { _saveName = value; }
         }
-
+        protected static object instanceLock = new object();
         /// <summary>
         /// Singleton instance
         /// </summary>
@@ -38,8 +50,21 @@ namespace Configuration_windows
         {
             get
             {
-                if(_inner == null)
-                    _inner = new MachineHandler();
+                if (_inner == null)
+                {
+                    lock (instanceLock)
+                    {
+                        if (_inner == null)
+                        {
+                            var newHandler = new MachineHandler();
+                            _instanceLoaded = true;
+                            if (_inner == null)
+                            {
+                                _inner = newHandler;
+                            }
+                        }
+                    }
+                }
                 return _inner;
             }
         }
@@ -54,20 +79,19 @@ namespace Configuration_windows
             }
         }
 
-        public ObservableCollection<string> MachineNames
-        {
-            get { return _machineNames; }
-            set
-            {
-                _machineNames = value;
-                OnPropertyChanged();
-            }
-        }
-
         public MachineConfigWindow ConfigWindow
         {
             get { return _configWindow; }
             set { _configWindow = value; }
+        }
+
+        //TODO: Manage and save this list.
+        public ObservableCollection<ConfigurationGroup> AllConfigGroups { get; set; }
+
+        public ObservableCollection<Configuration> AllConfigurations
+        {
+            get { return _allConfigurations; }
+            set { _allConfigurations = value; }
         }
 
         #endregion
@@ -77,9 +101,8 @@ namespace Configuration_windows
         /// </summary>
         private MachineHandler()
         {   
-            
             _machineList = new ObservableCollection<Machine>();
-            _machineNames = new ObservableCollection<string>();
+            _allConfigurations = new ObservableCollection<Configuration>();
             Load();
         }
 
@@ -92,7 +115,7 @@ namespace Configuration_windows
         {
             return
                 MachineList.FirstOrDefault(
-                    machine => machine.ConfigurationList.Any(config => config.ItemOutID == item.MasterID));
+                    machine => machine.ConfigurationList.Any(config => config.CanMake(item)));
         }
 
 
@@ -102,30 +125,30 @@ namespace Configuration_windows
         /// <param name="machine"></param>
         public void AddMachine(Machine machine = null)
         {
-            Machine newMachine = machine ?? Machine.CreateMachine("New Machine");
+            Machine newMachine = machine;
+            if(newMachine == null)
+                newMachine = Machine.CreateMachine("New Machine");
             _machineList.Add(newMachine);
-            _machineNames.Add(newMachine.Name);
-            newMachine.PropertyChanged += ChildMachineChanged;
+            //newMachine.PropertyChanged += ChildMachineChanged;
             OnPropertyChanged();
         }
 
-        private void ChildMachineChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
-        {
-            if (propertyChangedEventArgs.PropertyName == "Name")
-            {
-                Machine sendingMachine = sender as Machine;
-                if (sendingMachine != null)
-                {
-                    Int32 index = _machineList.IndexOf(sendingMachine);
-                    if (index != -1)
-                    {
-                        _configWindow.SaveFocus();
-                        _machineNames[index] = sendingMachine.Name;
-                        _configWindow.ReFocus();
-                    }
-                }
-            }
-        }
+        //private void ChildMachineChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        //{
+        //    if (propertyChangedEventArgs.PropertyName == "Name")
+        //    {
+        //        Machine sendingMachine = sender as Machine;
+        //        if (sendingMachine != null)
+        //        {
+        //            Int32 index = _machineList.IndexOf(sendingMachine);
+        //            if (index != -1)
+        //            {
+        //                _configWindow.SaveFocus();
+        //                _configWindow.ReFocus();
+        //            }
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Removes the machine at the passed index and updates the name list
@@ -136,14 +159,11 @@ namespace Configuration_windows
             if (index >= 0 && index < _machineList.Count)
             {
 
-                var result = MessageBox.Show("Are you sure you want to remove this configuration?", "",
-                    MessageBoxButton.OKCancel);
-                if (result == MessageBoxResult.OK)
+                var result = MessageBox.Show("Are you sure you want to remove this Machine?", "",
+                    MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
                 {
-                    _machineList[index].PropertyChanged += ChildMachineChanged;
-
                     _machineList.RemoveAt(index);
-                    _machineNames.RemoveAt(index);
                     OnPropertyChanged();
                 }
             }
@@ -158,7 +178,7 @@ namespace Configuration_windows
             {
                 SaveMachines(SaveName);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.DefaultExt = "dat";
@@ -178,20 +198,17 @@ namespace Configuration_windows
         /// </summary>
         public void Load()
         {
+            string fileName = SaveName;
             try
             {
-                using (BinaryReader reader = new BinaryReader(new FileStream(SaveName, FileMode.OpenOrCreate)))
+                using (Stream stream = new FileStream(fileName, FileMode.OpenOrCreate))
                 {
                     MachineList.Clear();
-                    Int32 configCount = reader.ReadInt32();
-                    for (; configCount > 0; configCount--)
-                    {
-                        Machine newMachine = Machine.CreateMachine(reader);
-                        AddMachine(newMachine);
-                    }
+                    MachineList = (ObservableCollection<Machine>) formatter.Deserialize(stream);
+                    _hasLoaded = true;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.DefaultExt = "dat";
@@ -202,30 +219,32 @@ namespace Configuration_windows
                 bool? accept = openFileDialog.ShowDialog();
                 if (accept == true)
                 {
-                    //SaveName = openFileDialog.FileName;
-                    using (BinaryReader reader = new BinaryReader(new FileStream(SaveName, FileMode.OpenOrCreate)))
+                    fileName = openFileDialog.FileName;
+                    try
                     {
-                        MachineList.Clear();
 
-                        Int32 configCount = reader.ReadInt32();
-                        for (; configCount > 0; configCount--)
+                        using (Stream stream = new FileStream(fileName, FileMode.OpenOrCreate))
                         {
-                            Machine newMachine = Machine.CreateMachine(reader);
-                            AddMachine(newMachine);
+                            MachineList.Clear();
+                            MachineList = (ObservableCollection<Machine>)formatter.Deserialize(stream);
+                            _hasLoaded = true;
                         }
+
+                    }
+                    catch (Exception inException)
+                    {
+                        MessageBox.Show("Unable to load Machine configuration. Error: " + inException.Message,"ERROR",MessageBoxButton.OK);
                     }
                 }
             }
         }
         protected void SaveMachines(string fileName)
         {
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(fileName, FileMode.OpenOrCreate)))
+            File.Create(fileName).Close();
+            using (Stream stream = new FileStream(fileName, FileMode.OpenOrCreate))
             {
-                writer.Write(MachineList.Count);
-                foreach (Machine machine in MachineList)
-                {
-                    machine.Save(writer);
-                }
+                XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<Machine>));
+                serializer.Serialize(stream,MachineList);
             }
         }
 
@@ -251,22 +270,17 @@ namespace Configuration_windows
                 if (accept == true)
                 {
                     //SaveName = openFileDialog.FileName;
-                    using (BinaryReader reader = new BinaryReader(new FileStream(SaveName, FileMode.OpenOrCreate)))
+                    using (Stream stream = new FileStream(SaveName, FileMode.OpenOrCreate))
                     {
-                        MachineList.Clear();
-
-                        Int32 configCount = reader.ReadInt32();
-                        for (; configCount > 0; configCount--)
-                        {
-                            Machine newMachine = Machine.CreateMachine(reader);
-                            AddMachine(newMachine);
-                        }
+                        MachineList = (ObservableCollection<Machine>) formatter.Deserialize(stream);
+                        _hasLoaded = true;
+                        RefreshConfigurations();
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                
+                MessageBox.Show("An error occured while loading the file: " + exception.Message);
             }
         }
 
@@ -277,7 +291,7 @@ namespace Configuration_windows
                 SaveMachines(SaveName);
                 MessageBox.Show("Save successful");
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 MessageBox.Show("Save failed. Is the machine.dat file open?");
             }
@@ -288,6 +302,47 @@ namespace Configuration_windows
             foreach (var machine in Instance.MachineList)
             {
                 machine.CheckConfigRefs();
+            }
+        }
+
+        public void RemoveMachine(Machine machine)
+        {
+            int index = MachineList.IndexOf(machine);
+            if (index < 0 || machine == null) return;
+
+            RemoveMachine(index);
+        }
+
+        public void UpdateName(Machine machine, string value)
+        {
+            if (PropertyChanged != null) PropertyChanged(machine, new PropertyChangedEventArgs("Name"));
+        }
+
+        public void RefreshConfigurations()
+        {
+            List<Configuration> checkConfigurations = new List<Configuration>(AllConfigurations);
+            foreach (var machine in MachineList)
+            {
+                foreach (var configurationGroup in machine.ConfigurationList)
+                {
+                    foreach (var configuration in configurationGroup.Configurations)
+                    {
+                        checkConfigurations.Remove(configuration);
+                        if (!AllConfigurations.Contains(configuration))
+                        {
+                            AllConfigurations.Add(configuration);
+                        }
+                    }
+                }
+            }
+            // configs that are not used by anything.
+            foreach (var checkConfiguration in checkConfigurations)
+            {
+                AllConfigurations.Remove(checkConfiguration);
+            }
+            if (ConfigWindow != null)
+            {
+                ConfigWindow.ViewModel.RefreshConfigs();
             }
         }
     }

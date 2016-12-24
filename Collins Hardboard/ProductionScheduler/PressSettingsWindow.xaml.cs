@@ -16,12 +16,6 @@ namespace ProductionScheduler
             set { PressManager.NumPlates = value; }
         }
 
-        public double PressLoadsPerHour { get { return PressManager.PressLoadsPerHour; } set
-        {
-            PressManager.PressLoadsPerHour = value;
-        } }
-
-
         public bool MondayChecked
         {
             get { return _mondayChecked; }

@@ -1,21 +1,229 @@
 ﻿<Window x:Class="Configuration_windows.MachineConfigWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MachineConfigWindow" Height="630" Width="860">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:configurationWindows="clr-namespace:Configuration_windows"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="MachineConfigWindow" Height="720" Width="1280"
+        Name="ThisWindow">
+    <Window.Resources>
+        <configurationWindows:NullToEnabledConverter x:Key="nullToEnabledConverter" />
+    </Window.Resources>
+    <Window.DataContext>
+        <configurationWindows:MachineWindowViewModel x:Name="ViewModel"/>
+    </Window.DataContext>
     <Grid>
-        <Button Name="SaveButton" Width="50" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" Click="SaveButton_Click">Save</Button>
-        <Button Name="LoadButton" Width="50" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="72,0,0,0" Click="LoadButton_Click">Load</Button>
+        <Button Name="SaveButton" Width="50" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" Command="{Binding SaveCommand}">Save</Button>
+        <Button Name="LoadButton" Width="50" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="72,0,0,0" Command="{Binding LoadCommand}">Load</Button>
         <ScrollViewer CanContentScroll="True" Margin="0,25,0,0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            
-        <StackPanel Name="MainStackPanel" Orientation="Horizontal" Margin="10">
-            <StackPanel>
-                <ListBox Name="MachineListBox" Height="300" SelectionChanged="MachineListBox_OnSelectionChanged"/>
-                <StackPanel Orientation="Horizontal">
-                    <Button Name="AddButton" Content="Add Machine" HorizontalAlignment="Left" Margin="10" Padding="3" VerticalAlignment="Top" Width="Auto" Click="AddButton_OnClick"/>
-                    <Button Name="DeleteButton" Content="Delete Machine" HorizontalAlignment="Left" Margin="10" Padding="3" VerticalAlignment="Top" Width="Auto" Click="DeleteButton_OnClick"/>
+
+            <Grid Name="MainStackPanel" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <WrapPanel>
+                        <Label>Machines</Label>
+                    </WrapPanel>
+                    <ListBox Name="MachineListBox" MinHeight="300" ItemsSource="{Binding MachineList}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding Name}" MinWidth="120"></TextBlock>
+                                    <Button Padding="5" Margin="10,2,2,2" Command="{Binding ElementName=ViewModel, Path=DeleteMachineCommand}" CommandParameter="{Binding}">Delete</Button>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Name="AddButton" Content="Add Machine" HorizontalAlignment="Left" Margin="10,0" Padding="3" VerticalAlignment="Top" Width="Auto" Command="{Binding AddMachineCommand}"/>
                 </StackPanel>
-            </StackPanel>
-        </StackPanel>
+                <Grid Grid.Column="1" Name="MachineControlGrid" DataContext="{Binding ElementName=MachineListBox, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource nullToEnabledConverter}, ElementName=MachineListBox, Path=SelectedItem}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="265.6"></ColumnDefinition>
+                        <ColumnDefinition Width="88"></ColumnDefinition>
+                        <ColumnDefinition Width="340"></ColumnDefinition>
+                        <ColumnDefinition Width="340"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="140"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <WrapPanel Grid.Row="0" Grid.ColumnSpan="4"  Height="28" Margin="10" VerticalAlignment="Center">
+                        <TextBlock VerticalAlignment="Center">Machine Name:</TextBlock>
+                        <TextBox  Width="80" Name="NameTb" VerticalContentAlignment="Center" VerticalAlignment="Center" Text="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.Name)}"></TextBox>
+                    </WrapPanel><!--Start LinesCanRun-->
+                    <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2">Lines to run on</Label>
+                    <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="LinesRunLb" ItemsSource="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.LinesCanRunOn)}"
+                             Margin="0,20,0,34">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding}" Margin="5,2"></TextBlock>
+                                    <Button Command="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.RemoveLineRunCommand)}" CommandParameter="{Binding}" Padding="4,0">Delete</Button>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <!-- Add/Remove buttons -->
+                    <ComboBox Name="LineRunOnCB" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="75,5,55,5"
+                              ItemsSource="{Binding ElementName=ViewModel, Path=AvailableLines}"/>
+                    <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Padding="4,2" Content="Add Line" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                            Command="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.AddLineRunCommand)}" 
+                            CommandParameter="{Binding ElementName=LineRunOnCB, Path=SelectedItem}"
+                            />
+                    <!--End LinesCanRun-->
+                    <!--Start Line Conflict-->
+                    <Label Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">Line conflicts</Label>
+                    <ListBox Grid.Row="1" Grid.Column="2" Name="LineConflictLb" ItemsSource="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.LineConflicts)}" 
+                            Margin="0,20,0,34">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding}" Margin="5,2"></TextBlock>
+                                    <Button Command="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.RemoveLineConflictCommand)}" CommandParameter="{Binding}" Padding="4,0">Delete</Button>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                    </ListBox>
+
+                    <ComboBox Name="LineConflictCb" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom" Margin="75,5,55,5"
+                              ItemsSource="{Binding ElementName=ViewModel, Path=AvailableLines}"/>
+                    <Button Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" Padding="4,2" Content="Add Line" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                            Command="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.AddLineConflictCommand)}" CommandParameter="{Binding ElementName=LineConflictCb, Path=SelectedItem}"/>
+                    <!--End Line Conflict-->
+                    <!--Start Machine Conflicts-->
+                    <Label Grid.Column="3" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">Machine conflicts</Label>
+                    <ListBox Grid.Row="1" Grid.Column="3" Name="MachineConflictLb" ItemsSource="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.MachineConflicts)}"
+                         Margin="2,20,2,35">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding}" Margin="5,2"></TextBlock>
+                                    <Button Command="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.RemoveMachineConflictCommand)}" CommandParameter="{Binding Name}" Padding="4,0">Delete</Button>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                    </ListBox>
+
+                    <ComboBox Name="MachineConflictCb" Grid.Row="1" Grid.Column="3" VerticalAlignment="Bottom" Margin="95,5,35,5"
+                              ItemsSource="{Binding ElementName=ViewModel, Path=AvailableMachines}"
+                              DisplayMemberPath="Name"/>
+                    <Button Grid.Row="1" Grid.Column="3" Margin="5" Padding="4,2" Content="Add Machine" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                            Command="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.AddMachineConflictCommand)}" CommandParameter="{Binding ElementName=MachineConflictCb, Path=SelectedValue}"/>
+                    <!--End Machine Conflicts-->
+
+                    <!--Start Config Groups-->
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Top">Config Groups</TextBlock>
+                    <ListBox Grid.Row="2" Grid.Column="0" Name="ConfigGroupsLb" ItemsSource="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.ConfigurationList)}"
+                         Margin="0,30,1.6,35">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="configurationWindows:ConfigurationGroup">
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding Path=Name}" Margin="5,2"></TextBlock>
+                                    <Button Command="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.RemoveConfigGroupCommand)}" CommandParameter="{Binding}" Padding="4,0">Delete</Button>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                    </ListBox>
+                    <Button Grid.Column="0" Grid.Row="2" Content="New Config Group" Width="110" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,5"
+                            Command="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.AddNewGroupCommand)}"/>
+                    <!--End Group area-->
+
+                    <!--Start Config Area-->
+                    <GroupBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Header="Configuration Group" IsEnabled="{Binding Converter={StaticResource nullToEnabledConverter}, ElementName=ConfigGroupsLb, Path=SelectedItem}">
+                        <Grid Name="ConfigGroupGrid" DataContext="{Binding ElementName=ConfigGroupsLb, Path=SelectedItem}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="37*" />
+                                <RowDefinition Height="406*" />
+                            </Grid.RowDefinitions>
+                            <WrapPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,377.2,1.8">
+                                <Label>Group Name:</Label>
+                                <TextBox MinWidth="100" Text="{Binding ElementName=ConfigGroupGrid, Path=DataContext.(configurationWindows:ConfigurationGroup.Name)}"/>
+                            </WrapPanel>
+                            <WrapPanel Grid.Row="0" Grid.Column="1" Margin="0.4,0,0.2,1.8">
+                                <Label>Change Time</Label>
+                                <xctk:MaskedTextBox Name="ChangeTimeBox" Width="50" Height="24" Text="{Binding ElementName=ConfigGroupGrid, Path=DataContext.(configurationWindows:ConfigurationGroup.ChangeTime)}"  Mask="00:00:00" MinWidth="10" Margin="10,0,0,0"/>
+                            </WrapPanel>
+                            <TextBlock Margin="20,40,0,0">Configurations</TextBlock>
+                            <ListBox Grid.Row="1" Grid.Column="0" Name="ConfigLb" ItemsSource="{Binding ElementName=ConfigGroupGrid, Path=DataContext.(configurationWindows:ConfigurationGroup.Configurations)}" Margin="2,0,2,30" >
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <WrapPanel>
+                                            <TextBlock Text="{Binding Path=Name}" Margin="5,2"></TextBlock>
+                                            <Button Command="{Binding ElementName=ConfigGroupGrid, Path=DataContext.(configurationWindows:ConfigurationGroup.RemoveConfigCommand)}" CommandParameter="{Binding}" Padding="4,0">Delete</Button>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <Button Grid.Row="1" Grid.Column="0" Padding="5,4" Margin="5,30" VerticalAlignment="Bottom" HorizontalAlignment="Center" Command="{Binding ElementName=ConfigGroupGrid, Path=DataContext.(configurationWindows:ConfigurationGroup.AddConfigCommand)}">Add New Config</Button>
+                            <Button Grid.Row="1" Grid.Column="0" Padding="5,4" Margin="5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Command="{Binding ElementName=ConfigGroupGrid, Path=DataContext.(configurationWindows:ConfigurationGroup.AddConfigCommand)}" CommandParameter="{Binding ElementName=ExistingComfigCb, Path=SelectedItem}">Add Existing</Button>
+                            <ComboBox Grid.Column="0" Grid.Row="1" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="150" ItemsSource="{Binding ElementName=ViewModel, Path=AllConfigurations}" Name="ExistingComfigCb" DisplayMemberPath="Name"></ComboBox>
+                            
+                            <GroupBox Grid.Row="1" Grid.Column="1" Header="Configuration" Name="ConfigurationGb" DataContext="{Binding ElementName=ConfigLb, Path=SelectedItem}">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" IsEnabled="{Binding Converter={StaticResource nullToEnabledConverter}, ElementName=ConfigLb, Path=SelectedItem}">
+                                    <StackPanel>
+                                        <WrapPanel>
+                                            <Label>Config Name:</Label>
+                                            <TextBox Text="{Binding ElementName=ConfigurationGb, Path=DataContext.(configurationWindows:Configuration.Name)}" MinWidth="100"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Pieces Out Per Minute:</Label>
+                                            <TextBox Text="{Binding ElementName=ConfigurationGb, Path=DataContext.(configurationWindows:Configuration.PiecesOutPerMinute)}" MinWidth="100"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Outputs</Label>
+                                            <Button Command="{Binding ElementName=ConfigurationGb, Path=DataContext.(configurationWindows:Configuration.AddNewOutputCommand)}" Margin="30,0,0,0" Padding="5">Add Output</Button>
+                                        </WrapPanel>
+
+                                        <ListBox Name="ConfigOutputLb" Margin="4" MinHeight="60" ItemsSource="{Binding ElementName=ConfigurationGb, Path=DataContext.(configurationWindows:Configuration.OutputItems)}">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate DataType="configurationWindows:ConfigItem">
+                                                    <WrapPanel>
+                                                        <ComboBox Width="200" ItemsSource="{Binding ElementName=ViewModel, Path=MasterList}" SelectedValuePath="MasterID" SelectedValue="{Binding MasterID}" DisplayMemberPath="Description"></ComboBox>
+                                                        <Label>Pieces:</Label>
+                                                        <TextBox Margin="5,0" Padding="5" MinWidth="80" Text="{Binding Path=Pieces}"></TextBox>
+                                                        <Button Command="{Binding ElementName=ConfigurationGb, Path=DataContext.(configurationWindows:Configuration.RemoveOutputCommand)}" CommandParameter="{Binding}">Delete</Button>
+                                                    </WrapPanel>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                        <WrapPanel>
+                                            <Label>Inputs</Label>
+                                            <Button Command="{Binding ElementName=ConfigurationGb, Path=DataContext.(configurationWindows:Configuration.AddNewInputCommand)}" Margin="30,0,0,0" Padding="5">Add Input</Button>
+                                        </WrapPanel>
+
+                                        <ListBox Name="ConfigInputLb" Margin="4" MinHeight="60" ItemsSource="{Binding ElementName=ConfigurationGb, Path=DataContext.(configurationWindows:Configuration.InputItems)}">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate DataType="configurationWindows:ConfigItem">
+                                                    <WrapPanel>
+                                                        <ComboBox Width="200" ItemsSource="{Binding ElementName=ViewModel, Path=MasterList}" SelectedValuePath="MasterID" SelectedValue="{Binding MasterID}" DisplayMemberPath="Description"></ComboBox>
+                                                        <Label>Pieces:</Label>
+                                                        <TextBox Margin="5,0" Padding="5" MinWidth="80" Text="{Binding Path=Pieces}"></TextBox>
+                                                        <Button Command="{Binding ElementName=ConfigurationGb, Path=DataContext.(configurationWindows:Configuration.RemoveInputCommand)}" CommandParameter="{Binding}">Delete</Button>
+                                                    </WrapPanel>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </GroupBox>
+                        </Grid>
+                    </GroupBox>
+                    <!--End Config Area-->
+                </Grid>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </Window>

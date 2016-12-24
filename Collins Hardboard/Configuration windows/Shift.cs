@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace Configuration_windows
 {
     [Serializable]
     public class Shift
     {
+        Shift()
+        {
+            // For serialization
+        }
+
         #region Fields
+
+        private List<string> _linesCanRunOn = new List<string>();
         private DateTime _startDate;
         private DateTime _endDate;
         private List<ShiftTime> _exceptionList = new List<ShiftTime>();
@@ -25,6 +35,15 @@ namespace Configuration_windows
         #endregion
 
         #region Properties
+
+        [Browsable(false)]
+        [XmlElement("Duration")]
+        public long ChangeTimeTicks
+        {
+            get { return _duration.Ticks; }
+            set { _duration = new TimeSpan(value); }
+        }
+
         public static Brush CanceledForeground
         {
             get { return _canceledForeground; }
@@ -78,6 +97,7 @@ namespace Configuration_windows
             set { _foregroundColor = value; }
         }
 
+        [XmlIgnore]
         public TimeSpan Duration
         {
             get { return _duration; }
@@ -161,6 +181,12 @@ namespace Configuration_windows
                 return String.Format("{0} ({1} - {2})", Name, StartTime.ToString("h:mm tt"),
                     (StartTime + Duration).ToString("h:mm tt"));
             }
+        }
+
+        public List<string> LinesCanRunOn
+        {
+            get { return _linesCanRunOn; }
+            set { _linesCanRunOn = value; }
         }
 
         public string MakeLabel(ShiftTime excep)

@@ -17,7 +17,6 @@
                 <MenuItem Header="Coating _Efficiency" Click="Efficiency_Click"/>
             </MenuItem>
             <MenuItem Header="_Configure">
-                <MenuItem Name="ConfigMenuItem" Header="Machine _Configurations" Click="ConfigMenuItem_OnClick"/>
                 <MenuItem Name="MachinesMenuItem" Header="_Machines" Click="MachinesMenuItem_OnClick"/>
                 <MenuItem Name="CoatingShiftMenuItem" Header="_Coating Shifts" Click="CoatingShiftMenuItem_OnClick"/>
                 <MenuItem Name="ProductionShiftMenuItem" Header="_Production Shifts" Click="ProductionShiftMenuItem_OnClick"/>

@@ -39,8 +39,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleGenTests", "Schedul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportLibTests", "ImportLibTests\ImportLibTests.csproj", "{55C23EBE-AA0F-448E-8519-EF9210B059BB}"
 EndProject
-Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "Installer", "Installer\Installer.aiproj", "{1C22FC18-CD74-47E1-B266-507254111EDE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationWindowsTests", "ConfigurationWindowsTests\ConfigurationWindowsTests.csproj", "{84F518FB-952A-4197-89C8-048D1FBCC19E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductionSchedulerTests", "ProductionSchedulerTests\ProductionSchedulerTests.csproj", "{21B708F9-2895-4225-81C8-9920E754280C}"
@@ -48,9 +46,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedScheduleViewer", "ExtendedScheduleViewer\ExtendedScheduleViewer.csproj", "{D75A7C75-622D-499A-98D4-F517D35C4C7D}"
 EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -113,10 +108,6 @@ Global
 		{55C23EBE-AA0F-448E-8519-EF9210B059BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55C23EBE-AA0F-448E-8519-EF9210B059BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55C23EBE-AA0F-448E-8519-EF9210B059BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C22FC18-CD74-47E1-B266-507254111EDE}.Debug|Any CPU.ActiveCfg = All
-		{1C22FC18-CD74-47E1-B266-507254111EDE}.Debug|Any CPU.Build.0 = All
-		{1C22FC18-CD74-47E1-B266-507254111EDE}.Release|Any CPU.ActiveCfg = All
-		{1C22FC18-CD74-47E1-B266-507254111EDE}.Release|Any CPU.Build.0 = All
 		{84F518FB-952A-4197-89C8-048D1FBCC19E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{84F518FB-952A-4197-89C8-048D1FBCC19E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84F518FB-952A-4197-89C8-048D1FBCC19E}.Release|Any CPU.ActiveCfg = Release|Any CPU

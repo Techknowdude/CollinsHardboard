@@ -50,10 +50,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>CEA5A99529EE59E4848E2706B617CFCCE4556772</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>480A4698AC2DF4BC092AA284C45A589202AE3759</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ScheduleGen_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ScheduleGen_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -177,6 +177,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="ScheduleGen_1_TemporaryKey.pfx" />
     <None Include="ScheduleGen_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

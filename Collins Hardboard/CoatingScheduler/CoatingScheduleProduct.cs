@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using CoatingScheduler.Annotations;
 using Configuration_windows;
 using Microsoft.Office.Interop.Excel;
@@ -10,6 +11,7 @@ using StaticHelpers;
 
 namespace CoatingScheduler
 {
+    [Serializable]
     public class CoatingScheduleProduct : CoatingScheduleProductBase, INotifyPropertyChanged
     {
 
@@ -284,48 +286,14 @@ namespace CoatingScheduler
             _units = units;
         }
 
-        public static CoatingScheduleProduct Load(BinaryReader fin)
+        public static CoatingScheduleProduct Load(Stream stream, IFormatter formatter)
         {
-            bool trial = fin.ReadBoolean();
-            bool backbrand = fin.ReadBoolean();
-            int masterID = fin.ReadInt32();
-            string thickness = fin.ReadString();
-            string productCode = fin.ReadString();
-            string grades = fin.ReadString();
-            bool hasBarcode = fin.ReadBoolean();
-            string units = fin.ReadString();
-            string notes = fin.ReadString();
-            string placement = fin.ReadString();
-            string description = fin.ReadString();
-            string coatingLine = fin.ReadString();
-            double unitsPerHour = fin.ReadDouble();
-            DurationType durationType = (DurationType)fin.ReadInt32();
-            Machine machine = Machine.CreateMachine(fin);
-            Configuration config = Configuration.CreateConfiguration(fin);
-
-            return new CoatingScheduleProduct(thickness, description, productCode, grades, units, hasBarcode, notes,
-                placement, trial, backbrand, masterID, coatingLine,unitsPerHour,durationType,machine,config);
+            return (CoatingScheduleProduct) formatter.Deserialize(stream);
         }
 
-        public override void Save(BinaryWriter fout)
+        public override void Save(Stream stream, IFormatter formatter)
         {
-            fout.Write("Product"); // so the base class knows which to load
-            fout.Write(IsTrial);
-            fout.Write(HasBackbrand);
-            fout.Write(MasterID);
-            fout.Write(Thickness);
-            fout.Write(ProductCode);
-            fout.Write(Grades);
-            fout.Write(HasBarcode);
-            fout.Write(Units);
-            fout.Write(Notes);
-            fout.Write(Placement);
-            fout.Write(Description);
-            fout.Write(CoatingLine);
-            fout.Write(UnitsPerHour);
-            fout.Write((int)DurationType);
-            Machine.Save(fout);
-            Config.Save(fout);
+            formatter.Serialize(stream,this);
         }
 
         public override Tuple<int, int> ExportToExcel(_Worksheet sheet, Int32 column, Int32 row)

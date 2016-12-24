@@ -230,7 +230,8 @@ namespace CoatingScheduler
                     if (product.Config.ItemInID == productMasterItem.MasterID)
                     {
                         Double.TryParse(product.Product.Units, out temp);
-                        unitChange -= (product.Config.ItemsIn / (double)product.Config.ItemsOut) * (temp*60*(product.Config.ItemsOutPerMinute*(product.Config.ItemsIn /(double)product.Config.ItemsOut)));
+                        //TODO: update all of this....
+                        unitChange -= product.Config.GetUnitsConsumed(productMasterItem, temp, null);
                     }
                     if (product.Config.ItemOutID == productMasterItem.MasterID)
                     {

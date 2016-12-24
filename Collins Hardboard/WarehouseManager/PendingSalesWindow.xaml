@@ -29,7 +29,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <WrapPanel Grid.Row="0">
-            <TextBlock Text="Production Code" Style="{StaticResource CodeStyle}"></TextBlock>
+            <TextBlock Text="Description" Style="{StaticResource CodeStyle}"></TextBlock>
             <TextBlock Text="Units" Style="{StaticResource UnitsStyle}"></TextBlock>
             <TextBlock Text="Date" Style="{StaticResource DateStyle}"></TextBlock>
         </WrapPanel>
@@ -37,7 +37,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
-                        <TextBlock Text="{Binding Path=ProductionCode}" Style="{StaticResource CodeStyle}"></TextBlock>
+                        <TextBlock Text="{Binding Path=Description}" Style="{StaticResource CodeStyle}"></TextBlock>
                         <TextBlock Text="{Binding Path=Units}" Style="{StaticResource UnitsStyle}"></TextBlock>
                         <TextBlock Text="{Binding Path=Date}" Style="{StaticResource DateStyle}"></TextBlock>
                     </WrapPanel>

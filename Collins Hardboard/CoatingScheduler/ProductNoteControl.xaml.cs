@@ -89,12 +89,7 @@ namespace CoatingScheduler
         {
             NotesBox.Text = Note.Text;
         }
-
-        public override string LoadTrackingItem()
-        {
-            return "";
-        }
-
+        
         private void BtnSwapUp_OnClick(object sender, RoutedEventArgs e)
         {
             if(Note != null)

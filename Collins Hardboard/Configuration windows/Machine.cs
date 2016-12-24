@@ -6,29 +6,36 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Windows;
+using System.Windows.Input;
 using Configuration_windows.Annotations;
 using ModelLib;
+using StaticHelpers;
 
 namespace Configuration_windows
 {
     /// <summary>
     /// Represents a physical machine in the production line.
     /// </summary>
-    public sealed class Machine : INotifyPropertyChanged
+    [Serializable]
+    public class Machine : INotifyPropertyChanged
     {
         #region Fields
 
         private String _name;
-        private ObservableCollection<Configuration> _configurationList;
+        private ObservableCollection<ConfigurationGroup> _configurationList;
         private ObservableCollection<string> _linesCanRunOn;
-        private ObservableCollection<string> _configurationListNames;
         private ObservableCollection<string> _lineConflicts;
         private ObservableCollection<string> _machineConflicts;
-
         #endregion
 
         #region Properties
+
+        protected Machine()
+        {
+            
+        }
 
         /// <summary>
         /// Name of the machine
@@ -40,6 +47,7 @@ namespace Configuration_windows
             {
                 if (_name != value)
                 {
+                    MachineHandler.Instance.UpdateName(this, value);
                     _name = value;
                     OnPropertyChanged();
                 }
@@ -49,7 +57,7 @@ namespace Configuration_windows
         /// <summary>
         /// List of configurations the machine may use
         /// </summary>
-        public ObservableCollection<Configuration> ConfigurationList
+        public ObservableCollection<ConfigurationGroup> ConfigurationList
         {
             get { return _configurationList; }
             set
@@ -57,22 +65,6 @@ namespace Configuration_windows
                 if (_configurationList != value)
                 {
                     _configurationList = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// List of the names of all configurations
-        /// </summary>
-        public ObservableCollection<String> ConfigurationListNames
-        {
-            get { return _configurationListNames; }
-            set
-            {
-                if (value != _configurationListNames)
-                {
-                    _configurationListNames = value;
                     OnPropertyChanged();
                 }
             }
@@ -106,6 +98,139 @@ namespace Configuration_windows
             }
         }
 
+
+        #region ICommands for GUI
+
+        public ICommand RemoveMachineConflictCommand
+        {
+            get { return new DelegateCommand(RemoveMachineConflict); }
+        }
+
+
+        public ICommand AddMachineConflictCommand
+        {
+           get { return new DelegateCommand(AddMachineConflict);}
+        }
+
+
+        public ICommand AddExistingCommand
+        {
+            get { return new DelegateCommand(AddExistingConfigGroup);}
+        }
+
+        public ICommand AddLineRunCommand
+        {
+            get { return new DelegateCommand(AddRunOnLine); }
+        }
+        public ICommand RemoveLineRunCommand
+        {
+            get { return new DelegateCommand(RemoveRunOnLine); }
+        }
+
+        public ICommand AddLineConflictCommand
+        {
+            get { return new DelegateCommand(AddLineConflict); }
+        }
+        public ICommand RemoveLineConflictCommand
+        {
+            get { return new DelegateCommand(RemoveLineConflict); }
+        }
+        
+        public ICommand RemoveConfigGroupCommand
+        {
+            get { return new DelegateCommand(RemoveConfigGroup); }
+        }
+
+        public ICommand AddNewGroupCommand
+        {
+            get { return new DelegateCommand(AddNewGroup);}
+        }
+
+        private void AddNewGroup()
+        {
+            ConfigurationList.Add(new ConfigurationGroup("New Group",null, TimeSpan.Zero));
+        }
+
+        private void RemoveConfigGroup(object obj)
+        {
+            ConfigurationGroup configGroup = obj as ConfigurationGroup;
+            if (configGroup != null)
+            {
+                var result = MessageBox.Show("Are you sure you want to remove this Configuration Group?", "",
+                    MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    ConfigurationList.Remove(configGroup);
+                }
+            }
+        }
+
+        #endregion
+
+        #region CommandDelegates
+        private void RemoveMachineConflict(object obj)
+        {
+            string machine = obj as string;
+            if (machine != null)
+            {
+                MachineConflicts.Remove(machine);
+            }
+        }
+
+        private void AddMachineConflict(object obj)
+        {
+            var machine = obj as Machine;
+            if (machine != null && !MachineConflicts.Contains(machine.Name))
+            {
+                MachineConflicts.Add(machine.Name);
+            }
+        }
+
+        private void RemoveLineConflict(object obj)
+        {
+            string line = obj as string;
+            if (line != null)
+            {
+                LineConflicts.Remove(line);
+            }
+        }
+
+        private void AddLineConflict(object obj)
+        {
+            string line = obj as string;
+            if (line != null && !LineConflicts.Contains(line))
+            {
+                LineConflicts.Add(line);
+            }
+        }
+
+        private void RemoveRunOnLine(object obj)
+        {
+            string line = obj as string;
+            if (line != null)
+            {
+                LinesCanRunOn.Remove(line);
+            }
+        }
+
+        private void AddRunOnLine(object obj)
+        {
+            string line = obj as string;
+            if (line != null && !LinesCanRunOn.Contains(line))
+            {
+                LinesCanRunOn.Add(line);
+            }
+        }
+
+        private void AddExistingConfigGroup(object obj)
+        {
+            if (obj != null)
+            {
+                ConfigurationGroup group = obj as ConfigurationGroup;
+                
+            }
+        }
+        #endregion
         #endregion
 
         /// <summary>
@@ -116,7 +241,7 @@ namespace Configuration_windows
         /// <param name="linesCanRunOn">List of lines the machine is run on</param>
         /// <returns>New machine containing passed data</returns>
         public static Machine CreateMachine(string name = default (String), 
-            ObservableCollection<Configuration> configurationList = default (ObservableCollection<Configuration>), 
+            ObservableCollection<ConfigurationGroup> configurationList = default (ObservableCollection<ConfigurationGroup>), 
             ObservableCollection<string> linesCanRunOn = default(ObservableCollection<String>), 
             ObservableCollection<String> machineConflicts = default(ObservableCollection<String>), 
             ObservableCollection<String> lineConflict = default(ObservableCollection<String>) )
@@ -130,13 +255,12 @@ namespace Configuration_windows
         /// <param name="name">Name of the machine</param>
         /// <param name="configurationList">List of configurations the machine may have</param>
         /// <param name="linesCanRunOn">List of lines the machine is run on</param>
-        Machine(string name, ObservableCollection<Configuration> configurationList, ObservableCollection<string> linesCanRunOn,
+        public Machine(string name, ObservableCollection<ConfigurationGroup> configurationList, ObservableCollection<string> linesCanRunOn,
             ObservableCollection<string> machineConflicts,ObservableCollection<string> lineConflicts )
         {
             _name = name;
             
-            _configurationList = configurationList ?? new ObservableCollection<Configuration>();
-            _configurationListNames = new ObservableCollection<string>(_configurationList.Select(x => x.Name));
+            _configurationList = configurationList ?? new ObservableCollection<ConfigurationGroup>();
             
             _linesCanRunOn = linesCanRunOn ?? new ObservableCollection<string>();
             _machineConflicts = machineConflicts ?? new ObservableCollection<String>();
@@ -147,12 +271,11 @@ namespace Configuration_windows
         /// Adds the passed configuration to the list and updates the list of names.
         /// </summary>
         /// <param name="newConfig">Configuration to add</param>
-        public void AddConfiguration(Configuration newConfig)
+        public void AddConfiguration(ConfigurationGroup newConfig)
         {
             if (newConfig != null)
             {
                 _configurationList.Add(newConfig);
-                _configurationListNames.Add(newConfig.Name);
                 OnPropertyChanged();
             }
         }
@@ -166,11 +289,10 @@ namespace Configuration_windows
             if (index >= 0 && index < _configurationList.Count)
             {
                 var result = MessageBox.Show("Are you sure you want to remove this configuration?", "",
-                    MessageBoxButton.OKCancel);
-                if (result == MessageBoxResult.OK)
+                    MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
                 {
                     _configurationList.RemoveAt(index);
-                    _configurationListNames.RemoveAt(index);
                     OnPropertyChanged();
                 }
             }
@@ -180,7 +302,7 @@ namespace Configuration_windows
         /// Removes the matching configuration from the list as well as the name fro mthe name list
         /// </summary>
         /// <param name="config">Configuration to remove</param>
-        public void RemoveConfiguration(Configuration config)
+        public void RemoveConfiguration(ConfigurationGroup config)
         {
             if (config != null)
             {
@@ -193,6 +315,7 @@ namespace Configuration_windows
             }
         }
 
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -202,73 +325,33 @@ namespace Configuration_windows
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void Save(BinaryWriter writer)
+        public void Save(Stream stream, IFormatter formatter)
         {
-            writer.Write(Name);
-            writer.Write(ConfigurationList.Count);
-            foreach (Configuration configuration in ConfigurationList)
+            formatter.Serialize(stream, MachineConflicts.ToList());
+            formatter.Serialize(stream, LinesCanRunOn.ToList());
+            formatter.Serialize(stream, LineConflicts.ToList());
+            formatter.Serialize(stream, Name);
+            formatter.Serialize(stream, ConfigurationList.Count);
+            foreach (var configurationGroup in ConfigurationList)
             {
-                configuration.Save(writer);
+                configurationGroup.Save(stream,formatter);
             }
-            writer.Write(LinesCanRunOn.Count);
-            foreach (string s in LinesCanRunOn)
-            {
-                writer.Write(s);
-            }
-            writer.Write(LineConflicts.Count);
-            foreach (var lineConflict in LineConflicts)
-            {
-                writer.Write(lineConflict);
-            }
-            writer.Write(MachineConflicts.Count);
-            foreach (var machineConflict in MachineConflicts)
-            {
-                writer.Write(machineConflict);
-            }
+
         }
 
-        public static Machine CreateMachine(BinaryReader reader)
+        public static Machine Load(Stream stream, IFormatter formatter)
         {
-            ObservableCollection<Configuration> configurationList = new ObservableCollection<Configuration>();
-            ObservableCollection<string> linesCanRunOn = new ObservableCollection<string>();
-            ObservableCollection<String> lineConflicts = new ObservableCollection<string>();
-            ObservableCollection<String> machineConflicts = new ObservableCollection<string>();
-
-            String name = reader.ReadString();
-            Int32 num;
-
-            num = reader.ReadInt32(); // configs
-            for(; num > 0; --num)
+            ObservableCollection<string> machineConflicts = new ObservableCollection<string>();
+            ObservableCollection<string> lineConflicts = new ObservableCollection<string>();
+            ObservableCollection<string> linesRun = new ObservableCollection<string>();
+            string name;
+            ObservableCollection<ConfigurationGroup> configurationGroups = new ObservableCollection<ConfigurationGroup>();
+            foreach (var mconf in ((List<string>)formatter.Deserialize(stream)))
             {
-                //attempt to load reference the needed config from the config list.
-                var config = Configuration.CreateConfiguration(reader);
-                var match = ConfigurationsHandler.GetInstance()
-                    .Configurations.FirstOrDefault(x => x.Name == config.Name);
-
-                if (match != null)
-                    config = match;
-
-                configurationList.Add( config);
-            }
-            num = reader.ReadInt32(); // lines to run on
-            for (; num > 0; --num)
-            {
-                linesCanRunOn.Add(reader.ReadString());
+                machineConflicts.Add(mconf);
             }
 
-            num = reader.ReadInt32(); // line conflicts
-            for (; num > 0; --num)
-            {
-                lineConflicts.Add(reader.ReadString());
-            }
-
-            num = reader.ReadInt32(); //machine conflicts
-            for (; num > 0; --num)
-            {
-                machineConflicts.Add(reader.ReadString());
-            }
-
-            return CreateMachine(name,configurationList,linesCanRunOn,machineConflicts,lineConflicts);
+            return (Machine) formatter.Deserialize(stream);
         }
 
         public override string ToString()
@@ -278,28 +361,40 @@ namespace Configuration_windows
 
         public Configuration GetBestConfig(ProductMasterItem nextItem)
         {
-            var configs = ConfigurationList.Where(conf => conf.ItemOutID == nextItem.MasterID);
-            Configuration config = configs.FirstOrDefault();
+            //TODO: fix tis
+            //var configs = ConfigurationList.Where(conf => conf.ItemOutID == nextItem.MasterID);
+            //Configuration config = configs.FirstOrDefault();
 
-            foreach (var configuration in configs)
-            {
-                if (configuration.ItemsOutPerMinute > config.ItemsOutPerMinute)
-                    config = configuration;
-            }
-            
-            return config;
+            //foreach (var configuration in configs)
+            //{
+            //    config = config.GetFastestConfig(configuration, nextItem);
+            //}
+
+            return null;//config;
         }
 
         public void CheckConfigRefs()
         {
-            for (int index = 0; index < ConfigurationList.Count; index++)
-            {
-                var configuration = ConfigurationList[index];
-                var match = ConfigurationsHandler.GetInstance()
-                    .Configurations.FirstOrDefault(x => x.Name == configuration.Name);
+            List<ConfigurationGroup> configs = new List<ConfigurationGroup>();
+            configs.AddRange(ConfigurationList);
 
-                if (match != null)
-                    ConfigurationList[index] = match;
+            foreach (var configuration in configs)
+            {
+                //TODO Fix this
+                //var match = ConfigurationsHandler.GetInstance()
+                //    .Configurations.FirstOrDefault(x => x.ItemOutID == configuration.ItemOutID);
+
+                //if (match != null)
+                //{
+                //    int index = ConfigurationList.IndexOf(configuration);
+                //    ConfigurationList[index] = match;
+                //    // update name if needed.
+                //    ConfigurationListNames[index] = match.Name;
+                //}
+                //else
+                //{
+                //    ConfigurationList.Remove(configuration);
+                //}
             }
         }
     }

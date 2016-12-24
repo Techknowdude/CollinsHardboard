@@ -15,10 +15,10 @@ namespace ScheduleGen
 
         private bool _calculated;
 
-        private int _grossPieces;
-        private int _onHandPieces;
-        private int _netRequiredPieces;
-        private int _purchaseOrderPieces;
+        private double _grossPieces;
+        private double _onHandUnits;
+        private double _netRequiredUnits;
+        private double _purchaseOrderPieces;
 
         #endregion
 
@@ -27,7 +27,7 @@ namespace ScheduleGen
         /// <summary>
         /// Setter will adjust the net requirements.
         /// </summary>
-        public int GrossPieces
+        public double GrossPieces
         {
             get { return _grossPieces; }
 
@@ -41,13 +41,13 @@ namespace ScheduleGen
         /// <summary>
         /// Setter will adjust the net requirements.
         /// </summary>
-        public int OnHandPieces
+        public double OnHandPieces
         {
-            get { return _onHandPieces; }
+            get { return _onHandUnits; }
 
             set
             {
-                _onHandPieces = value;
+                _onHandUnits = value;
                 CalcNetRequired();
             }
 
@@ -56,17 +56,17 @@ namespace ScheduleGen
         /// <summary>
         /// Need for additional pieces
         /// </summary>
-        public int NetRequiredPieces
+        public double NetRequiredPieces
         {
-            get { return _netRequiredPieces; }
+            get { return _netRequiredUnits; }
 
-            set { _netRequiredPieces = value; }
+            set { _netRequiredUnits = value; }
         }
 
         /// <summary>
         /// How many pieces are required to be produced on this day
         /// </summary>
-        public int PurchaseOrderPieces
+        public double PurchaseOrderPieces
         {
             get { return _purchaseOrderPieces; }
 
@@ -97,7 +97,7 @@ namespace ScheduleGen
         /// Adds the pieces to the current gross requirement
         /// </summary>
         /// <param name="pieces"></param>
-        public void AddGrossRequirement(int pieces)
+        public void AddGrossRequirement(double pieces)
         {
             // This recalculates the 
             GrossPieces += pieces;
@@ -118,7 +118,7 @@ namespace ScheduleGen
 
         protected bool Equals(RequirementsDay other)
         {
-            return _calculated == other._calculated && _grossPieces == other._grossPieces && _onHandPieces == other._onHandPieces && _netRequiredPieces == other._netRequiredPieces && _purchaseOrderPieces == other._purchaseOrderPieces;
+            return _calculated == other._calculated && _grossPieces == other._grossPieces && _onHandUnits == other._onHandUnits && _netRequiredUnits == other._netRequiredUnits && _purchaseOrderPieces == other._purchaseOrderPieces;
         }
 
         public override int GetHashCode()
@@ -126,15 +126,15 @@ namespace ScheduleGen
             unchecked
             {
                 var hashCode = _calculated.GetHashCode();
-                hashCode = (hashCode * 397) ^ _grossPieces;
-                hashCode = (hashCode * 397) ^ _onHandPieces;
-                hashCode = (hashCode * 397) ^ _netRequiredPieces;
-                hashCode = (hashCode * 397) ^ _purchaseOrderPieces;
+                hashCode = (hashCode * 397) ^ (int) _grossPieces;
+                hashCode = (hashCode * 397) ^ (int) _onHandUnits;
+                hashCode = (hashCode * 397) ^ (int) _netRequiredUnits;
+                hashCode = (hashCode * 397) ^ (int) _purchaseOrderPieces;
                 return hashCode;
             }
         }
 
-        public void AddOnHand(int pieces)
+        public void AddOnHand(double pieces)
         {
             // this should recalc net
             OnHandPieces += pieces;

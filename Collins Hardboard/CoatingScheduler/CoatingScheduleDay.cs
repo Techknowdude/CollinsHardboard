@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Windows;
 using Configuration_windows;
 using Microsoft.Office.Interop.Excel;
@@ -52,34 +53,21 @@ namespace CoatingScheduler
 
         }
 
-        public static CoatingScheduleDay Load(BinaryReader reader)
+        public static CoatingScheduleDay Load(Stream stream, IFormatter formatter)
         {
-            string dateString = reader.ReadString();
-            DateTime date;
-            DateTime.TryParse(dateString, out date);
-            string coatingLine = reader.ReadString();
+            DateTime date = (DateTime) formatter.Deserialize(stream);
+            string coatingLine = (string) formatter.Deserialize(stream);
+            ObservableCollection<ICoatingScheduleLogic> children = (ObservableCollection<ICoatingScheduleLogic>) formatter.Deserialize(stream);
 
-            ObservableCollection<ICoatingScheduleLogic> children = new ObservableCollection<ICoatingScheduleLogic>();
-
-            int numChildren = reader.ReadInt32();
-            for (; numChildren > 0; --numChildren)
-            {
-                children.Add(CoatingScheduleLine.Load(reader));
-            }
-            
             return new CoatingScheduleDay(date,coatingLine,children);
         }
 
 
-        public override void Save(BinaryWriter writer)
+        public override void Save(Stream stream, IFormatter formatter)
         {
-            writer.Write(Date.ToString());
-            writer.Write(CoatingLine);
-            writer.Write(ChildrenLogic.Count);
-            foreach (var logic in ChildrenLogic)
-            {
-                logic.Save(writer);
-            }
+            formatter.Serialize(stream,Date);
+            formatter.Serialize( stream,CoatingLine);
+            formatter.Serialize( stream,ChildrenLogic);
         }
 
         public override Tuple<int, int> ExportToExcel(_Worksheet sheet, int column, int row)

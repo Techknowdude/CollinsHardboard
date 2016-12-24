@@ -16,8 +16,12 @@ namespace CoatingScheduler
     /// <summary>
     /// Interaction logic for ProductControl.xaml
     /// </summary>
+    [Serializable]
     public partial class ProductControl : ProductControlBase
     {
+        private string _configName;
+        private string _machineName;
+
         #region Properties
 
         public override Machine Machine
@@ -30,6 +34,7 @@ namespace CoatingScheduler
             {
                 BorderBrush = value == null ? Brushes.Red : Brushes.Blue;
                 Product.Machine = value;
+                MachineName = value?.Name;
             }
         }
 
@@ -43,8 +48,16 @@ namespace CoatingScheduler
             {
                 BorderBrush = value == null ? Brushes.Red : Brushes.Blue;
                 Product.Config = value;
+                ConfigName = value?.Name;
             }
         }
+
+        public string ConfigName
+        {
+            get { return _configName; }
+            set { _configName = value; }
+        }
+
         public CoatingScheduleProduct Product { get; set; }
         public override ICoatingScheduleControl ParentControl { get; set; }
         
@@ -82,9 +95,8 @@ namespace CoatingScheduler
             SetMachineRef();
         }
 
-        private bool SetMachineRef()
+        private void SetMachineRef()
         {
-            bool success;
             try
             {
                 if (Product.MasterID != 0)
@@ -92,21 +104,36 @@ namespace CoatingScheduler
                     Machine =
                         MachineHandler.Instance.MachineList.FirstOrDefault(
                             machine =>
-                                machine.ConfigurationList.Any(
-                                    config => config.ItemOutID == Product.MasterID));
+                                machine.Name.Equals(MachineName));
                     if (Machine != null)
-                        Config =
-                            Machine.ConfigurationList.FirstOrDefault(
-                                config => config.ItemOutID == Product.MasterID);
+                    {
+                        bool found = false;
+                        for (int groupIndex = 0;!found && groupIndex < Machine.ConfigurationList.Count; groupIndex++)
+                        {
+                            var configurationGroup = Machine.ConfigurationList[groupIndex];
+                            for (int configIndex = 0; !found && configIndex < configurationGroup.Configurations.Count; configIndex++)
+                            {
+                                var configuration = configurationGroup.Configurations[configIndex];
+                                if (configuration.Name.Equals(ConfigName))
+                                {
+                                    Config = configuration;
+                                    found = true;
+                                }
+                            }
+                        }
+                    }
+
                 }
-                success = true;
             }
             catch (Exception e)
             {
-                success = false;
             }
+        }
 
-            return success;
+        public string MachineName
+        {
+            get { return _machineName; }
+            set { _machineName = value; }
         }
 
         private void BtnRemoveProduct_Click(object sender, RoutedEventArgs e)
@@ -227,9 +254,6 @@ namespace CoatingScheduler
         public override void UpdateControlData()
         {
             if (Product == null) return;
-
-            
-            TxbThickness.Text = Product.Thickness;
             TxbProductDescription.Text = Product.ProductCode;
             TxbGrades.Text = Product.Grades;
             MtbUnits.Text = Product.Units;
@@ -243,29 +267,6 @@ namespace CoatingScheduler
             PaintTrialComboBox.SelectedIndex = Product.IsTrial ? 1 : 0;
             DurationComboBox.SelectedIndex = Product.DurationType == DurationType.Units ? 0 : 1;
         }
-
-        
-        public override string LoadTrackingItem()
-        {
-            var shiftLen = Product.ShiftDuration;
-            var item = TrackingSelectionWindow.TrackingItems.FirstOrDefault(x => x.MasterID == Product.MasterID);
-            if (Config != null)
-            {
-                if (item != null)
-                {
-                    return CoatingScheduleWindow.GetCurrentTotal(item, Config.ItemsOut*shiftLen);
-                }
-                else
-                {
-                    return "";
-                }
-            }
-            else
-            {
-                return "Config Err";
-            }
-        }
-
 
         private void DurationComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -298,16 +299,14 @@ namespace CoatingScheduler
             {
                 ProductMasterItem consumedItem =
                     StaticInventoryTracker.ProductMasterList.FirstOrDefault(
-                        master => master.MasterID == Config.ItemInID);
+                        master => master.MasterID == Product.MasterID);
                 ProductMasterItem createdItem =
                     StaticInventoryTracker.ProductMasterList.FirstOrDefault(
                         master => master.MasterID == Product.MasterID);
 
                 if (consumedItem != null && createdItem != null)
                 {
-                    double unitsConsumed = window.Units*
-                                           ((double)(Config.ItemsIn*consumedItem.PiecesPerUnit)/
-                                            (Config.ItemsOut*createdItem.PiecesPerUnit));
+                    double unitsConsumed = Config.GetUnitsConsumed(consumedItem, window.Units,createdItem);
                     // remove units from inventory
                     var invItem =
                         StaticInventoryTracker.InventoryItems.FirstOrDefault(

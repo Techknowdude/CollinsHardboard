@@ -59,6 +59,5 @@ namespace CoatingScheduler
             throw new NotImplementedException();
         }
 
-        public abstract string LoadTrackingItem();
     }
 }

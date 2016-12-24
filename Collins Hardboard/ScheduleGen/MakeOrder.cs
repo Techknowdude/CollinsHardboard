@@ -11,10 +11,10 @@ namespace ScheduleGen
         private int _masterID;
         private int _piecesToMake;
 
-        public MakeOrder(int master, int pieces)
+        public MakeOrder(int master, double pieces)
         {
             MasterID = master;
-            PiecesToMake = pieces;
+            PiecesToMake = (int) pieces;
         }
 
         public int MasterID

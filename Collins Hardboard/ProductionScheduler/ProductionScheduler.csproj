@@ -50,10 +50,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>3A1F9E3AF011C7CAF5B23D9EC6399881BE0EDD1A</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>5BACEFA36CFF9CC1E2133AFB6A61714B50DAC58E</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ProductionScheduler_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ProductionScheduler_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -161,6 +161,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ProductionScheduler_1_TemporaryKey.pfx" />
     <None Include="ProductionScheduler_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

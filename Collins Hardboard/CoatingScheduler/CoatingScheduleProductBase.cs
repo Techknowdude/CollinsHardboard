@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization;
 using Microsoft.Office.Interop.Excel;
 
 namespace CoatingScheduler
 {
+    [Serializable]
     public abstract class CoatingScheduleProductBase : ICoatingScheduleLogic
     {
 
@@ -105,7 +107,7 @@ namespace CoatingScheduler
         {
         }
 
-        public abstract override void Save(BinaryWriter writer);
+        public abstract override void Save(Stream stream, IFormatter formatter);
 
         public abstract override Tuple<int, int> ExportToExcel(_Worksheet sheet, Int32 column, Int32 row);
 

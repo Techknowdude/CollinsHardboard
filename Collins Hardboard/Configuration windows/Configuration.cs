@@ -1,33 +1,100 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using System.Windows.Input;
 using Configuration_windows.Annotations;
-using ImportLib;
 using ModelLib;
+using StaticHelpers;
 
 namespace Configuration_windows
 {
     /// <summary>
     /// Contains configuration data
     /// </summary>
+    [Serializable]
     public class Configuration : INotifyPropertyChanged
     {
+        #region Commands
+
+        public ICommand RemoveInputCommand
+        {
+            get { return new DelegateCommand(RemoveInput); }
+        }
+        public ICommand RemoveOutputCommand
+        {
+            get { return new DelegateCommand(RemoveOutput); }
+        }
+        public ICommand AddNewInputCommand
+        {
+            get { return new DelegateCommand(AddNewInput); }
+        }
+
+        private void AddNewInput()
+        {
+            InputItems.Add(new ConfigItem());
+        }
+
+        public ICommand AddNewOutputCommand
+        {
+            get { return new DelegateCommand(AddNewOutput); }
+        }
+
+        private void AddNewOutput()
+        {
+            OutputItems.Add(new ConfigItem());
+        }
+
+        private void RemoveInput(object obj)
+        {
+            var item = obj as ConfigItem;
+            if (item != null)
+            {
+                InputItems.Remove(item);
+            }
+        }
+
+        private void RemoveOutput(object obj)
+        {
+            var item = obj as ConfigItem;
+            if (item != null)
+            {
+                OutputItems.Remove(item);
+            }
+        }
+
+        #endregion
+
+        private const string DefaultConfigName = "New Configuration";
+
         #region Fields
-
         private String _name = String.Empty;
-        private TimeSpan _changeTime;
-        private double _itemsOutPerMinute = double.MinValue;
-        private Int32 _itemsIn;
-        private Int32 _itemInId = -1;
-        private Int32 _itemOutId = -1;
-        private Int32 _itemsOut;
+        private double _piecesOutPerMinute = double.MinValue;
 
-        private OnNameChange _nameChanged;
+        private ObservableCollection<ConfigItem> _inputItems;
+        private ProductMasterItem _itemOut;
+        private ObservableCollection<ConfigItem> _outputItems;
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Number of conversions this configuration does each hour.
+        /// </summary>
+        public double PiecesOutPerMinute
+        {
+            get { return _piecesOutPerMinute; }
+            set
+            {
+                if (_piecesOutPerMinute != value)
+                {
+                    _piecesOutPerMinute = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         /// <summary>
         /// Name and description of the configuration
         /// </summary>
@@ -36,132 +103,37 @@ namespace Configuration_windows
             get { return _name; }
             set
             {
-                if (value != _name)
+                if (value != _name && _name.Equals(DefaultConfigName))
                 {
                     _name = value;
                     OnPropertyChanged();
-                    if (_nameChanged != null)
-                    {
-                        _nameChanged(value);
-                    }
                 }
             }
         }
 
-        /// <summary>
-        /// The number of pieces that is used in the conversion
-        /// </summary>
-        public Int32 ItemsIn
+        public ObservableCollection<ConfigItem> InputItems
         {
-            get { return _itemsIn; }
+            get { return _inputItems; }
             set
             {
-                if (value != _itemsIn)
+                if (_inputItems != value)
                 {
-                    _itemsIn = value;
+                    _inputItems = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        /// <summary>
-        /// The product master ID for the input items
-        /// </summary>
-        public Int32 ItemOutID
+        //TODO: remove this
+        public int ItemOutID { get; set; }
+        public int ItemInID { get; set; }
+        public double ItemsIn { get; set; }
+        public double ItemsOut { get; set; }
+
+        public ObservableCollection<ConfigItem> OutputItems
         {
-            get { return _itemOutId; }
-            
-            set
-            {
-                if (value != _itemOutId)
-                {
-                    _itemOutId = value;
-                    ItemOut = StaticInventoryTracker.ProductMasterList.FirstOrDefault(x => x.MasterID == value);
-                    OnPropertyChanged();                
-                }
-            }
-        }
-
-        /// <summary>
-        /// The number of pieces that is used in the conversion
-        /// </summary>
-        public Int32 ItemsOut
-        {
-            get { return _itemsOut; }
-            set
-            {
-                if (value != _itemsOut)
-                {
-                    _itemsOut = value;
-                    OnPropertyChanged();
-                }
-            }
-          
-        }
-
-        /// <summary>
-        /// The product master ID for the input items
-        /// </summary>
-        public Int32 ItemInID
-        {
-            get { return _itemInId; }
-            set
-            {
-                if (value != _itemInId)
-                {
-                    _itemInId = value;
-                    ItemIn = StaticInventoryTracker.ProductMasterList.FirstOrDefault(x => x.MasterID == value);
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Reference to the master item for the input
-        /// </summary>
-        public ProductMasterItem ItemIn { get; set; }
-
-        /// <summary>
-        /// Reference to the master item for the input
-        /// </summary>
-        public ProductMasterItem ItemOut { get; set; }
-
-        /// <summary>
-        /// The time required to setup this configuration
-        /// </summary>
-        public TimeSpan ChangeTime
-        {
-            get { return _changeTime; }
-            set
-            {
-                if (value != _changeTime)
-                {
-                    _changeTime = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Number of convertions this configuration does each hour.
-        /// </summary>
-        public double ItemsOutPerMinute
-        {
-            get { return _itemsOutPerMinute; }
-            set
-            {
-                if (_itemsOutPerMinute != value)
-                {
-                    _itemsOutPerMinute = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public OnNameChange NameChanged
-        {
-            get { return _nameChanged; }
-            set { _nameChanged = value; }
+            get { return _outputItems; }
+            set { _outputItems = value; }
         }
 
         #endregion
@@ -170,31 +142,21 @@ namespace Configuration_windows
         /// Factory for Configuration
         /// </summary>
         /// <returns>A new Configuration</returns>
-        public static Configuration CreateConfiguration(String name = default(String), Int32 inputID = default(int),
-            Int32 inputPieces = 1, Int32 outputID = default(int),
-            Int32 outputPieces = default(int), double convertionsPerMin = default(double),
-            TimeSpan changeTime = default(TimeSpan))
+        public static Configuration CreateConfiguration()
         {
-            return new Configuration(name,inputID,inputPieces,outputID,outputPieces,convertionsPerMin,changeTime);
+            //TODO: Remove output ID and change time
+            return new Configuration();
         }
 
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        Configuration(String name = default(String), Int32 inputID = default(int), 
-            Int32 inputPieces = default(int), Int32 outputID = default(int), 
-            Int32 outputPieces = default(int), double itemsOutPerMinute = default(double), 
-            TimeSpan changeTime = default(TimeSpan))
+        // For serialization only
+        protected Configuration()
         {
-            Name = name;
-            ItemsIn = inputPieces;
-            ItemInID = inputID;
-            ItemsOut = outputPieces;
-            ItemOutID = outputID;
-            ItemsOutPerMinute = itemsOutPerMinute;
-            ChangeTime = changeTime;
+            _name = DefaultConfigName;
+            InputItems = new ObservableCollection<ConfigItem>();
+            OutputItems = new ObservableCollection<ConfigItem>();
         }
 
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -207,39 +169,73 @@ namespace Configuration_windows
         /// <summary>
         /// Saves the configuration using the binary writer
         /// </summary>
-        /// <param name="writer">BinaryWriter to write to</param>
-        public void Save(BinaryWriter writer)
+        public void Save(Stream stream, IFormatter formatter)
         {
-            writer.Write(Name);
-            writer.Write(ItemsIn);
-            writer.Write(ItemInID);
-            writer.Write(ItemsOut);
-            writer.Write(ItemOutID);
-            writer.Write(ItemsOutPerMinute);
-            writer.Write(ChangeTime.Hours);
-            writer.Write(ChangeTime.Minutes);
-            writer.Write(ChangeTime.Seconds);
+            formatter.Serialize(stream,Name);
+            formatter.Serialize(stream,PiecesOutPerMinute);
+            formatter.Serialize(stream,InputItems.Count);
+            foreach (var configItem in InputItems)
+            {
+                configItem.Save(stream,formatter);
+            }
+            formatter.Serialize(stream,OutputItems.Count);
+            foreach (var configItem in OutputItems)
+            {
+                configItem.Save(stream,formatter);
+            }
         }
 
         /// <summary>
         /// Create a new configuration from a file
         /// </summary>
-        /// <param name="reader">input stream containing the configuration data.</param>
         /// <returns>New Configuration with the data in the input stream</returns>
-        public static Configuration CreateConfiguration(BinaryReader reader)
+        public static Configuration Load(Stream stream, IFormatter formatter)
         {
-            String Name = reader.ReadString();
-            Int32 itemsIn = reader.ReadInt32();
-            Int32 itemInID = reader.ReadInt32();
-            Int32 itemsOut = reader.ReadInt32();
-            Int32 itemOutID = reader.ReadInt32();
-            double conversions = reader.ReadDouble();
-            Int32 hours = reader.ReadInt32();
-            Int32 minutes = reader.ReadInt32();
-            Int32 seconds = reader.ReadInt32();
-            TimeSpan changeTime = new TimeSpan(hours,minutes,seconds);
+            ObservableCollection<ConfigItem> inItems = new ObservableCollection<ConfigItem>();
+            ObservableCollection<ConfigItem> outItems = new ObservableCollection<ConfigItem>();
 
-            return new Configuration(Name,itemInID,itemsIn,itemOutID,itemsOut,conversions,changeTime);
+            string name = (string) formatter.Deserialize(stream);
+            double piecesOut = (double) formatter.Deserialize(stream);
+            int numInItems = (int)formatter.Deserialize(stream);
+
+            for (int i = 0; i < numInItems; i++)
+            {
+                inItems.Add(ConfigItem.Load(stream, formatter));
+            }
+            int numOutItems = (int)formatter.Deserialize(stream);
+            for (int i = 0; i < numOutItems; i++)
+            {
+                outItems.Add(ConfigItem.Load(stream, formatter));
+            }
+
+            return new Configuration() {_inputItems = inItems, _outputItems = outItems, Name = name, PiecesOutPerMinute = piecesOut,};
+        }
+
+        public bool CanMake(ProductMasterItem item)
+        {
+            return item != null && OutputItems.Any(output => output.MasterID == item.MasterID);
+        }
+
+        public void AddIngredient(ConfigItem make)
+        {
+            InputItems.Add(make);
+        }
+
+        public void AddOutput(int masterID, int pieces)
+        {
+            OutputItems.Add(new ConfigItem(masterID,pieces));
+        }
+
+        public void AddIngredient(int inputID, int inputPieces)
+        {
+            ConfigItem makeItem = ConfigItem.Create(inputID,inputPieces);
+            AddIngredient(makeItem);
+        }
+
+        public bool RemoveIngredient(int inputID)
+        {
+            ConfigItem target = InputItems.FirstOrDefault(item => item.MasterID == inputID);
+            return InputItems.Remove(target);
         }
 
         public override string ToString()
@@ -256,12 +252,133 @@ namespace Configuration_windows
             }
             else
             {
-                return other.ChangeTime == ChangeTime && other.ItemIn == ItemIn && other.ItemInID == ItemInID &&
-                       other.ItemOut == ItemOut
-                       && other.ItemOutID == ItemOutID && other.ItemsIn == ItemsIn && other.ItemsOut == ItemsOut &&
-                       other.ItemsOutPerMinute == ItemsOutPerMinute
+                bool inOutsMatch = true;
+                // lists are not null and same count
+                if (OutputItems != null && other.OutputItems != null)
+                {
+                    if (OutputItems.Count == other.OutputItems.Count)
+                    {
+                        for (int index = 0; index < OutputItems.Count && inOutsMatch; index++)
+                        {
+                            inOutsMatch = OutputItems[index].Equals(other.OutputItems[index]);
+                        }
+                    }
+                    else
+                        inOutsMatch = false;
+                }
+                else if(OutputItems == null || other.OutputItems == null)
+                {
+                    inOutsMatch = false;
+                }
+
+                if(inOutsMatch && InputItems != null && other.InputItems != null)
+                {
+                    // list have same data
+                    if(InputItems.Count == other.InputItems.Count)
+                    {
+                        for (int index = 0; index < _inputItems.Count && inOutsMatch; index++)
+                        {
+                            inOutsMatch = _inputItems[index].Equals(other._inputItems[index]);
+                        }
+                    }
+                }
+                else if (InputItems == null || other.InputItems == null)
+                {
+                    inOutsMatch = false;
+                }
+                return inOutsMatch 
                        && other.Name == Name;
             }
+        }
+
+        /// <summary>
+        /// Calculates the best configuration between this and the other.
+        /// </summary>
+        /// <param name="otherConfiguration">Other to compare to</param>
+        /// <param name="nextItem">Item to make</param>
+        /// <returns>fastest config or null if neither can make</returns>
+        public Configuration GetFastestConfig(Configuration otherConfiguration, ProductMasterItem nextItem)
+        {
+            //TODO: fill this in
+            var myOutput = OutputItems.FirstOrDefault(o => o.MasterID == nextItem.MasterID);
+            var otherOutput = otherConfiguration.OutputItems.FirstOrDefault(o => o.MasterID == nextItem.MasterID);
+
+            // neither can make
+            if (otherOutput == null && myOutput == null) return null;
+
+            // I can't make
+            if (myOutput == null) return otherConfiguration;
+
+            // Other can't make
+            if (otherOutput == null) return this;
+
+            double myRate = PiecesOutPerMinute;
+            double otherRate = otherConfiguration.PiecesOutPerMinute;
+
+            return myRate > otherRate ? this : otherConfiguration;
+        }
+
+        /// <summary>
+        /// Calculates the hours needed to make an item.
+        /// </summary>
+        /// <param name="item">Item to make</param>
+        /// <param name="units">Units to make</param>
+        /// <returns>hours needed or -1 if unable to make</returns>
+        public double HoursToMake(ProductMasterItem item, double units)
+        {
+            return HoursToMake(item.MasterID,item.PiecesPerUnit,units);
+        }
+
+        /// <summary>
+        /// Calculates the hours needed to make an item.
+        /// </summary>
+        /// <param name="madeID">Item to make</param>
+        /// <param name="madePiecesPerUnit">Pieces per unit to make</param>
+        /// <param name="units">Units to make</param>
+        /// <returns>hours needed or -1 if unable to make</returns>
+        public double HoursToMake(int madeID, double madePiecesPerUnit, double units)
+        {
+            var output = OutputItems.FirstOrDefault(o => o.MasterID == madeID);
+            if (output == null) return -1;
+
+            return ((units * madePiecesPerUnit) * ((_piecesOutPerMinute * output.Pieces) / 60));
+        }
+
+        /// <summary>
+        /// Calculates the units that can be output for the duration.
+        /// </summary>
+        /// <param name="item">Item to make</param>
+        /// <param name="hours">Time frame</param>
+        /// <returns>-1 if the <see cref="Configuration"/> can't make the item.</returns>
+        public double UnitsToMakeInHours(ProductMasterItem item, double hours)
+        {
+            var output = OutputItems.FirstOrDefault(o => o.MasterID == item.MasterID);
+            if (output == null) return -1;
+
+            //TODO: Update with rate of output.
+            return ((60 * hours) / (item.PiecesPerUnit * (_piecesOutPerMinute * (output.Pieces))));
+        }
+
+        /// <summary>
+        /// Returns the units consumed to make the item\
+        /// </summary>
+        /// <param name="consumedItem"></param>
+        /// <param name="unitsMade"></param>
+        /// <param name="createdItem"></param>
+        /// <returns></returns>
+        public double GetUnitsConsumed(ProductMasterItem consumedItem, double unitsMade, ProductMasterItem createdItem)
+        {
+            var createdPieces = unitsMade*createdItem.PiecesPerUnit;
+            var consumedInput = _inputItems.FirstOrDefault(input => input.MasterID == consumedItem.MasterID);
+            var createdOutput = OutputItems.FirstOrDefault(output => output.MasterID == createdItem.MasterID);
+            if (consumedInput != null && createdOutput != null)
+            {
+                var operations = (createdPieces/createdOutput.Pieces);
+                return operations*consumedInput.Pieces/consumedItem.PiecesPerUnit;
+            }
+
+            // Item not consumed, or produced
+            return 0;
         }
     }
 }

@@ -15,16 +15,9 @@
             <RowDefinition Height="28*"/>
             <RowDefinition Height="28*"/>
         </Grid.RowDefinitions>
-        <xctk:RichTextBox TabIndex="1" x:Name="TxbThickness" HorizontalAlignment="Left" Height="22" Margin="3,3,0,0" Text="{Binding Path=(coatingScheduler:CoatingScheduleProduct.Thickness)}" VerticalAlignment="Top" Width="59" Grid.Row="0" >
-            <FlowDocument>
-                <Paragraph/>
-                <Paragraph>
-                    <Run Text=""/>
-                </Paragraph>
-            </FlowDocument>
-        </xctk:RichTextBox>
-        <xctk:RichTextBox TabIndex="2" x:Name="TxbProductDescription" HorizontalAlignment="Left" Height="22" Margin="67,3,0,0" Text="{Binding Path=(coatingScheduler:CoatingScheduleProduct.Description)}" VerticalAlignment="Top" Width="169" Grid.Row="0" UndoLimit="101"/>
-        <xctk:RichTextBox TabIndex="3" x:Name="TxbGrades" HorizontalAlignment="Left" Height="22" Margin="241,3,0,0" Text="{Binding Path=Grades}" VerticalAlignment="Top" Width="59" Grid.Row="0" />
+
+        <xctk:RichTextBox TabIndex="2" x:Name="TxbProductDescription" HorizontalAlignment="Left" Height="22" Margin="3,3,0,0" Text="{Binding Path=(coatingScheduler:CoatingScheduleProduct.Description)}" VerticalAlignment="Top" Width="226" Grid.Row="0" UndoLimit="101"/>
+        <xctk:RichTextBox TabIndex="3" x:Name="TxbGrades" HorizontalAlignment="Left" Height="22" Margin="234,3,0,0" Text="{Binding Path=Grades}" VerticalAlignment="Top" Width="66" Grid.Row="0" />
         <xctk:RichTextBox TabIndex="7" x:Name="TxbNotes" HorizontalAlignment="Left" Height="22" Margin="179,2.8,0,0" VerticalAlignment="Top" Width="279" Grid.Row="1" Text="{Binding Path=(coatingScheduler:CoatingScheduleProduct.Notes)}"/>
         <xctk:RichTextBox TabIndex="9" x:Name="TxbPlacement" HorizontalAlignment="Left" Height="22" Margin="93,4,0,2.8" VerticalAlignment="Center" Width="292" Grid.Row="2" Text="{Binding Path=(coatingScheduler:CoatingScheduleProduct.Placement)}"/>
         <!--<CheckBox TabIndex="5" x:Name="CbxUnits" IsChecked="{Binding Path=(mainApplication:CoatingScheduleProduct.HasUnits)}" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>-->

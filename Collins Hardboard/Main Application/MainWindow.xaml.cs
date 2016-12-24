@@ -91,14 +91,7 @@ namespace Main_Application
         {
             InternalImport.GetInstance().ImportSales();
         }
-
-        private void ConfigMenuItem_OnClick(object sender, RoutedEventArgs e)
-        {
-            ConfigurationsWindow window = new ConfigurationsWindow();
-            window.Show();
-            window.Focus();
-        }
-
+        
         private void MachinesMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
             MachineConfigWindow window = new MachineConfigWindow();
