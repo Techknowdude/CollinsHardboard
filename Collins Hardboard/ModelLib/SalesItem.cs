@@ -31,9 +31,9 @@ namespace ModelLib
 
         private double _pcs;
         /// <summary>
-        /// Pieces per whole unit
+        /// Total Pieces of order
         /// </summary>
-        public double Pieces
+        public double TotalPieces
         {
             get { return _pcs; }
             set { _pcs = value; }
@@ -68,7 +68,7 @@ namespace ModelLib
 
             ProductionCode = code;
             Units = unit;
-            Pieces = pcs;
+            TotalPieces = pcs;
             Grade = grade;
             Date = date;
         }
@@ -79,9 +79,9 @@ namespace ModelLib
             InventoryItemID = IDCounter++;
             MasterID = mItem1.MasterID;
 
-            ProductionCode = mItem1.ProductionCode;
+            ProductionCode = mItem1.Description;
             Units = unit;
-            Pieces = pcs;
+            TotalPieces = pcs;
             Grade = grade;
             Date = date;
         }
@@ -94,7 +94,7 @@ namespace ModelLib
         public bool IsEqual(SalesItem other)
         {
             return Date == other.Date && InvoiceNumber == other.InvoiceNumber && Grade == other.Grade &&
-                   ProductionCode == other.ProductionCode && Math.Abs(Units - other.Units) < 0.0001 && Math.Abs(Pieces - other.Pieces) < 0.0001;
+                   ProductionCode == other.ProductionCode && Math.Abs(Units - other.Units) < 0.0001 && Math.Abs(TotalPieces - other.TotalPieces) < 0.0001;
         }
 
         public void SaveItem(BinaryWriter writer)
@@ -103,7 +103,7 @@ namespace ModelLib
             writer.Write(InventoryItemID);
             writer.Write(ProductionCode);
             writer.Write(Units);
-            writer.Write(Pieces);
+            writer.Write(TotalPieces);
             writer.Write(Grade);
             writer.Write(Date.ToLongDateString());
             writer.Write(MasterID);

@@ -16,12 +16,21 @@ namespace ScheduleGen
         private bool _calculated;
 
         private double _grossPieces;
-        private double _onHandUnits;
-        private double _netRequiredUnits;
+        private double _inventory;
+        private double _netRequiredPieces;
         private double _purchaseOrderPieces;
+        private double _nextInventoryPieces;
 
         #endregion
 
+        public RequirementsDay(ProductRequirements parentRequirements, DateTime day)
+        {
+            ParentRequirements = parentRequirements;
+            Day = day;
+        }
+
+        public ProductRequirements ParentRequirements { get; set; }
+        public DateTime Day { get; set; }
         #region Properties
 
         /// <summary>
@@ -41,26 +50,50 @@ namespace ScheduleGen
         /// <summary>
         /// Setter will adjust the net requirements.
         /// </summary>
-        public double OnHandPieces
+        public double Inventory
         {
-            get { return _onHandUnits; }
+            get { return _inventory; }
 
             set
             {
-                _onHandUnits = value;
+                _inventory = value;
                 CalcNetRequired();
             }
 
         }
 
+        public double NextInventoryPieces
+        {
+            get { return _nextInventoryPieces; }
+            set
+            {
+                if (Math.Abs(_nextInventoryPieces - value) > PieceCountTolerance)
+                {
+                    var change = value - _nextInventoryPieces;
+                    _nextInventoryPieces = value;
+                    ParentRequirements.UpdateNextInventory(Day, change);
+                }
+            }
+        }
+
+        public double PieceCountTolerance = 0.00000;
+
         /// <summary>
-        /// Need for additional pieces
+        /// Need for additional pieces. Updates other requirements if changed.
         /// </summary>
         public double NetRequiredPieces
         {
-            get { return _netRequiredUnits; }
+            get { return _netRequiredPieces; }
 
-            set { _netRequiredUnits = value; }
+            set
+            {
+                if (Math.Abs(_netRequiredPieces - value) > PieceCountTolerance)
+                {
+                    var change = value - _netRequiredPieces;
+                    _netRequiredPieces = value;
+                    ParentRequirements.UpdateGross(Day,change);
+                }
+            }
         }
 
         /// <summary>
@@ -86,11 +119,8 @@ namespace ScheduleGen
 
         public void CalcNetRequired()
         {
-            NetRequiredPieces = GrossPieces - OnHandPieces;
-            if (NetRequiredPieces < 0) // onHand covers requirement. Don't show negative NetRequired, use 0.
-            {
-                NetRequiredPieces = 0;
-            }
+            NetRequiredPieces = Math.Max(GrossPieces - Inventory,0); // Don't show negative NetRequired, use 0.
+            NextInventoryPieces = Math.Max(Inventory - GrossPieces, 0);
         }
 
         /// <summary>
@@ -99,7 +129,7 @@ namespace ScheduleGen
         /// <param name="pieces"></param>
         public void AddGrossRequirement(double pieces)
         {
-            // This recalculates the 
+            // This recalculates everything and changes any dependent items as well.
             GrossPieces += pieces;
         }
 
@@ -110,34 +140,21 @@ namespace ScheduleGen
                 return base.Equals(obj);
             else
             {
-                return GrossPieces == other.GrossPieces
-                       && other.OnHandPieces == OnHandPieces
-                       && PurchaseOrderPieces == other.PurchaseOrderPieces;
+                return Math.Abs(GrossPieces - other.GrossPieces) < PieceCountTolerance
+                       && Math.Abs(other.Inventory - Inventory) < PieceCountTolerance
+                       && Math.Abs(PurchaseOrderPieces - other.PurchaseOrderPieces) < PieceCountTolerance;
             }
         }
 
         protected bool Equals(RequirementsDay other)
         {
-            return _calculated == other._calculated && _grossPieces == other._grossPieces && _onHandUnits == other._onHandUnits && _netRequiredUnits == other._netRequiredUnits && _purchaseOrderPieces == other._purchaseOrderPieces;
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = _calculated.GetHashCode();
-                hashCode = (hashCode * 397) ^ (int) _grossPieces;
-                hashCode = (hashCode * 397) ^ (int) _onHandUnits;
-                hashCode = (hashCode * 397) ^ (int) _netRequiredUnits;
-                hashCode = (hashCode * 397) ^ (int) _purchaseOrderPieces;
-                return hashCode;
-            }
+            return _calculated == other._calculated && _grossPieces == other._grossPieces && _inventory == other._inventory && _netRequiredPieces == other._netRequiredPieces && _purchaseOrderPieces == other._purchaseOrderPieces;
         }
 
         public void AddOnHand(double pieces)
         {
             // this should recalc net
-            OnHandPieces += pieces;
+            Inventory += pieces;
         }
     }
 }

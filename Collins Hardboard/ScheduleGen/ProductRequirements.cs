@@ -32,7 +32,7 @@ namespace ScheduleGen
 
         private ProductMasterItem _masterItem;
         private Dictionary<DateTime, RequirementsDay> _requiredPieces;
-        private Tuple<ProductMasterItem, int> _input;
+        private List<ConfigItem> _input;
         private int _outPieces;
         #endregion
 
@@ -60,7 +60,7 @@ namespace ScheduleGen
         /// Item IDs and number required to make some number of pieces of this product.
         /// [ID][Number to make]
         /// </summary>
-        public Tuple<ProductMasterItem, int> Input
+        public List<ConfigItem> Input
         {
             get
             {
@@ -95,11 +95,11 @@ namespace ScheduleGen
         /// Factory for product requirements
         /// </summary>
         /// <returns></returns>
-        public static ProductRequirements CreateProductRequirements(ProductMasterItem masterID, Configuration usedConfig)
+        public static ProductRequirements CreateProductRequirements(ProductMasterItem master, Configuration usedConfig)
         {
-            var req = new ProductRequirements(masterID);
+            var req = new ProductRequirements(master);
             req.OutPieces = (int) (usedConfig.ItemsOut > 0 ? usedConfig.ItemsOut : 1);
-            req.Input = new Tuple<ProductMasterItem, int>(masterID, (int) usedConfig.ItemsIn);
+            req.Input = usedConfig.InputItems.ToList();
             _allRequirements.Add(req);
             return req;
         }
@@ -137,8 +137,9 @@ namespace ScheduleGen
             }
             else
             {
-                requirement = new RequirementsDay {GrossPieces = pieces};
+                requirement = new RequirementsDay(this, validDate);
                 RequiredPieces[validDate] = requirement;
+                requirement.GrossPieces = pieces;
             }
 
         }
@@ -153,13 +154,6 @@ namespace ScheduleGen
             // Validate day
             var validDate = ValidateDay(_earliestDay);
 
-
-            // Update earliest and latest days
-            if (validDate > _latestDay)
-                _latestDay = validDate;
-            if (validDate < _earliestDay)
-                _earliestDay = validDate;
-
             RequirementsDay reqDay = null;
             RequirementsDay prevDay = null;
 
@@ -171,8 +165,9 @@ namespace ScheduleGen
             }
             else
             {
-                reqDay = new RequirementsDay { OnHandPieces = pieces };
+                reqDay = new RequirementsDay(this, validDate);
                 RequiredPieces[validDate] = reqDay;
+                reqDay.Inventory = pieces;
             }
         }
 
@@ -210,7 +205,7 @@ namespace ScheduleGen
             }
             else
             {
-                reqDay = new RequirementsDay();
+                reqDay = new RequirementsDay(this,validDay);
                 RequiredPieces[validDay] = reqDay;
             }
 
@@ -262,11 +257,8 @@ namespace ScheduleGen
                 }
             }
 
+
             AddSalesUntilDate(date);
-
-            AddCurrentInventory();
-
-            FinalizeRequirementNumbers();
 
             // output the requirements
             OutputStringToFile();
@@ -339,32 +331,6 @@ namespace ScheduleGen
             return queue;
         }
 
-        private static void FinalizeRequirementNumbers()
-        {
-            foreach (var productRequirement in _allRequirements)
-            {
-                DateTime currentDay = _earliestDay;
-                DateTime leadDay = currentDay.AddDays(LeadTimeDays);
-                RequirementsDay currentReq = productRequirement.GetRequirementDay(currentDay);
-                RequirementsDay nextReq = productRequirement.GetRequirementDay(leadDay);
-
-                while (leadDay <= _latestDay)
-                {
-                    nextReq.OnHandPieces = Math.Max(currentReq.OnHandPieces - currentReq.GrossPieces, 0);
-
-                    currentReq.PurchaseOrderPieces = nextReq.NetRequiredPieces;
-
-                    currentDay = currentDay.AddDays(1);
-                    leadDay = currentDay.AddDays(LeadTimeDays);
-                    if (leadDay > _latestDay)
-                        break;
-
-                    currentReq = productRequirement.GetRequirementDay(currentDay);
-                    nextReq = productRequirement.GetRequirementDay(leadDay);
-                }
-            }
-        }
-
 
         /// <summary>
         /// Adds all sales order dated up to the passed date.
@@ -377,6 +343,7 @@ namespace ScheduleGen
                 var requirement = _allRequirements.FirstOrDefault(x => x.MasterItem.MasterID == salesItem.MasterID);
                 requirement?.AddSale(salesItem.Date,(salesItem.Units));
             }
+            AddCurrentInventory();
         }
 
         /// <summary>
@@ -445,7 +412,7 @@ namespace ScheduleGen
                 if (day != null)
                 {
                     grossBuilder.Append($"{day.GrossPieces},");
-                    onHandBuilder.Append($"{day.OnHandPieces},");
+                    onHandBuilder.Append($"{day.Inventory},");
                     netBuilder.Append($"{day.NetRequiredPieces},");
                     purchaseBuilder.Append($"{day.PurchaseOrderPieces},");
                 }
@@ -465,7 +432,55 @@ namespace ScheduleGen
             outputString.AppendLine(purchaseBuilder.ToString());
         }
 
-        #endregion  
+        #endregion
 
+        public void UpdateNextInventory(DateTime day, double change)
+        {
+            RequirementsDay nextDay;
+            if (day.AddDays(1) <= _latestDay)
+            {
+                nextDay = GetRequirementDay(day.AddDays(1));
+                nextDay.Inventory += change;
+            }
+
+        }
+
+        public void UpdateGross(DateTime POdate, double change)
+        {
+            DateTime grossDate = POdate.AddDays(-LeadTimeDays);
+            
+            // get each item required to make this
+            foreach (var configItem in Input)
+            {
+                var prodRequirement =
+                    _allRequirements.FirstOrDefault(req => req.MasterItem.Equals(configItem.MasterItem));
+                if (prodRequirement == null)
+                {
+                    Configuration childConfiguration = MachineHandler.Instance.AllConfigurations.FirstOrDefault(conf => conf.CanMake(configItem.MasterItem));
+                    if (childConfiguration != null)
+                    {
+                        prodRequirement = CreateProductRequirements(configItem.MasterItem, childConfiguration);
+                    }
+                }
+
+                if(prodRequirement != null)
+                {
+                    var reqDay = prodRequirement.GetRequirementDay(grossDate);
+                    reqDay.GrossPieces += change;
+                }
+            }
+        }
+
+        public void SetInventory(double pieces)
+        {
+            var day = GetRequirementDay(_earliestDay);
+            day.Inventory = pieces;
+        }
+
+        public void SetEarlistDate(DateTime day)
+        {
+            var validatedDate = ValidateDay(day);
+            _earliestDay = validatedDate;
+        }
     }
 }

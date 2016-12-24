@@ -61,6 +61,7 @@ namespace Configuration_windows
                             if (_inner == null)
                             {
                                 _inner = newHandler;
+                                newHandler.Load();
                             }
                         }
                     }
@@ -103,7 +104,6 @@ namespace Configuration_windows
         {   
             _machineList = new ObservableCollection<Machine>();
             _allConfigurations = new ObservableCollection<Configuration>();
-            Load();
         }
 
         /// <summary>

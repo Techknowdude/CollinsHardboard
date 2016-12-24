@@ -130,7 +130,7 @@ namespace ImportLib
 
                 for (Int32 i = 0; i < newForecastItem.UnitsPerMonth.Length; i++)
                 {
-                    SalesItem[] foundItems = SalesItems.Where(x => x.ProductionCode == productMasterItem.ProductionCode &&
+                    SalesItem[] foundItems = SalesItems.Where(x => x.MasterID == productMasterItem.MasterID &&
                         x.Date.Month == DateTime.Now.AddMonths(-(i + 1)).Month && x.Date.AddYears(1).AddMonths(1) >= DateTime.Now).ToArray();
 
                     newForecastItem.UnitsPerMonth[i] = foundItems.Sum(x => (x.Units / productMasterItem.PiecesPerUnit));
@@ -165,7 +165,7 @@ namespace ImportLib
         /// <summary>
         /// Adds the sale to the list of sales
         /// </summary>
-        /// <param name="prodCode"></param>
+        /// <param name="description"></param>
         /// <param name="invoiceNum"></param>
         /// <param name="date"></param>
         /// <param name="units">Pieces in the order expressed as a decimal in Units</param>
@@ -173,9 +173,9 @@ namespace ImportLib
         /// <param name="grade"></param>
         /// <param name="master"></param>
         /// <returns></returns>
-        public static SalesItem AddSales(string prodCode, string invoiceNum, DateTime date, double units, double pieces, string grade, int master)
+        public static SalesItem AddSales(string description, string invoiceNum, DateTime date, double units, double pieces, string grade, int master)
         {
-            var sale = new SalesItem(prodCode, invoiceNum, units, pieces, grade, date, -1,master);
+            var sale = new SalesItem(description, invoiceNum, units, pieces, grade, date, -1,master);
             AddSales(sale);
             return sale;
         }

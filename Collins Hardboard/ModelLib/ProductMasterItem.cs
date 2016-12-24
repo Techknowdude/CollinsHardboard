@@ -221,7 +221,7 @@ namespace ModelLib
             }
             else
             {
-                return false;
+                return MasterID == obj as int?;
             }
         }
     }

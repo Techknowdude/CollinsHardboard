@@ -30,7 +30,7 @@ namespace ModelLibTests
             Assert.AreEqual(item.ProductionCode,readItem.ProductionCode);
             Assert.AreEqual(item.InvoiceNumber,readItem.InvoiceNumber);
             Assert.AreEqual(item.Units,readItem.Units);
-            Assert.AreEqual(item.Pieces,readItem.Pieces);
+            Assert.AreEqual(item.TotalPieces,readItem.TotalPieces);
             Assert.AreEqual(item.Grade,readItem.Grade);
             Assert.AreEqual(item.Date,readItem.Date);
             Assert.AreEqual(item.MasterID,readItem.MasterID);
