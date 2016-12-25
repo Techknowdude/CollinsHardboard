@@ -67,12 +67,7 @@ namespace ScheduleGen
             get { return _nextInventoryPieces; }
             set
             {
-                if (Math.Abs(_nextInventoryPieces - value) > PieceCountTolerance)
-                {
-                    var change = value - _nextInventoryPieces;
                     _nextInventoryPieces = value;
-                    ParentRequirements.UpdateNextInventory(Day, change);
-                }
             }
         }
 
@@ -87,12 +82,7 @@ namespace ScheduleGen
 
             set
             {
-                if (Math.Abs(_netRequiredPieces - value) > PieceCountTolerance)
-                {
-                    var change = value - _netRequiredPieces;
                     _netRequiredPieces = value;
-                    ParentRequirements.UpdateGross(Day,change);
-                }
             }
         }
 

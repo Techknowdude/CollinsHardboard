@@ -122,7 +122,7 @@ namespace ScheduleGen
             scheduleLine = (CoatingScheduleLine)scheduleDay.ChildrenLogic[0];
 
 
-            _orders = ProductRequirements.GetMakeOrders(SalesOutlook, DefaultWidthPriority > DefaultSalePriority);
+            _orders = RequirementsHandler.GetMakeOrders(SalesOutlook, DefaultWidthPriority > DefaultSalePriority);
 
             while (CurrentDay <= EndGen && _orders.Count > 0)
             {

@@ -91,6 +91,7 @@
       <DependentUpon>PurgeWiPControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="RequirementsDay.cs" />
+    <Compile Include="RequirementsHandler.cs" />
     <Compile Include="RunBeforeControl.xaml.cs">
       <DependentUpon>RunBeforeControl.xaml</DependentUpon>
     </Compile>
