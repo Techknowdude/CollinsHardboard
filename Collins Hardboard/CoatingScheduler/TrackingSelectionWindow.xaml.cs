@@ -11,6 +11,8 @@ namespace CoatingScheduler
 {
     /// <summary>
     /// Interaction logic for TrackingSelectionWindow.xaml
+    /// 
+    /// WARNING: Code unused. Replaced with extended schedule
     /// </summary>
     public partial class TrackingSelectionWindow : Window
     {

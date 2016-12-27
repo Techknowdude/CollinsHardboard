@@ -150,7 +150,7 @@ namespace Configuration_windows
         public bool CanMake(int masterID)
         {
             ProductMasterItem item =
-                StaticInventoryTracker.PressMasterList.FirstOrDefault(prod => prod.MasterID == masterID);
+                StaticInventoryTracker.ProductMasterList.FirstOrDefault(prod => prod.MasterID == masterID);
             if (item != null)
             {
                 return CanMake(item);

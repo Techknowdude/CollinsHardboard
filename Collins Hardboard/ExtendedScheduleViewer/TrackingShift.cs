@@ -145,11 +145,10 @@ namespace ExtendedScheduleViewer
             double removed = GetConsumed(item);
 
             var newSum = new ItemSummary(item,running,added,removed);
-
             ItemSummaries.Add(newSum);
             Control.AddSummary(newSum);
 
-            ExtendedSchedule.RunningTotalsDictionary[item] = newSum.RunningUnits;
+            ExtendedSchedule.RunningTotalsDictionary[item.MasterID] = newSum.RunningUnits;
 
             return newSum.RunningUnits;
         }
@@ -175,9 +174,9 @@ namespace ExtendedScheduleViewer
         {
             foreach (var watchedItem in ExtendedSchedule.Instance.Watches)
             {
-                if (ExtendedSchedule.RunningTotalsDictionary != null && ExtendedSchedule.RunningTotalsDictionary.ContainsKey(watchedItem))
+                if (ExtendedSchedule.RunningTotalsDictionary != null && ExtendedSchedule.RunningTotalsDictionary.ContainsKey(watchedItem.MasterID))
                 {
-                    ExtendedSchedule.RunningTotalsDictionary[watchedItem] = AddSummary(watchedItem, ExtendedSchedule.RunningTotalsDictionary[watchedItem]);
+                    ExtendedSchedule.RunningTotalsDictionary[watchedItem.MasterID] = AddSummary(watchedItem, ExtendedSchedule.RunningTotalsDictionary[watchedItem.MasterID]);
                 }
                 else
                 {
@@ -205,13 +204,13 @@ namespace ExtendedScheduleViewer
                     StaticInventoryTracker.ProductMasterList.FirstOrDefault(m => m.MasterID == salesItem.MasterID);
                 if (master != null)
                 {
-                    if (ExtendedSchedule.RunningTotalsDictionary.ContainsKey(master))
+                    if (ExtendedSchedule.RunningTotalsDictionary.ContainsKey(master.MasterID))
                     {
-                        ExtendedSchedule.RunningTotalsDictionary[master] -= salesItem.Units;
+                        ExtendedSchedule.RunningTotalsDictionary[master.MasterID] -= salesItem.Units;
                     }
                     else
                     {
-                        ExtendedSchedule.RunningTotalsDictionary[master] = -salesItem.Units;
+                        ExtendedSchedule.RunningTotalsDictionary[master.MasterID] = -salesItem.Units;
                     }
                 }
             }

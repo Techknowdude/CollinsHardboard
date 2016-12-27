@@ -26,7 +26,7 @@ namespace ExtendedScheduleViewer
             get { return _instance ?? (_instance = new ExtendedSchedule()); }
         }
 
-        public static Dictionary<ProductMasterItem, double> RunningTotalsDictionary = new Dictionary<ProductMasterItem, double>();
+        public static Dictionary<int, double> RunningTotalsDictionary = new Dictionary<int, double>();
 
         public ObservableCollection<ProductMasterItem> Watches
         {
@@ -77,7 +77,7 @@ namespace ExtendedScheduleViewer
 
                     // if master item exists.
                     if (keyMasterItem != null)
-                        RunningTotalsDictionary[keyMasterItem] = inventoryItem.Units;
+                        RunningTotalsDictionary[keyMasterItem.MasterID] = inventoryItem.Units;
                 }
             }
             // update WiP data
@@ -92,7 +92,7 @@ namespace ExtendedScheduleViewer
 
                     // if master item exists.
                     if (keyMasterItem != null)
-                        RunningTotalsDictionary[keyMasterItem] = inventoryItem.Units;
+                        RunningTotalsDictionary[keyMasterItem.MasterID] = inventoryItem.Units;
                 }
             }
 
@@ -119,24 +119,7 @@ namespace ExtendedScheduleViewer
             //}
 
         }
-
-        void Test()
-        {
-            ProductMasterItem item = StaticInventoryTracker.PressMasterList[0];
-
-            CoatingSchedule newSchedule = new CoatingSchedule();
-            newSchedule.AddLogic();
-            CoatingScheduleDay day = newSchedule.ChildrenLogic.Last() as CoatingScheduleDay;
-            day.Date = day.Date.AddDays(2);
-            day.AddLogic();
-            CoatingScheduleShift shift = day.ChildrenLogic.Last().ChildrenLogic.Last() as CoatingScheduleShift;
-            CoatingScheduleProduct product = new CoatingScheduleProduct(item);
-            shift.AddLogic(product);
-            product.Units = "1";
-
-            AddDay(new TrackingDay(day));
-            AddTrackingItem(item);
-        }
+        
 
         public void AddTrackingItem(ProductMasterItem item)
         {

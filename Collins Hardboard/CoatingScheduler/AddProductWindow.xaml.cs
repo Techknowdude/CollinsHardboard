@@ -80,9 +80,16 @@ namespace CoatingScheduler
             if (MachineComboBox.SelectedIndex != -1)
             {
                 ItemMachine = MachineComboBox.SelectedItem as Machine;
-
-                //ConfigComboBox.ItemsSource =
-                //    ItemMachine.ConfigurationList.Where(config => config.ItemOutID == MasterItem.MasterID);
+                List<Configuration> availableConfigurations = new List<Configuration>();
+                foreach (var configurationGroup in ItemMachine.ConfigurationList)
+                {
+                    foreach (var config in configurationGroup.Configurations)
+                    {
+                        if(config.CanMake(MasterItem))
+                            availableConfigurations.Add(config);
+                    }
+                }
+                ConfigComboBox.ItemsSource = availableConfigurations;
             }
             else
             {
@@ -115,9 +122,8 @@ namespace CoatingScheduler
             if (ProductComboBox.SelectedIndex != -1)
             {
                 MasterItem = ProductComboBox.SelectedItem as ProductMasterItem;
-                //TODO: update this
-                //MachineComboBox.ItemsSource = MachineHandler.Instance.MachineList.Where(machine =>
-                //    machine.ConfigurationList.Any(config => config.ItemOutID == MasterItem.MasterID));
+                MachineComboBox.ItemsSource = MachineHandler.Instance.MachineList.Where(machine =>
+                    machine.ConfigurationList.Any(config => config.CanMake(MasterItem.MasterID)));
             }
             else
             {

@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Windows.Input;
 using Configuration_windows.Annotations;
+using ImportLib;
 using ModelLib;
 using StaticHelpers;
 
@@ -379,6 +380,22 @@ namespace Configuration_windows
 
             // Item not consumed, or produced
             return 0;
+        }
+
+        public double GetUnitsConsumed(ProductMasterItem item, string units, int masterID)
+        {
+            double consumed = 0;
+            double checkedUnits = 0;
+            if (double.TryParse(units, out checkedUnits))
+            {
+                var master = StaticInventoryTracker.ProductMasterList.FirstOrDefault(m => m.MasterID == masterID);
+                if (master != null)
+                {
+                    consumed = GetUnitsConsumed(item, checkedUnits, master);
+                }
+            }
+
+            return consumed;
         }
     }
 }

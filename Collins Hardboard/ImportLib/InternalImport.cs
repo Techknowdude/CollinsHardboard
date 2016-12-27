@@ -129,6 +129,7 @@ namespace ImportLib
                     double unitsPerShift;
                     int masterID;
                     String madeIn;
+                    double fgPieces;
 
                     MyConnection.Open();
                     myCommand.Connection = MyConnection;
@@ -159,17 +160,16 @@ namespace ImportLib
                         Int32 targetOrdinal = excelData.GetOrdinal("Max");
                         Int32 shiftUnitsOrdinal = excelData.GetOrdinal("Avg run Coating");
                         Int32 madeOrdinal = excelData.GetOrdinal("Made In");
+                        Int32 fgPiecesOrdinal = excelData.GetOrdinal("FGPieces");
 
                         while (excelData.Read())
                         {
                             rowNum++;
                             try
                             {
-                                bool assigned = false;
                                 try
                                 {
                                     valid = excelData.GetBoolean(excelData.GetOrdinal("ValidRow"));
-                                    assigned = true;
                                 }
                                 catch (Exception e)
                                 {
@@ -178,7 +178,6 @@ namespace ImportLib
                                 try
                                 {
                                     valid = excelData.GetString(excelData.GetOrdinal("ValidRow")).ToLower() == "true";
-                                    assigned = true;
                                 }
                                 catch (Exception e)
                                 {
@@ -212,12 +211,13 @@ namespace ImportLib
                                 hasBarcode = !(barcode.ToUpper() == "NO" || barcode.ToUpper() == "FALSE");
                                 unitsPerShift = excelData.GetDouble(shiftUnitsOrdinal);
                                 madeIn = excelData.GetString(madeOrdinal);
+                                fgPieces = excelData.GetDouble(fgPiecesOrdinal);
 
                                 if (maxSupply < targetSupply)
                                     maxSupply = targetSupply;
 
                                 StaticInventoryTracker.AddMasterItem(new ProductMasterItem(masterID, product, description, width, length,
-                                    thickness, texture, waste, pcsUnit, grades, hasBarcode, notes, turnType, minSupply, maxSupply, targetSupply, unitsPerShift / 8) {MadeIn = madeIn});
+                                    thickness, texture, waste, pcsUnit, grades, hasBarcode, notes, turnType, minSupply, maxSupply, targetSupply, unitsPerShift / 8) {MadeIn = madeIn, FGPieces = fgPieces});
                                 ++numImported;
                             }
                             catch (Exception e)

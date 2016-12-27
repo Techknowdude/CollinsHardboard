@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
+using System.Xml.Serialization;
 using ImportLib;
 using ModelLib;
 using CoatingScheduler;

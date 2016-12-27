@@ -189,7 +189,27 @@ namespace Configuration_windows
             {
                 --infinityPrevention;
 
-                foreach (var shift in Shifts)
+                if (Shifts.Count == 1)
+                {
+                    var shift = Shifts[0];
+                    var found = false;
+                    var shiftStart = StaticFunctions.GetDayAndTime(currentDateTime, shift.StartTime);
+                    // go back a day until there is a shift on that day
+                    do
+                    {
+                        shiftStart = shiftStart.AddDays(-1);
+                        if (shift.DaysList.Contains(shiftStart.DayOfWeek))
+                        {
+                            closestdif = startTime - shiftStart;
+                            found = true;
+                        }
+
+                    } while (!found && infinityPrevention > 0);
+                    break;
+                }
+                else
+                {
+                    foreach (var shift in Shifts)
                 {
                     if (shift.DaysList.Contains(currentDateTime.DayOfWeek))
                     {
@@ -210,7 +230,7 @@ namespace Configuration_windows
                             closer = true;
                         }
                     }
-                }
+                }}
                 currentDateTime = currentDateTime.AddDays(-1); // go back a day
 
             } while (closer && infinityPrevention > 0);

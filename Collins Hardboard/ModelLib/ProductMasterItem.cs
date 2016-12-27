@@ -88,6 +88,11 @@ namespace ModelLib
         public double TargetSupply { get; set; }
 
         public double UnitsPerHour { get; set; }
+
+        public double FGPieces { get; set; }
+        public double FGRatio { get { return PiecesPerUnit / FGPieces; } }
+        public bool IsFG { get { return Math.Abs(PiecesPerUnit - FGPieces) < 0.0000001; } }
+
         #endregion
 
         public ProductMasterItem(int idNumber, string itemCode, string description, double width, double length, string thickness, string texture, double waste, int pcsPerUnit, string grades, bool hasBarcode, string notes, string turnType, double minSupply, double maxSupply, double targetSupply, double unitsPerHour)
@@ -159,6 +164,7 @@ namespace ModelLib
             UnitsPerHour = item.UnitsPerHour;
             MasterID = item.MasterID;
             MadeIn = item.MadeIn;
+            FGPieces = item.FGPieces;
         }
 
         public override string ToString()
@@ -186,6 +192,7 @@ namespace ModelLib
             writer.Write(PiecesPerUnit);
             writer.Write(MasterID);
             writer.Write(MadeIn);
+            writer.Write(FGPieces);
         }
 
         public static ProductMasterItem Load(BinaryReader reader)
@@ -208,8 +215,9 @@ namespace ModelLib
             Int32 pcs = reader.ReadInt32();
             Int32 id = reader.ReadInt32();
             String made = reader.ReadString();
+            double fgPieces = reader.ReadDouble();
 
-            return new ProductMasterItem(id,code,desc,width,len,StaticFunctions.ConvertDoubleToStringThickness(thick),tex,waste,pcs,grades,bar,notes,turns,min,max,target,units) {MadeIn = made};
+            return new ProductMasterItem(id,code,desc,width,len,StaticFunctions.ConvertDoubleToStringThickness(thick),tex,waste,pcs,grades,bar,notes,turns,min,max,target,units) {MadeIn = made, FGPieces = fgPieces};
         }
 
         public override bool Equals(object obj)

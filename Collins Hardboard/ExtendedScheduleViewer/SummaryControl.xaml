@@ -18,13 +18,13 @@
     </UserControl.Resources>
     <WrapPanel Margin="10,0" >
             <Border BorderThickness="1" BorderBrush="Black">
-            <TextBlock Width="40" Text="{Binding Path=RunningUnits}" TextAlignment="Center" Style="{StaticResource RunningTotalTextStyle}" ></TextBlock>
+            <TextBlock Width="40" Text="{Binding Path=RunningFGUnits}" TextAlignment="Center" Style="{StaticResource RunningTotalTextStyle}" ></TextBlock>
             </Border>
             <Border BorderThickness="1" BorderBrush="Black">
-            <TextBlock Width="40" Text="{Binding Path=AddedUnits}" TextAlignment="Center"></TextBlock>
+            <TextBlock Width="40" Text="{Binding Path=AddedFGUnits}" TextAlignment="Center"></TextBlock>
             </Border>
             <Border BorderThickness="1" BorderBrush="Black">
-            <TextBlock Width="40" Text="{Binding Path=RemovedUnits}" TextAlignment="Center"></TextBlock>
+            <TextBlock Width="40" Text="{Binding Path=RemovedFGUnits}" TextAlignment="Center"></TextBlock>
             </Border>
         </WrapPanel>
 </UserControl>

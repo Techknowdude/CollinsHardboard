@@ -391,9 +391,8 @@ namespace CoatingScheduler
             {
                 var product = ((CoatingScheduleProduct) coatingScheduleLogic);
                 var config = product.Config;
-                
-                //TODO: fix this
-                //consumed += config.GetUnitsConsumed(item, product.Units,product.MasterID);
+
+                consumed += config.GetUnitsConsumed(item, product.Units, product.MasterID);
             }
 
             return consumed;
