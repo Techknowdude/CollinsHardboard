@@ -72,19 +72,28 @@ namespace ScheduleGen
         private static Dictionary<ProductMasterItem, double> _fulfilled;
         private static Queue<String> _errors = new Queue<string>();
 
-        public static void GenerateSalesSchedule(DateTime salesOutlook, DateTime startGen, DateTime endGen, bool testing = false)
+        public static void GenerateSalesSchedule(DateTime salesOutlook, DateTime startGen, DateTime endGen,
+            bool testing = false)
         {
             _orders.Clear();
             currentInventoryItems.Clear();
 
             foreach (var allInventoryItem in StaticInventoryTracker.AllInventoryItems)
             {
-                currentInventoryItems.Add(new InventoryItem(allInventoryItem.ProductCode, allInventoryItem.Units, allInventoryItem.PiecesPerUnit, allInventoryItem.Grade, allInventoryItem.MasterID, allInventoryItem.InventoryItemID));
+                currentInventoryItems.Add(new InventoryItem(allInventoryItem.ProductCode, allInventoryItem.Units,
+                    allInventoryItem.PiecesPerUnit, allInventoryItem.Grade, allInventoryItem.MasterID,
+                    allInventoryItem.InventoryItemID));
             }
 
             if (StaticInventoryTracker.ProductMasterList.Count == 0)
             {
                 MessageBox.Show("No master loaded. Please load master before generating schedule.");
+                return;
+            }
+
+            if (MachineHandler.Instance.MachineList.Count == 0)
+            {
+                MessageBox.Show("No machines configured/loaded. Please load or configure the plant machines before generating schedule.");
                 return;
             }
 
@@ -94,7 +103,9 @@ namespace ScheduleGen
 
             int lastWaitItems = 0;
 
+            // List of items that need to be scheduled
             ProductItems = new List<ProductMasterItem>();
+            //Items that have been scheduled
             ScheduledItems = new List<ProductMasterItem>();
 
             CoatingSchedule.CurrentSchedule?.ChildrenLogic.Clear();
@@ -114,20 +125,40 @@ namespace ScheduleGen
             CurrentWaste = StaticFactoryValuesManager.CurrentWaste;
             CurrentDay = StartGen;
             LastWidth = ProductItems.Max(x => x.Width);
-            // for each item, get highest priority for that 
 
+            // add the first shift to the schedule
             schedule.AddLogic();
             scheduleDay = (CoatingScheduleDay)schedule.ChildrenLogic[0];
             scheduleDay.Date = CurrentDay;
             scheduleDay.AddLogic();
             scheduleLine = (CoatingScheduleLine)scheduleDay.ChildrenLogic[0];
 
-
+            // get a list of all sales orders
             _orders = RequirementsHandler.GetMakeOrders(SalesOutlook, DefaultWidthPriority > DefaultSalePriority);
+            MakeOrder nextOrder = null;
 
-            while (CurrentDay <= EndGen && _orders.Count > 0)
+            // While we have not reached the end of the schedule
+
+            /*
+             *   Scheduling algorithm:
+             *   
+             *   Find all orders and when they are due.
+             *   Backtrack and find out when the order needs to be started (hard start date)
+             *   -> Get the farthest sale and backtrack so the hard deadlines don't overlap
+             *   
+             *   
+             *   Get the next best item to schedule using these criteria:
+             *   1. If the current shift is the hard start date for an order, schedule it
+             *   2. Item has a forecast deadline (soft deadline)
+             *   3. Item is part of the current configuration group
+             *   4. Item width is <= current width ( this may not be important)
+             *   
+             */
+            while (CurrentDay <= EndGen)
             {
-                var nextOrder = _orders.Peek();
+                
+                if(_orders.Any())
+                    nextOrder = _orders.Peek();
 
                 while (nextOrder != null && nextOrder.PiecesToMake < 1) // get rid of empty orders
                 {

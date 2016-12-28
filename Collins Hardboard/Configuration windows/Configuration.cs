@@ -104,7 +104,8 @@ namespace Configuration_windows
             get { return _name; }
             set
             {
-                if (value != _name && _name.Equals(DefaultConfigName))
+                // only allow the config name to be set once, as this is how the schedule links to the config
+                if (value != _name && _name.Equals(DefaultConfigName) && MachineHandler.Instance.IsConfigNameUnique(value))
                 {
                     _name = value;
                     OnPropertyChanged();

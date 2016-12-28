@@ -343,5 +343,10 @@ namespace Configuration_windows
                 ConfigWindow.ViewModel.RefreshConfigs();
             }
         }
+
+        public bool IsConfigNameUnique(string name)
+        {
+            return Instance != null && !AllConfigurations.Any(config => config.Name.Equals(name));
+        }
     }
 }
