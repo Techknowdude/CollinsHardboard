@@ -16,75 +16,83 @@ using StaticHelpers;
 
 namespace ScheduleGen
 {
-    public static class ScheduleGenerator
+    public class ScheduleGenerator
     {
+        private static ScheduleGenerator _inner = null;
+
+        public static ScheduleGenerator Instance
+        {
+            get
+            {
+                if (_inner == null)
+                    _inner = new ScheduleGenerator();
+                return _inner;
+            }
+        }
+
         private const int DefaultWidthPriority = 250;
         private const int DefaultSalePredictionPriority = 225;
         private const int DefaultSalePriority = 200;
 
-        static CoatingScheduleDay scheduleDay;
-        static CoatingScheduleLine scheduleLine;
-        static CoatingScheduleShift scheduleShift;
-        static CoatingSchedule schedule = new CoatingSchedule();
-        private static bool added;
-        private static SalesPrediction.SalesDurationEnum duration;
+        CoatingScheduleDay scheduleDay;
+        CoatingScheduleLine scheduleLine;
+        CoatingScheduleShift scheduleShift;
+        CoatingSchedule schedule = new CoatingSchedule();
+        private bool added;
+        private SalesPrediction.SalesDurationEnum duration;
         static double avgSold;
 
-        public static DateTime SalesOutlook { get; set; }
-        public static DateTime StartGen { get; set; }
-        public static DateTime EndGen { get; set; }
+        public DateTime SalesOutlook { get; set; }
+        public DateTime StartGen { get; set; }
+        public DateTime EndGen { get; set; }
 
-        private static ScheduleGenWindow _window;
-        private static ObservableCollection<GenControl> _controlsList = new ObservableCollection<GenControl>();
-        private static DateTime _currentDay = DateTime.Today;
+        private ScheduleGenWindow _window;
+        private ObservableCollection<GenControl> _controlsList = new ObservableCollection<GenControl>();
+        private DateTime _currentDay = DateTime.Today;
         public const string datFile = "ScheduleGenSettings.dat";
-        static List<InventoryItem> currentInventoryItems = new List<InventoryItem>();
-        public static List<InventoryItem> CurrentInventory { get { return currentInventoryItems; } }
-        private static Dictionary<Machine, LastConfigTime> _runningMachines = new Dictionary<Machine, LastConfigTime>(); 
+        List<InventoryItem> currentInventoryItems = new List<InventoryItem>();
+        public List<InventoryItem> CurrentInventory { get { return currentInventoryItems; } }
+        private Dictionary<Machine, LastConfigTime> _runningMachines = new Dictionary<Machine, LastConfigTime>();
 
-        public static DateTime CurrentDay
+        public DateTime CurrentDay
         {
             get { return _currentDay; }
             set { _currentDay = value; }
         }
 
-        public static List<ProductMasterItem> ProductItems { get; set; }
+        public List<ProductMasterItem> ProductItems { get; set; }
 
-        public static ObservableCollection<GenControl> ControlsList
+        public ObservableCollection<GenControl> ControlsList
         {
             get { return _controlsList; }
             set { _controlsList = value; }
         }
 
-        public static ScheduleGenWindow Window
+        public ScheduleGenWindow Window
         {
             get { return _window; }
             set { _window = value; }
         }
 
-        public static List<ProductMasterItem> ScheduledItems { get; set; }
-        public static double CurrentWaste { get; set; }
-        public static double LastWidth { get; set; }
-        public static String CurrentLine { get; set; }
-        static Queue<MakeOrder> _orders = new Queue<MakeOrder>();
-        static Queue<MakeOrder> _waitOrders = new Queue<MakeOrder>();
+        public List<ProductMasterItem> ScheduledItems { get; set; }
+        public double CurrentWaste { get; set; }
+        public double LastWidth { get; set; }
+        public String CurrentLine { get; set; }
 
-        private static Dictionary<ProductMasterItem, double> _fulfilled;
-        private static Queue<String> _errors = new Queue<string>();
+        public int ProjectedSalesWeight { get; set; } = 500;
+        public int WidthWeight { get; set; } = 200;
+        public int SalesWeight { get; set; } = 1000;
+        public int ConfigGroupingWeight { get; set; } = 300;
 
-        public static void GenerateSalesSchedule(DateTime salesOutlook, DateTime startGen, DateTime endGen,
+        Queue<MakeOrder> _orders = new Queue<MakeOrder>();
+        Queue<MakeOrder> _waitOrders = new Queue<MakeOrder>();
+
+        private Dictionary<ProductMasterItem, double> _fulfilled;
+        private Queue<String> _errors = new Queue<string>();
+
+        public void GenerateSalesSchedule(DateTime salesOutlook, DateTime startGen, DateTime endGen,
             bool testing = false)
         {
-            _orders.Clear();
-            currentInventoryItems.Clear();
-
-            foreach (var allInventoryItem in StaticInventoryTracker.AllInventoryItems)
-            {
-                currentInventoryItems.Add(new InventoryItem(allInventoryItem.ProductCode, allInventoryItem.Units,
-                    allInventoryItem.PiecesPerUnit, allInventoryItem.Grade, allInventoryItem.MasterID,
-                    allInventoryItem.InventoryItemID));
-            }
-
             if (StaticInventoryTracker.ProductMasterList.Count == 0)
             {
                 MessageBox.Show("No master loaded. Please load master before generating schedule.");
@@ -97,111 +105,136 @@ namespace ScheduleGen
                 return;
             }
 
-            SalesOutlook = salesOutlook;
-            StartGen = startGen;
-            EndGen = endGen;
+            _orders.Clear();
+            currentInventoryItems.Clear();
 
-            int lastWaitItems = 0;
-
-            // List of items that need to be scheduled
-            ProductItems = new List<ProductMasterItem>();
-            //Items that have been scheduled
-            ScheduledItems = new List<ProductMasterItem>();
-
-            CoatingSchedule.CurrentSchedule?.ChildrenLogic.Clear();
-
-            CoatingScheduleWindow scheduleWindow = new CoatingScheduleWindow(schedule);
-            scheduleWindow.Show();
-            PressScheduleWindow pressScheduleWindow = new PressScheduleWindow();
-            pressScheduleWindow.Show();
-            PressManager.PlateConfigurations.Clear();
-            pressScheduleWindow.UpdateControls();
-
-
-            // get list of all items that are made
-            ProductItems.AddRange(StaticInventoryTracker.ProductMasterList.Where(x => x.MadeIn == "Coating"));
-
-            // initialize with current waste, line, and width
-            CurrentWaste = StaticFactoryValuesManager.CurrentWaste;
-            CurrentDay = StartGen;
-            LastWidth = ProductItems.Max(x => x.Width);
-
-            // add the first shift to the schedule
-            schedule.AddLogic();
-            scheduleDay = (CoatingScheduleDay)schedule.ChildrenLogic[0];
-            scheduleDay.Date = CurrentDay;
-            scheduleDay.AddLogic();
-            scheduleLine = (CoatingScheduleLine)scheduleDay.ChildrenLogic[0];
-
-            // get a list of all sales orders
-            _orders = RequirementsHandler.GetMakeOrders(SalesOutlook, DefaultWidthPriority > DefaultSalePriority);
-            MakeOrder nextOrder = null;
-
-            // While we have not reached the end of the schedule
-
-            /*
-             *   Scheduling algorithm:
-             *   
-             *   Find all orders and when they are due.
-             *   Backtrack and find out when the order needs to be started (hard start date)
-             *   -> Get the farthest sale and backtrack so the hard deadlines don't overlap
-             *   
-             *   
-             *   Get the next best item to schedule using these criteria:
-             *   1. If the current shift is the hard start date for an order, schedule it
-             *   2. Item has a forecast deadline (soft deadline)
-             *   3. Item is part of the current configuration group
-             *   4. Item width is <= current width ( this may not be important)
-             *   
-             */
-            while (CurrentDay <= EndGen)
+            foreach (var allInventoryItem in StaticInventoryTracker.AllInventoryItems)
             {
-                
-                if(_orders.Any())
-                    nextOrder = _orders.Peek();
+                currentInventoryItems.Add(new InventoryItem(allInventoryItem.ProductCode, allInventoryItem.Units,
+                    allInventoryItem.PiecesPerUnit, allInventoryItem.Grade, allInventoryItem.MasterID,
+                    allInventoryItem.InventoryItemID));
+            }
 
-                while (nextOrder != null && nextOrder.PiecesToMake < 1) // get rid of empty orders
+            try
+            {
+                RegisterEvals();
+
+                SalesOutlook = salesOutlook;
+                StartGen = startGen;
+                EndGen = endGen;
+
+                int lastWaitItems = 0;
+
+                // List of items that need to be scheduled
+                ProductItems = new List<ProductMasterItem>();
+                //Items that have been scheduled
+                ScheduledItems = new List<ProductMasterItem>();
+
+                CoatingSchedule.CurrentSchedule?.ChildrenLogic.Clear();
+
+                CoatingScheduleWindow scheduleWindow = new CoatingScheduleWindow(schedule);
+                scheduleWindow.Show();
+                PressScheduleWindow pressScheduleWindow = new PressScheduleWindow();
+                pressScheduleWindow.Show();
+                PressManager.PlateConfigurations.Clear();
+                pressScheduleWindow.UpdateControls();
+
+
+                // get list of all items that are made
+                ProductItems.AddRange(StaticInventoryTracker.ProductMasterList.Where(x => x.MadeIn == "Coating"));
+
+                // initialize with current waste, line, and width
+                CurrentWaste = StaticFactoryValuesManager.CurrentWaste;
+                CurrentDay = StartGen;
+                LastWidth = ProductItems.Max(x => x.Width);
+
+                // add the first shift to the schedule
+                schedule.AddLogic();
+                scheduleDay = (CoatingScheduleDay)schedule.ChildrenLogic[0];
+                scheduleDay.Date = CurrentDay;
+                scheduleDay.AddLogic();
+                scheduleLine = (CoatingScheduleLine)scheduleDay.ChildrenLogic[0];
+
+                // get a list of all sales orders
+                _orders = RequirementsHandler.GetMakeOrders(SalesOutlook, DefaultWidthPriority > DefaultSalePriority);
+                MakeOrder nextOrder = null;
+
+                // While we have not reached the end of the schedule
+
+                /*
+                 *   Scheduling algorithm:
+                 *   
+                 *   Find all orders and when they are due.
+                 *   Backtrack and find out when the order needs to be started (hard start date)
+                 *   -> Get the farthest sale and backtrack so the hard deadlines don't overlap
+                 *   
+                 *   
+                 *   Get the next best item to schedule using these criteria:
+                 *   1. If the current shift is the hard start date for an order, schedule it
+                 *   2. Item has a forecast deadline (soft deadline)
+                 *   3. Item is part of the current configuration group
+                 *   4. Item width is <= current width ( this may not be important)
+                 *   
+                 */
+                while (CurrentDay <= EndGen)
                 {
-                    _orders.Dequeue();
-                    if (_orders.Count == 0)
-                        break;
-                    nextOrder = _orders.Peek();
-                }
 
-                if (nextOrder == null) continue;
+                    if (_orders.Any())
+                        nextOrder = _orders.Peek();
 
-                ProductMasterItem nextItem =
-                    StaticInventoryTracker.ProductMasterList.FirstOrDefault(x => x.MasterID == nextOrder.MasterID);
-
-                if(nextItem == null) continue;
-                
-
-                ScheduleSaleItem(nextItem,nextOrder.PiecesToMake);
-
-
-                if (_orders.Count == 0)
-                {
-                    if(lastWaitItems == _waitOrders.Count)
-                        AddControl(); // Making no progress, advance a shift
-
-                    lastWaitItems = _waitOrders.Count;
-                    while (_waitOrders.Count > 0)
+                    while (nextOrder != null && nextOrder.PiecesToMake < 1) // get rid of empty orders
                     {
-                        _orders.Enqueue(_waitOrders.Dequeue());
+                        _orders.Dequeue();
+                        if (_orders.Count == 0)
+                            break;
+                        nextOrder = _orders.Peek();
+                    }
+
+                    if (nextOrder == null) continue;
+
+                    ProductMasterItem nextItem =
+                        StaticInventoryTracker.ProductMasterList.FirstOrDefault(x => x.MasterID == nextOrder.MasterID);
+
+                    if (nextItem == null) continue;
+
+
+                    ScheduleSaleItem(nextItem, nextOrder.PiecesToMake);
+
+
+                    if (_orders.Count == 0)
+                    {
+                        if (lastWaitItems == _waitOrders.Count)
+                            AddControl(); // Making no progress, advance a shift
+
+                        lastWaitItems = _waitOrders.Count;
+                        while (_waitOrders.Count > 0)
+                        {
+                            _orders.Enqueue(_waitOrders.Dequeue());
+                        }
                     }
                 }
+
+                scheduleWindow.LoadTrackingItems();
+                pressScheduleWindow.UpdateControls();
+
+
+                while (_errors.Count > 0)
+                {
+                    MessageBox.Show(_errors.Dequeue());
+                }
+
+                MessageBox.Show("Schedule done generating");
+
             }
-
-            scheduleWindow.LoadTrackingItems();
-            pressScheduleWindow.UpdateControls();
-
-
-            while (_errors.Count > 0)
+            catch (Exception e)
             {
-                MessageBox.Show(_errors.Dequeue());
+                Console.WriteLine(e);
+                throw;
             }
-
-            MessageBox.Show("Schedule done generating");
+            finally
+            {
+                UnregisterEvals();
+            }
         }
 
         /// <summary>
@@ -210,7 +243,7 @@ namespace ScheduleGen
         /// <param name="config"></param>
         /// <param name="unitsToMake"></param>
         /// <returns>True if the entire amount is made in time -- The parent item can now be scheduled</returns>
-        private static bool ScheduleSalesPrerequisite(Configuration config, double unitsToMake)
+        private bool ScheduleSalesPrerequisite(Configuration config, double unitsToMake)
         {
             double unitsRequired = unitsToMake;
             bool scheduled = false;
@@ -230,7 +263,7 @@ namespace ScheduleGen
             // try to schedule item
             if (prevItem.MadeIn == "Coating")
             {
-                scheduled = ScheduleSaleItem(prevItem, unitsRequired*prevItem.PiecesPerUnit);
+                scheduled = ScheduleSaleItem(prevItem, unitsRequired * prevItem.PiecesPerUnit);
             }
             else if (prevItem.MadeIn == "Press")
             {
@@ -246,7 +279,7 @@ namespace ScheduleGen
             return scheduled;
         }
 
-        private static bool ScheduleSaleItem(ProductMasterItem nextItem, double pieces)
+        private bool ScheduleSaleItem(ProductMasterItem nextItem, double pieces)
         {
             Tuple<Machine, Configuration, int> machineLine = GetBestMachine(nextItem);
 
@@ -260,7 +293,7 @@ namespace ScheduleGen
                 scheduleShift = (CoatingScheduleShift)scheduleLine.ChildrenLogic[lineIndex];
 
                 // update running machine availability. Date is the time it will be available again
-                _runningMachines[machine] = new LastConfigTime( StaticFunctions.GetDayAndTime(scheduleLine.Date,scheduleLine.Shift.StartTime) + scheduleLine.Shift.Duration, config);
+                _runningMachines[machine] = new LastConfigTime(StaticFunctions.GetDayAndTime(scheduleLine.Date, scheduleLine.Shift.StartTime) + scheduleLine.Shift.Duration, config);
                 StaticFunctions.OutputDebugLine($"Machine {machine.Name} is being used until {_runningMachines[machine].LastShiftTime} to make {nextItem.Description}");
 
                 double unitsToMake = pieces / (double)nextItem.PiecesPerUnit;
@@ -286,7 +319,7 @@ namespace ScheduleGen
                     if (hasPrereqs)
                     {
                         var unitsMade = scheduleShift.ScheduleItem(machine, config, nextItem, double.MaxValue);
-                        var takeOff = unitsMade*nextItem.PiecesPerUnit;
+                        var takeOff = unitsMade * nextItem.PiecesPerUnit;
                         foreach (var makeOrder in _orders.Where(m => m.MasterID == nextItem.MasterID))
                         {
                             if (takeOff > makeOrder.PiecesToMake)
@@ -308,13 +341,13 @@ namespace ScheduleGen
                     }
                 }
             }
-            if(_orders.Count > 0)
+            if (_orders.Count > 0)
                 _waitOrders.Enqueue(_orders.Dequeue());
 
             return false;
         }
 
-        public static void GeneratePredictionSchedule(DateTime salesOutlook, DateTime startGen, DateTime endGen, bool testing = false)
+        public void GeneratePredictionSchedule(DateTime salesOutlook, DateTime startGen, DateTime endGen, bool testing = false)
         {
             currentInventoryItems.Clear();
             _runningMachines.Clear();
@@ -333,7 +366,7 @@ namespace ScheduleGen
             duration = SalesPrediction.SalesDurationEnum.LastYear;
 
             var prediction = ControlsList.FirstOrDefault(control => control is SalesPrediction) as SalesPrediction ??
-                             new SalesPrediction(Window,DefaultSalePredictionPriority,SalesPrediction.SalesDurationEnum.LastYear);
+                             new SalesPrediction(Window, DefaultSalePredictionPriority, SalesPrediction.SalesDurationEnum.LastYear);
             var widthController = ControlsList.FirstOrDefault(control => control is WidthControl) as WidthControl ??
                                   new WidthControl(Window, DefaultWidthPriority);
 
@@ -356,7 +389,7 @@ namespace ScheduleGen
             scheduleWindow.Show();
             scheduleWindow.Schedule.ChildrenLogic.Clear();
             scheduleWindow.DayControls.Clear();
-            PressScheduleWindow pressWindow=  new PressScheduleWindow();
+            PressScheduleWindow pressWindow = new PressScheduleWindow();
             pressWindow.Show();
             PressManager.PlateConfigurations.Clear();
             pressWindow.UpdateControls();
@@ -457,7 +490,7 @@ namespace ScheduleGen
         /// </summary>
         /// <param name="nextItem"></param>
         /// <returns></returns>
-        private static bool ScheduleItem(ProductMasterItem nextItem)
+        private bool ScheduleItem(ProductMasterItem nextItem)
         {
             while (LineFull())
             {
@@ -485,7 +518,7 @@ namespace ScheduleGen
                 scheduleShift = (CoatingScheduleShift)scheduleLine.ChildrenLogic[lineIndex];
 
                 // update running machine availability. Date is the time it will be available again
-                _runningMachines[machine] = new LastConfigTime( StaticFunctions.GetDayAndTime(scheduleLine.Date,scheduleLine.Shift.StartTime) + scheduleLine.Shift.Duration, config);
+                _runningMachines[machine] = new LastConfigTime(StaticFunctions.GetDayAndTime(scheduleLine.Date, scheduleLine.Shift.StartTime) + scheduleLine.Shift.Duration, config);
                 StaticFunctions.OutputDebugLine($"Machine {machine.Name} is being used until {_runningMachines[machine].LastShiftTime} to make {nextItem.Description}");
 
                 double unitsToMake = GetUnitsToMake(nextItem, machine);
@@ -537,7 +570,7 @@ namespace ScheduleGen
             return false;
         }
 
-        private static bool SchedulePrerequisite(Configuration config, double unitsToMake)
+        private bool SchedulePrerequisite(Configuration config, double unitsToMake)
         {
             double unitsRequired = unitsToMake;
             bool scheduled = false;
@@ -573,7 +606,7 @@ namespace ScheduleGen
             return scheduled;
         }
 
-        private static bool HasPrerequisites(Configuration config, double unitsToMake)
+        private bool HasPrerequisites(Configuration config, double unitsToMake)
         {
             bool hasEnough = false;
             var inv = currentInventoryItems.FirstOrDefault(i => i.MasterID == config.ItemInID);
@@ -594,7 +627,7 @@ namespace ScheduleGen
         }
 
 
-        public static void RemoveIfCompleted(ProductMasterItem nextItem)
+        public void RemoveIfCompleted(ProductMasterItem nextItem)
         {
             var inv = currentInventoryItems.FirstOrDefault(i => i.MasterID == nextItem.MasterID);
             if (inv != null)
@@ -613,7 +646,7 @@ namespace ScheduleGen
             }
         }
 
-        private static double GetAvgUnitsPerDay(ProductMasterItem nextItem)
+        private double GetAvgUnitsPerDay(ProductMasterItem nextItem)
         {
             double unitUsage = 0;
             var forecast = StaticInventoryTracker.ForecastItems.FirstOrDefault(f => f.MasterID == nextItem.MasterID);
@@ -663,7 +696,7 @@ namespace ScheduleGen
         }
 
 
-        public static Tuple<Machine, Configuration, int> GetBestMachine(ProductMasterItem nextItem)
+        public Tuple<Machine, Configuration, int> GetBestMachine(ProductMasterItem nextItem)
         {
             Machine bestMachine = null;
             int lineIndex = 0;
@@ -680,12 +713,12 @@ namespace ScheduleGen
 
             if (machines.Count == 0)
             {
-                if(!_errors.Contains($"No machine can make {nextItem}. Please add a configuration to make this item to a machine."))
+                if (!_errors.Contains($"No machine can make {nextItem}. Please add a configuration to make this item to a machine."))
                     _errors.Enqueue(
                     $"No machine can make {nextItem}. Please add a configuration to make this item to a machine.");
             }
 
-           
+
 
             foreach (var machine in machines)
             {
@@ -758,7 +791,7 @@ namespace ScheduleGen
                             else
                             {
                                 // can't use the config yet - not ready
-                                StaticFunctions.OutputDebugLine($"Machine {machine.Name} can't be used. It is unavailable until {_runningMachines[machine].LastShiftTime /*+ config.ChangeTime*/}. It is needed by {nextItem.Description} by {StaticFunctions.GetDayAndTime(scheduleLine.Date,scheduleLine.Shift.StartTime)}");
+                                StaticFunctions.OutputDebugLine($"Machine {machine.Name} can't be used. It is unavailable until {_runningMachines[machine].LastShiftTime /*+ config.ChangeTime*/}. It is needed by {nextItem.Description} by {StaticFunctions.GetDayAndTime(scheduleLine.Date, scheduleLine.Shift.StartTime)}");
                                 bestMachine = null;
                                 lineIndex = 0;
                                 config = null;
@@ -780,18 +813,18 @@ namespace ScheduleGen
             return new Tuple<Machine, Configuration, int>(bestMachine, config, lineIndex);
         }
 
-        private static bool LineFull()
+        private bool LineFull()
         {
             return scheduleLine.IsFull();
         }
 
 
-        public static bool LoadSettings(string fileName = datFile)
+        public bool LoadSettings(string fileName = datFile)
         {
             return LoadFileData(fileName, _window);
         }
 
-        private static bool LoadFileData(String file, ScheduleGenWindow window)
+        private bool LoadFileData(String file, ScheduleGenWindow window)
         {
             try
             {
@@ -814,12 +847,12 @@ namespace ScheduleGen
             }
         }
 
-        public static bool SaveSettings()
+        public bool SaveSettings()
         {
             return SaveFileData(datFile);
         }
 
-        private static bool SaveFileData(String fileName)
+        private bool SaveFileData(String fileName)
         {
             try
             {
@@ -841,7 +874,7 @@ namespace ScheduleGen
             return true;
         }
 
-        public static void UpdateControlOrder()
+        public void UpdateControlOrder()
         {
             ObservableCollection<GenControl> controls = new ObservableCollection<GenControl>();
 
@@ -870,7 +903,7 @@ namespace ScheduleGen
         }
 
 
-        public static double GetUnitsToMake(ProductMasterItem nextItem, Machine machine)
+        public double GetUnitsToMake(ProductMasterItem nextItem, Machine machine)
         {
             double unitsToMake = 0;
             double maxInShift = 0;
@@ -1004,7 +1037,7 @@ namespace ScheduleGen
         }
 
 
-        private static void AddControl()
+        private void AddControl()
         {
             if (scheduleDay.CanAddShift()) // if all shifts not used.
             {
@@ -1024,7 +1057,7 @@ namespace ScheduleGen
             }
         }
 
-        private static void DecrementInventory(int dayDif)
+        private void DecrementInventory(int dayDif)
         {
             // update inventory by lowering it by the number of days past
             foreach (var inventoryItem in CurrentInventory)
@@ -1064,7 +1097,7 @@ namespace ScheduleGen
 
         }
 
-        public static DateTime GetSalesRange()
+        public DateTime GetSalesRange()
         {
             return SalesOutlook;
         }
@@ -1077,8 +1110,88 @@ namespace ScheduleGen
 
         private static void GenerateScheduleTest()
         {
-            //ScheduleGenerator.GenerateSchedule(true);
+            //ScheduleGenerator.Instance.GenerateSchedule(true);
         }
+
+
+        #region Evaluation of next to schedule
+
+        private delegate int Evaluator(ProductMasterItem item);
+
+        private Evaluator evaluations;
+
+        /// <summary>
+        /// Gathers the weight that the item should be scheduled. Based on any registered evaluators.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public int Evaluate(ProductMasterItem item)
+        {
+            int weight = 0;
+            //weight += EvaluateSales(item);
+            //weight += EvaluateWidth(item);
+            //weight += EvaluateProjection(item);
+            //weight += EvaluateGrouping(item);
+            weight = evaluations(item);
+
+            return weight;
+        }
+
+        /// <summary>
+        /// Get the weight value of scheduling the item
+        /// </summary>
+        /// <param name="item">Item to potentially schedule</param>
+        /// <returns>weight that the item should be scheduled</returns>
+        private int EvaluateSales(ProductMasterItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Get the weight value of scheduling the item
+        /// </summary>
+        /// <param name="item">Item to potentially schedule</param>
+        /// <returns>weight that the item should be scheduled</returns>
+        private int EvaluateWidth(ProductMasterItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Get the weight value of scheduling the item
+        /// </summary>
+        /// <param name="item">Item to potentially schedule</param>
+        /// <returns>weight that the item should be scheduled</returns>
+        private int EvaluateProjection(ProductMasterItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Get the weight value of scheduling the item
+        /// </summary>
+        /// <param name="item">Item to potentially schedule</param>
+        /// <returns>weight that the item should be scheduled</returns>
+        private int EvaluateGrouping(ProductMasterItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        private void RegisterEvals()
+        {
+            evaluations = null;
+            evaluations += EvaluateGrouping;
+            evaluations += EvaluateProjection;
+            evaluations += EvaluateSales;
+            evaluations += EvaluateWidth;
+        }
+
+        private void UnregisterEvals()
+        {
+            evaluations = null;
+        }
+        #endregion
     }
 
     internal class LastConfigTime

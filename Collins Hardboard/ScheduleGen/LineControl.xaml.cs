@@ -103,7 +103,7 @@ namespace ScheduleGen
 
         public override int GetCost(ProductMasterItem item)
         {
-            if (ScheduleGenerator.CurrentLine == CoatingLine && item.Equals(MasterItem))
+            if (ScheduleGenerator.Instance.CurrentLine == CoatingLine && item.Equals(MasterItem))
                 return 0;
 
             return Priority;

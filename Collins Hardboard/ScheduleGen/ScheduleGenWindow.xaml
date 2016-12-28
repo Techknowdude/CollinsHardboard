@@ -18,12 +18,27 @@
             <Label>Consider sales due before:</Label>
             <DatePicker Name="SalesDatePicker"  SelectedDate="{Binding Path=SaleDate}"></DatePicker>
         </StackPanel>
-        <ListView Name="ControlsListView"></ListView>
+        <ListBox Name="ControlsListView">
+
+            <WrapPanel>
+                <TextBlock>Sales weight:</TextBlock>
+                <TextBox Text="{Binding Path=ScheduleGen.SalesWeight}" Width="80"></TextBox>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock>Configuration grouping weight:</TextBlock>
+                <TextBox Text="{Binding Path=ScheduleGen.ConfigGroupingWeight}" Width="80"></TextBox>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock>Sales projection weight:</TextBlock>
+                <TextBox Text="{Binding Path=ScheduleGen.ProjectedSalesWeight}" Width="80"></TextBox>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock>Similar width weight:</TextBlock>
+                <TextBox Text="{Binding Path=ScheduleGen.WidthWeight}" Width="80"></TextBox>
+            </WrapPanel>
+        </ListBox>
         <StackPanel Orientation="Horizontal">
-            <Button Name="GenerateFromPredictionButton" Padding="8,2" Click="GeneratePredictionButton_OnClick" >Generate schedule from prediction</Button>
-            <Button Name="GenerateFromSalesButton" Padding="8,2" Click="GenerateSalesButton_OnClick" >Generate schedule from sales</Button>
-            <!--<Button Name="SaveButton" Width="80" Click="SaveButton_OnClick" Margin="5,0">Save Settings</Button>
-            <Button Name="LoadButton" Width="80" Click="LoadButton_OnClick" >Load Settings</Button>-->
+            <Button Name="GenerateFromPredictionButton" Padding="8,2" Click="GeneratePredictionButton_OnClick" >Generate schedule</Button>
 
         </StackPanel>
 

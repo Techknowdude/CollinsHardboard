@@ -35,7 +35,7 @@ namespace ScheduleGen
 
         public override int GetCost(ProductMasterItem item)
         {
-            var sales = StaticInventoryTracker.SalesItems.Where(x => (x.Units- x.Fulfilled) < 0.01 && x.MasterID == item.MasterID && x.Date < ScheduleGenerator.GetSalesRange()); // get all not filled ordered
+            var sales = StaticInventoryTracker.SalesItems.Where(x => (x.Units- x.Fulfilled) < 0.01 && x.MasterID == item.MasterID && x.Date < ScheduleGenerator.Instance.GetSalesRange()); // get all not filled ordered
 
             int currentPriority = 0;
 

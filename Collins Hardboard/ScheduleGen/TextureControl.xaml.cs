@@ -147,12 +147,12 @@ namespace ScheduleGen
         {
             if (OnlyOn)
             {
-                if (item.Texture.Equals(SelectedTexture) && ScheduleGenerator.CurrentDay.DayOfWeek == Day)
+                if (item.Texture.Equals(SelectedTexture) && ScheduleGenerator.Instance.CurrentDay.DayOfWeek == Day)
                     return Priority;
             }
             else
             {
-                if (item.Texture.Equals(SelectedTexture) && ScheduleGenerator.CurrentDay.DayOfWeek != Day)
+                if (item.Texture.Equals(SelectedTexture) && ScheduleGenerator.Instance.CurrentDay.DayOfWeek != Day)
                     return Priority;
             }
 

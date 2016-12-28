@@ -35,17 +35,17 @@ namespace ScheduleGen
         /// <returns></returns>
         public override int GetCost(ProductMasterItem item)
         {
-            if (ScheduleGenerator.LastWidth == item.Width)
+            if (ScheduleGenerator.Instance.LastWidth == item.Width)
             {
                 return Priority;
             }
-            else if (ScheduleGenerator.LastWidth > item.Width)
+            else if (ScheduleGenerator.Instance.LastWidth > item.Width)
             {
-                return (int) ((ScheduleGenerator.LastWidth/item.Width)*Priority);
+                return (int) ((ScheduleGenerator.Instance.LastWidth/item.Width)*Priority);
             }
             else
             {
-                return -(int) ((ScheduleGenerator.LastWidth/item.Width)*Priority);
+                return -(int) ((ScheduleGenerator.Instance.LastWidth/item.Width)*Priority);
             }
         }
 

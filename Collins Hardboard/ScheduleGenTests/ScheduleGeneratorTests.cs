@@ -114,16 +114,16 @@ namespace ScheduleGen.Tests
         //    var widControl = new WidthControl(genWindow, 800);
         //    genWindow.Show();
 
-        //    ScheduleGenerator.ControlsList.Add(saleControl);
-        //    ScheduleGenerator.ControlsList.Add(predictionControl);
-        //    ScheduleGenerator.ControlsList.Add(wasteControl);
-        //    ScheduleGenerator.ControlsList.Add(widControl);
+        //    ScheduleGenerator.Instance.ControlsList.Add(saleControl);
+        //    ScheduleGenerator.Instance.ControlsList.Add(predictionControl);
+        //    ScheduleGenerator.Instance.ControlsList.Add(wasteControl);
+        //    ScheduleGenerator.Instance.ControlsList.Add(widControl);
 
-        //    ScheduleGenerator.StartGen = DateTime.Today;
-        //    ScheduleGenerator.EndGen = DateTime.Today.AddDays(1);
-        //    ScheduleGenerator.SalesOutlook = DateTime.Today.AddDays(14);
+        //    ScheduleGenerator.Instance.StartGen = DateTime.Today;
+        //    ScheduleGenerator.Instance.EndGen = DateTime.Today.AddDays(1);
+        //    ScheduleGenerator.Instance.SalesOutlook = DateTime.Today.AddDays(14);
 
-        //    ScheduleGenerator.GenerateSalesSchedule(DateTime.Today.AddDays(14), DateTime.Today, DateTime.Today.AddDays(1));
+        //    ScheduleGenerator.Instance.GenerateSalesSchedule(DateTime.Today.AddDays(14), DateTime.Today, DateTime.Today.AddDays(1));
 
         //    Console.ReadLine();
         //}
@@ -212,16 +212,16 @@ namespace ScheduleGen.Tests
         //    var widControl = new WidthControl(genWindow, 800);
         //    genWindow.Show();
 
-        //    ScheduleGenerator.ControlsList.Add(saleControl);
-        //    ScheduleGenerator.ControlsList.Add(predictionControl);
-        //    ScheduleGenerator.ControlsList.Add(wasteControl);
-        //    ScheduleGenerator.ControlsList.Add(widControl);
+        //    ScheduleGenerator.Instance.ControlsList.Add(saleControl);
+        //    ScheduleGenerator.Instance.ControlsList.Add(predictionControl);
+        //    ScheduleGenerator.Instance.ControlsList.Add(wasteControl);
+        //    ScheduleGenerator.Instance.ControlsList.Add(widControl);
 
-        //    ScheduleGenerator.StartGen = DateTime.Today;
-        //    ScheduleGenerator.EndGen = DateTime.Today.AddDays(1);
-        //    ScheduleGenerator.SalesOutlook = DateTime.Today.AddDays(14);
+        //    ScheduleGenerator.Instance.StartGen = DateTime.Today;
+        //    ScheduleGenerator.Instance.EndGen = DateTime.Today.AddDays(1);
+        //    ScheduleGenerator.Instance.SalesOutlook = DateTime.Today.AddDays(14);
 
-        //    ScheduleGenerator.GenerateSalesSchedule(DateTime.Today.AddDays(14), DateTime.Today, DateTime.Today.AddDays(1));
+        //    ScheduleGenerator.Instance.GenerateSalesSchedule(DateTime.Today.AddDays(14), DateTime.Today, DateTime.Today.AddDays(1));
 
         //    Console.ReadLine();
         //}

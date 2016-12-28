@@ -67,10 +67,10 @@ namespace ScheduleGen
         {
             double avgWaste = (StaticFactoryValuesManager.WasteMin + StaticFactoryValuesManager.WasteMax)/2;
 
-            if (ScheduleGenerator.CurrentWaste < avgWaste && item.Waste > 0)
+            if (ScheduleGenerator.Instance.CurrentWaste < avgWaste && item.Waste > 0)
                 return Priority;
 
-            if (ScheduleGenerator.CurrentWaste > avgWaste && item.Waste < 0)
+            if (ScheduleGenerator.Instance.CurrentWaste > avgWaste && item.Waste < 0)
                 return Priority;
 
             return 0;

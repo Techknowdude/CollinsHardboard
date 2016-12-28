@@ -57,7 +57,7 @@ namespace ScheduleGen
 
         public override int GetCost(ProductMasterItem item)
         {
-            var inv = ScheduleGenerator.CurrentInventory.FirstOrDefault(x => x.MasterID == item.MasterID);
+            var inv = ScheduleGenerator.Instance.CurrentInventory.FirstOrDefault(x => x.MasterID == item.MasterID);
             if (item.TurnType == "U")
             {
                 if (inv != null && item.MinSupply > inv.Units)

@@ -81,12 +81,12 @@ namespace ScheduleGen
         {
             if (item.Equals(BeforeItem))
             {
-                if (ScheduleGenerator.ProductItems.Contains(AfterItem))
+                if (ScheduleGenerator.Instance.ProductItems.Contains(AfterItem))
                     return Priority;
             }
             else if(item.Equals(AfterItem))
             {
-                if (ScheduleGenerator.ScheduledItems.Contains(BeforeItem))
+                if (ScheduleGenerator.Instance.ScheduledItems.Contains(BeforeItem))
                     return Priority;
             }
             return 0;
