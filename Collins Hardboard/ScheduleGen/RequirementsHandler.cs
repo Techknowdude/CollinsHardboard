@@ -105,14 +105,17 @@ namespace ScheduleGen
 
             while (current <= _latestDay)
             {
-                foreach (var productRequirements in _allRequirements)
+                // only return things that the coating plant can make
+                foreach (var productRequirements in _allRequirements.Where(req => req.MasterItem.MadeIn.ToUpper().Equals("COATING")))
                 {
                     if (productRequirements.RequiredPieces.ContainsKey(current))
                     {
                         var day = productRequirements.RequiredPieces[current];
                         if (day.PurchaseOrderPieces > 0)
+                        {
                             orders.Insert(0,
                                 new MakeOrder(productRequirements.MasterItem.MasterID, day.PurchaseOrderPieces));
+                        }
                     }
                 }
                 current = current.AddDays(1);

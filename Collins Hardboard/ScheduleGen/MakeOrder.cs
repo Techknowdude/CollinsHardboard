@@ -10,6 +10,7 @@ namespace ScheduleGen
     {
         private int _masterID;
         private int _piecesToMake;
+        public DateTime DueDay { get; set; }
 
         public MakeOrder(int master, double pieces)
         {

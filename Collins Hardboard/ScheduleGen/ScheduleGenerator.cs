@@ -77,6 +77,8 @@ namespace ScheduleGen
         public List<ProductMasterItem> ScheduledItems { get; set; }
         public double CurrentWaste { get; set; }
         public double LastWidth { get; set; }
+        public ConfigurationGroup LastUsedGroup { get; set; }
+        public List<ProductMasterItem> PredictionItems { get; set; } = new List<ProductMasterItem>();
         public String CurrentLine { get; set; }
 
         public int ProjectedSalesWeight { get; set; } = 500;
@@ -1063,29 +1065,56 @@ namespace ScheduleGen
             foreach (var inventoryItem in CurrentInventory)
             {
                 var forecast = StaticInventoryTracker.ForecastItems.FirstOrDefault(f => f.MasterID == inventoryItem.MasterID);
-                if (forecast != null)
+                ProductMasterItem master = StaticInventoryTracker.ProductMasterList.FirstOrDefault(m => m.MasterID == inventoryItem.MasterID);
+                if (forecast != null && master != null)
                 {
                     try
                     {
+                        double turnUnits = 0;
                         switch (duration)
                         {
                             case SalesPrediction.SalesDurationEnum.LastMonth:
                                 inventoryItem.Units -= forecast.AvgOneMonth / 30 * dayDif;
+                                turnUnits = forecast.AvgOneMonth;
                                 break;
                             case SalesPrediction.SalesDurationEnum.Last3Months:
                                 inventoryItem.Units -= forecast.AvgThreeMonths / 30 * dayDif;
+                                turnUnits = forecast.AvgThreeMonths;
                                 break;
                             case SalesPrediction.SalesDurationEnum.Last6Months:
                                 inventoryItem.Units -= forecast.AvgSixMonths / 30 * dayDif;
+                                turnUnits = forecast.AvgSixMonths;
                                 break;
                             case SalesPrediction.SalesDurationEnum.Last12Months:
                                 inventoryItem.Units -= forecast.AvgTwelveMonths / 30 * dayDif;
+                                turnUnits = forecast.AvgTwelveMonths;
                                 break;
                             case SalesPrediction.SalesDurationEnum.LastYear:
                                 inventoryItem.Units -= forecast.AvgPastYear / 30 * dayDif;
+                                turnUnits = forecast.AvgPastYear;
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
+                        }
+                        
+                        // check if the master item should be triggered to be scheduled.
+                        if (master.TurnType == "T")
+                        {
+                            if (turnUnits <= 0)
+                                turnUnits = 1;
+
+                            double turns = inventoryItem.Units / turnUnits;
+                            if (master.MinSupply < turns && !PredictionItems.Contains(master))
+                            {
+                                PredictionItems.Add(master);
+                            }
+                        }
+                        else
+                        {
+                            if (inventoryItem.Units < master.MinSupply && !PredictionItems.Contains(master))
+                            {
+                                PredictionItems.Add(master);
+                            }
                         }
                     }
                     catch (Exception e)
@@ -1154,7 +1183,19 @@ namespace ScheduleGen
         /// <returns>weight that the item should be scheduled</returns>
         private int EvaluateWidth(ProductMasterItem item)
         {
-            throw new NotImplementedException();
+            // Linear progression of weight with the dif in current working width.
+            if (LastWidth == item.Width)
+            {
+                return WidthWeight;
+            }
+            else if (ScheduleGenerator.Instance.LastWidth > item.Width)
+            {
+                return (int)((ScheduleGenerator.Instance.LastWidth / item.Width) * WidthWeight);
+            }
+            else
+            {
+                return -(int)((ScheduleGenerator.Instance.LastWidth / item.Width) * WidthWeight);
+            }
         }
 
         /// <summary>
@@ -1164,7 +1205,9 @@ namespace ScheduleGen
         /// <returns>weight that the item should be scheduled</returns>
         private int EvaluateProjection(ProductMasterItem item)
         {
-            throw new NotImplementedException();
+            if (PredictionItems == null) return 0;
+
+            return PredictionItems.Contains(item) ? ProjectedSalesWeight : 0;
         }
 
         /// <summary>
@@ -1174,7 +1217,11 @@ namespace ScheduleGen
         /// <returns>weight that the item should be scheduled</returns>
         private int EvaluateGrouping(ProductMasterItem item)
         {
-            throw new NotImplementedException();
+            var possibleGroups = MachineHandler.Instance.AllConfigGroups.Where(confGroup => confGroup.CanMake(item));
+            if (possibleGroups.Contains(LastUsedGroup)) 
+                return ConfigGroupingWeight;
+
+            return 0;
         }
 
 
