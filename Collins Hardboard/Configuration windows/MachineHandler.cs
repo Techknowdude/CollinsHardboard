@@ -268,7 +268,7 @@ namespace Configuration_windows
                 if (accept == true)
                 {
                     //SaveName = openFileDialog.FileName;
-                    using (Stream stream = new FileStream(SaveName, FileMode.OpenOrCreate))
+                    using (Stream stream = new FileStream(openFileDialog.FileName, FileMode.OpenOrCreate))
                     {
                         MachineList = (ObservableCollection<Machine>) formatter.Deserialize(stream);
                         _hasLoaded = true;

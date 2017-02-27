@@ -92,6 +92,11 @@ namespace ScheduleGen
         private Dictionary<ProductMasterItem, double> _fulfilled;
         private Queue<String> _errors = new Queue<string>();
 
+        private List<MakeOrder> SaleFGItems = new List<MakeOrder>();
+        private List<MakeOrder> SaleWiPItems = new List<MakeOrder>();
+        private List<MakeOrder> PredictionFGItems = new List<MakeOrder>();
+        private List<MakeOrder> PredictionWiPItems = new List<MakeOrder>();
+
         public void GenerateSalesSchedule(DateTime salesOutlook, DateTime startGen, DateTime endGen,
             bool testing = false)
         {
@@ -108,6 +113,11 @@ namespace ScheduleGen
             }
 
             _orders.Clear();
+            SaleFGItems.Clear();
+            SaleWiPItems.Clear();
+            PredictionFGItems.Clear();
+            PredictionWiPItems.Clear();
+
             currentInventoryItems.Clear();
 
             foreach (var allInventoryItem in StaticInventoryTracker.AllInventoryItems)
@@ -159,27 +169,43 @@ namespace ScheduleGen
 
                 // get a list of all sales orders
                 _orders = RequirementsHandler.GetMakeOrders(SalesOutlook, DefaultWidthPriority > DefaultSalePriority);
+                foreach (var makeOrder in _orders)
+                {
+                    var master =
+                        StaticInventoryTracker.ProductMasterList.FirstOrDefault(p => p.MasterID == makeOrder.MasterID);
+                    if (master != null)
+                    {
+                        if (master.MadeIn.Equals("Coating"))
+                        {
+                            SaleFGItems.Add(makeOrder);
+                        }
+                        else
+                        {
+                            SaleWiPItems.Add(makeOrder);
+                        }
+                    }
+                }
+
+                // remove sales orders from inventory
+                foreach (var salesItem in StaticInventoryTracker.SalesItems.Where(x => x.Date < SalesOutlook))
+                {
+                    var inv = currentInventoryItems.FirstOrDefault(i => i.MasterID == salesItem.MasterID);
+                    if (inv != null)
+                    {
+                        inv.Units -= salesItem.Units;
+                    }
+                }
+
+                Dictionary<string,MakeOrder> nextSaleOrder = new Dictionary<string, MakeOrder>();
+                Dictionary<string,MakeOrder> nextWiPOrder = new Dictionary<string, MakeOrder>();
+                Dictionary<string,MakeOrder> lastOrder = new Dictionary<string, MakeOrder>();
                 MakeOrder nextOrder = null;
 
                 // While we have not reached the end of the schedule
-
-                /*
-                 *   Scheduling algorithm:
-                 *   
-                 *   Find all orders and when they are due.
-                 *   Backtrack and find out when the order needs to be started (hard start date)
-                 *   -> Get the farthest sale and backtrack so the hard deadlines don't overlap
-                 *   
-                 *   
-                 *   Get the next best item to schedule using these criteria:
-                 *   1. If the current shift is the hard start date for an order, schedule it
-                 *   2. Item has a forecast deadline (soft deadline)
-                 *   3. Item is part of the current configuration group
-                 *   4. Item width is <= current width ( this may not be important)
-                 *   
-                 */
+                
                 while (CurrentDay <= EndGen)
                 {
+                    
 
                     if (_orders.Any())
                         nextOrder = _orders.Peek();
@@ -198,6 +224,8 @@ namespace ScheduleGen
                         StaticInventoryTracker.ProductMasterList.FirstOrDefault(x => x.MasterID == nextOrder.MasterID);
 
                     if (nextItem == null) continue;
+
+                    ProductMasterItem highPriorityItem = GetNextHighPriorityItem(nextSaleOrder,nextWiPOrder,lastOrder);
 
 
                     ScheduleSaleItem(nextItem, nextOrder.PiecesToMake);
@@ -237,6 +265,64 @@ namespace ScheduleGen
             {
                 UnregisterEvals();
             }
+        }
+
+        private ProductMasterItem GetNextHighPriorityItem(Dictionary<string, MakeOrder> nextSaleOrder, Dictionary<string, MakeOrder> nextWiPOrder, Dictionary<string, MakeOrder> lastOrder)
+        {
+            ProductMasterItem item = null;
+            double currentPriority = 0;
+            double highestPriority = -1;
+            double GroupWeight = 100;
+            double widthWeight = 60;
+            double saleFGWeight = 500;
+            double saleWipWeight = 400;
+
+            foreach (var coatingLine in StaticFactoryValuesManager.CoatingLines)
+            {
+
+                // check for last ran match
+                var lastRanGroup =
+                    MachineHandler.Instance.AllConfigGroups.FirstOrDefault(
+                        c => c.CanMake(lastOrder[coatingLine].MasterID));
+                var lastMaster =
+                    StaticInventoryTracker.ProductMasterList.FirstOrDefault(
+                        m => lastOrder[coatingLine].MasterID == m.MasterID);
+
+                foreach (var saleFGItem in SaleFGItems)
+                {
+                    currentPriority = 0;
+
+                    var nextMaster =
+                        StaticInventoryTracker.ProductMasterList.FirstOrDefault(m => m.MasterID == saleFGItem.MasterID);
+                    // Next item should only be from the same line.
+                    bool runsOn = false;
+                    if(!MachineHandler.Instance.MachineList.Any(m => m.LinesCanRunOn.Contains(coatingLine) && m.ConfigurationList.Any(c => c.CanMake(nextMaster))))
+                    {
+                        continue;
+                    }
+
+                    var fgGroup =
+                        MachineHandler.Instance.AllConfigGroups.FirstOrDefault(g => g.CanMake(saleFGItem.MasterID));
+                    if (fgGroup == lastRanGroup)
+                    {
+                        currentPriority += GroupWeight;
+                    }
+
+                    if (nextMaster.Width - lastMaster.Width > 0)
+                    {
+                        currentPriority += Math.Max(nextMaster.Width - lastMaster.Width, 2)/2 * WidthWeight;
+                    }
+
+                    if (currentPriority > highestPriority)
+                    {
+                        item = nextMaster;
+                        highestPriority = currentPriority;
+                    }
+                }
+            }
+            
+
+            return item;
         }
 
         /// <summary>

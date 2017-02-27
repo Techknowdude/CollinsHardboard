@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Configuration_windows;
 using ImportLib;
@@ -193,7 +192,16 @@ namespace ScheduleGen
                     var reqDay = currentRequirement.GetRequirementDay(day);
                     if (reqDay.NetRequiredPieces > 0)
                     {
-                        DateTime POday = day.AddDays(-LeadTimeDays);
+                        double leadHours = 0;
+                        Configuration config =
+                            MachineHandler.Instance.AllConfigurations.FirstOrDefault(
+                                c => c.CanMake(currentRequirement.MasterItem));
+                        if (config != null)
+                        {
+                            leadHours = config.HoursToMake(currentRequirement.MasterItem, reqDay.NetRequiredPieces/currentRequirement.MasterItem.PiecesPerUnit);
+                        }
+
+                        DateTime POday = day.AddDays(Math.Ceiling(leadHours/24 + LeadTimeDays));
                         var POreqDay = currentRequirement.GetRequirementDay(POday);
                         POreqDay.PurchaseOrderPieces = (reqDay.NetRequiredPieces);
                         // add gross for any dependent items

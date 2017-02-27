@@ -247,5 +247,22 @@ namespace Configuration_windows
                 return Shifts[index - 1];
             return Shifts.Last();
         }
+
+        /// <summary>
+        /// Gets the number of available hours on this day
+        /// </summary>
+        /// <param name="day"></param>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        public double GetHoursOnDay(DateTime day, string line)
+        {
+            double hours = 0;
+            foreach (var shift in Shifts.Where(s => s.LinesCanRunOn.Contains(line)))
+            {
+                hours += shift.Hours(day);
+            }
+
+            return 0;
+        }
     }
 }

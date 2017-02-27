@@ -104,7 +104,7 @@
                             <DataTemplate>
                                 <WrapPanel>
                                     <TextBlock Text="{Binding}" Margin="5,2"></TextBlock>
-                                    <Button Command="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.RemoveMachineConflictCommand)}" CommandParameter="{Binding Name}" Padding="4,0">Delete</Button>
+                                    <Button Command="{Binding ElementName=MachineControlGrid, Path=DataContext.(configurationWindows:Machine.RemoveMachineConflictCommand)}" CommandParameter="{Binding}" Padding="4,0">Delete</Button>
                                 </WrapPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

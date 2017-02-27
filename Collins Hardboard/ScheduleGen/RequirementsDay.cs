@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Configuration_windows;
+using ModelLib;
+using StaticHelpers;
 
 namespace ScheduleGen
 {
@@ -21,12 +24,22 @@ namespace ScheduleGen
         private double _purchaseOrderPieces;
         private double _nextInventoryPieces;
 
+        Dictionary<string,ProductMasterItem> _produced = new Dictionary<string, ProductMasterItem>();
+
+        private Dictionary<string,double> hoursUsed = new Dictionary<string, double>();
+        private Dictionary<string,double> hoursAvailable = new Dictionary<string, double>();
+
         #endregion
 
         public RequirementsDay(ProductRequirements parentRequirements, DateTime day)
         {
             ParentRequirements = parentRequirements;
             Day = day;
+            foreach (var coatingLine in StaticFactoryValuesManager.CoatingLines)
+            {
+                hoursAvailable[coatingLine] = ShiftHandler.CoatingInstance.GetHoursOnDay(day, coatingLine);
+                hoursUsed[coatingLine] = 0;
+            }
         }
 
         public ProductRequirements ParentRequirements { get; set; }

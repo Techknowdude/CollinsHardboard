@@ -110,26 +110,26 @@ namespace ImportLib
                 try
                 {
                     bool valid = false;
-                    string product;
-                    double width;
-                    double length;
-                    string thickness;
-                    string texture;
-                    double waste;
-                    Int32 pcsUnit;
-                    String grades;
-                    String barcode;
-                    String description;
+                    string product = String.Empty;
+                    double width = -1;
+                    double length = -1;
+                    string thickness = String.Empty;
+                    string texture = String.Empty;
+                    double waste = -1;
+                    Int32 pcsUnit = -1;
+                    String grades = String.Empty;
+                    String barcode = String.Empty;
+                    String description = String.Empty;
                     String notes = string.Empty;
-                    String turnType;
-                    double minSupply;
-                    double maxSupply;
-                    double targetSupply;
-                    bool hasBarcode;
-                    double unitsPerShift;
-                    int masterID;
-                    String madeIn;
-                    double fgPieces;
+                    String turnType = String.Empty;
+                    double minSupply = -1;
+                    double maxSupply = -1;
+                    double targetSupply = -1;
+                    bool hasBarcode = false;
+                    double unitsPerShift = -1;
+                    int masterID = -1;
+                    String madeIn = String.Empty;
+                    double fgPieces = -1;
 
                     MyConnection.Open();
                     myCommand.Connection = MyConnection;
@@ -186,17 +186,105 @@ namespace ImportLib
 
                                 if (!valid) continue;
 
+                                try
+                                {
                                 masterID = Convert.ToInt32(excelData.GetDouble(idOrdinal));
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Master ID invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
                                 product = excelData.GetString(prodOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Product Code invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
                                 width = excelData.GetDouble(widthOrdinal);
-                                length = excelData.GetDouble(lengthOrdinal);
-                                thickness = excelData.GetValue(thickOrdinal).ToString();
-                                texture = excelData.GetString(textureOrdinal);
-                                waste = excelData.GetDouble(wasteOrdinal);
-                                pcsUnit = (int)excelData.GetDouble(pcsOrdinal);
-                                grades = excelData.GetString(gradesOrdinal);
-                                barcode = excelData.GetString(barcodeOrdinal);
-                                description = excelData.GetString(descriptionOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Width invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
+                                    length = excelData.GetDouble(lengthOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Length invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
+                                    thickness = excelData.GetValue(thickOrdinal).ToString();
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Thickness invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
+                                    texture = excelData.GetString(textureOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Texture invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
+                                    waste = excelData.GetDouble(wasteOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Waste/Unit (lbs) invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
+                                    description = excelData.GetString(descriptionOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Description invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
+                                    barcode = excelData.GetString(barcodeOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Barcode invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
+                                    grades = excelData.GetString(gradesOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Grades invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
+                                    pcsUnit = (int)excelData.GetDouble(pcsOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Pcs/Package invalid on row " + rowNum);
+                                    throw;
+                                }
                                 try
                                 {
                                     notes = excelData.GetString(notesOrdinal);
@@ -204,14 +292,71 @@ namespace ImportLib
                                 catch (Exception)
                                 {
                                 }
-                                turnType = excelData.GetString(turnTypeOrdinal);
-                                minSupply = excelData.GetDouble(minOrdinal);
-                                maxSupply = excelData.GetDouble(maxOrdinal);
+                                try
+                                {
+                                    minSupply = excelData.GetDouble(minOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Min invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
+                                    maxSupply = excelData.GetDouble(maxOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Max invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
+                                    turnType = excelData.GetString(turnTypeOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Units/Turns invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
                                 targetSupply = excelData.GetDouble(targetOrdinal);
-                                hasBarcode = !(barcode.ToUpper() == "NO" || barcode.ToUpper() == "FALSE");
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Target invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
                                 unitsPerShift = excelData.GetDouble(shiftUnitsOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Avg run Coating invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
                                 madeIn = excelData.GetString(madeOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("MadeIn invalid on row " + rowNum);
+                                    throw;
+                                }
+                                try
+                                {
                                 fgPieces = excelData.GetDouble(fgPiecesOrdinal);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("FGPieces invalid on row " + rowNum);
+                                    throw;
+                                }
+
+                                hasBarcode = !(barcode.ToUpper() == "NO" || barcode.ToUpper() == "FALSE");
 
                                 if (maxSupply < targetSupply)
                                     maxSupply = targetSupply;
@@ -231,7 +376,7 @@ namespace ImportLib
                     }
                     catch (Exception e)
                     {
-
+                        MessageBox.Show("Error while reading Master File: Error comes from/missing column: " + e.Message);
                         Console.WriteLine("Exception!: " + e.Message); //query failed
                     }
 
