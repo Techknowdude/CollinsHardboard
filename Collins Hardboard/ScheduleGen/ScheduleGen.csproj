@@ -81,11 +81,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ConfigTime.cs" />
+    <Compile Include="Evaluator.cs" />
     <Compile Include="GenControl.cs" />
+    <Compile Include="GenerationData.cs" />
     <Compile Include="LineControl.xaml.cs">
       <DependentUpon>LineControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MakeOrder.cs" />
+    <Compile Include="PriorityItem.cs" />
     <Compile Include="ProductRequirements.cs" />
     <Compile Include="PurgeWiPControl.xaml.cs">
       <DependentUpon>PurgeWiPControl.xaml</DependentUpon>

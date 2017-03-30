@@ -397,5 +397,15 @@ namespace Configuration_windows
                 //}
             }
         }
+
+        /// <summary>
+        /// Returns any configuration groups that can make the item
+        /// </summary>
+        /// <param name="nextItem"></param>
+        /// <returns></returns>
+        public IEnumerable<ConfigurationGroup> GetConfigGroups(ProductMasterItem nextItem)
+        {
+            return ConfigurationList.Where(c => c.CanMake(nextItem));
+        }
     }
 }

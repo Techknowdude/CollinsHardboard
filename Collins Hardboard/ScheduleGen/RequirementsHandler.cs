@@ -69,7 +69,7 @@ namespace ScheduleGen
             }
         }
 
-        public static Queue<MakeOrder> GetMakeOrders(DateTime date, bool scheduleByWidth)
+        public static List<MakeOrder> GetMakeOrders(DateTime date)
         {
             foreach (var masterItem in StaticInventoryTracker.ProductMasterList)
             {
@@ -91,7 +91,7 @@ namespace ScheduleGen
 
             AddSalesUntilDate(date);
 
-            AddCurrentInventory();
+            //AddCurrentInventory();
 
             CalculateAllRequirements();
 
@@ -104,8 +104,7 @@ namespace ScheduleGen
 
             while (current <= _latestDay)
             {
-                // only return things that the coating plant can make
-                foreach (var productRequirements in _allRequirements.Where(req => req.MasterItem.MadeIn.ToUpper().Equals("COATING")))
+                foreach (var productRequirements in _allRequirements)//.Where(req => req.MasterItem.MadeIn.ToUpper().Equals("COATING")))
                 {
                     if (productRequirements.RequiredPieces.ContainsKey(current))
                     {
@@ -120,58 +119,7 @@ namespace ScheduleGen
                 current = current.AddDays(1);
             }
 
-            var queue = new Queue<MakeOrder>();
-            var masterList = new List<ProductMasterItem>();
-            masterList.AddRange(
-                StaticInventoryTracker.ProductMasterList.Where(
-                    master => orders.Any(order => order.MasterID == master.MasterID)));
-
-            if (scheduleByWidth)
-            {
-                while (orders.Any())
-                {
-                    // Match up widths by order they come in.
-                    var currentOrder = orders.First();
-                    var currentMaster = masterList.FirstOrDefault(master => master.MasterID == currentOrder.MasterID);
-                    queue.Enqueue(currentOrder);
-                    orders.RemoveAt(0);
-
-                    if (currentMaster == null)
-                    {
-                        // can't make that
-                        MessageBox.Show("No matching master for order. Master ID: " + currentOrder.MasterID + " for " +
-                                        currentOrder.PiecesToMake + " pieces. Unable to schedule like widths.");
-                    }
-                    else
-                    {
-                        // get all other pending orders of same width and add them.
-                        List<ProductMasterItem> otherMasters =
-                            masterList.Where(master => master.Width == currentMaster.Width).ToList();
-
-                        if (otherMasters.Count == 0) continue;
-
-                        List<MakeOrder> matchingOrders =
-                            orders.Where(order => otherMasters.Any(master => master.MasterID == order.MasterID))
-                                .ToList();
-                        foreach (var matchingOrder in matchingOrders)
-                        {
-                            // queue the orders by previous priority, grouped by width
-                            queue.Enqueue(matchingOrder);
-                            // remove order so you don't double schedule
-                            orders.Remove(matchingOrder);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                foreach (var makeOrder in orders)
-                {
-                    queue.Enqueue(makeOrder);
-                }
-            }
-
-            return queue;
+            return orders;
         }
 
         private static void CalculateAllRequirements()
