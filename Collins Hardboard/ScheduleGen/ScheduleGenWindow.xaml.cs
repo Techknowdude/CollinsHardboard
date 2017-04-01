@@ -21,22 +21,13 @@ namespace ScheduleGen
             ScheduleGenerator.Instance.Window = this;
         }
 
-        public void Remove(GenControl control)
-        {
-            ScheduleGenerator.Instance.ControlsList.Remove(control);
-        }
 
-        public void UpdateControlOrder()
-        {
-            ScheduleGenerator.Instance.UpdateControlOrder();
-        }
-        
         private void GeneratePredictionButton_OnClick(object sender, RoutedEventArgs e)
         {
             try
             {
 
-            ScheduleGenerator.Instance.GeneratePredictionSchedule(SaleDate,StartDate,EndDate);
+            ScheduleGenerator.Instance.GenerateSchedule(SaleDate,StartDate,EndDate);
 
             }
             catch (Exception exception)

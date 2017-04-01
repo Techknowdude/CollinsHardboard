@@ -83,25 +83,12 @@
     </ApplicationDefinition>
     <Compile Include="ConfigTime.cs" />
     <Compile Include="Evaluator.cs" />
-    <Compile Include="GenControl.cs" />
     <Compile Include="GenerationData.cs" />
-    <Compile Include="LineControl.xaml.cs">
-      <DependentUpon>LineControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MakeOrder.cs" />
     <Compile Include="PriorityItem.cs" />
     <Compile Include="ProductRequirements.cs" />
-    <Compile Include="PurgeWiPControl.xaml.cs">
-      <DependentUpon>PurgeWiPControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="RequirementsDay.cs" />
     <Compile Include="RequirementsHandler.cs" />
-    <Compile Include="RunBeforeControl.xaml.cs">
-      <DependentUpon>RunBeforeControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SalesNumbersControl.xaml.cs">
-      <DependentUpon>SalesNumbersControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SalesPrediction.xaml.cs">
       <DependentUpon>SalesPrediction.xaml</DependentUpon>
     </Compile>
@@ -109,52 +96,15 @@
     <Compile Include="ScheduleGenWindow.xaml.cs">
       <DependentUpon>ScheduleGenWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TextureControl.xaml.cs">
-      <DependentUpon>TextureControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WasteControl.xaml.cs">
-      <DependentUpon>WasteControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WidthControl.xaml.cs">
-      <DependentUpon>WidthControl.xaml</DependentUpon>
-    </Compile>
-    <Page Include="LineControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PurgeWiPControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="RunBeforeControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SalesNumbersControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="SalesPrediction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ScheduleGenWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TextureControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WasteControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WidthControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

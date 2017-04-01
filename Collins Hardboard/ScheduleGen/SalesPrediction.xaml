@@ -1,4 +1,4 @@
-﻿<scheduleGen:GenControl x:Class="ScheduleGen.SalesPrediction"
+﻿<scheduleGen:SalesPrediction x:Class="ScheduleGen.SalesPrediction"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -18,4 +18,4 @@
             <ComboBoxItem>Same time last year</ComboBoxItem>
         </ComboBox>
     </StackPanel>
-</scheduleGen:GenControl>
+</scheduleGen:SalesPrediction>

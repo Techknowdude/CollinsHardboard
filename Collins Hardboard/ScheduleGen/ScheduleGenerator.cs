@@ -59,16 +59,6 @@ namespace ScheduleGen
             get { return _window; }
             set { _window = value; }
         }
-
-        public List<ProductMasterItem> ScheduledItems { get; set; }
-        public double CurrentWaste { get; set; }
-        public double LastWidth { get; set; }
-        public ConfigurationGroup LastUsedGroup { get; set; }
-        public List<ProductMasterItem> PredictionItems { get; set; } = new List<ProductMasterItem>();
-        public String CurrentLine { get; set; }
-
-        public List<MakeOrder> Orders { get; private set; } = new List<MakeOrder>();
-
         private Queue<String> _errors = new Queue<string>();
 
         internal GenerationData GenerationData;
@@ -91,8 +81,6 @@ namespace ScheduleGen
                 MessageBox.Show("No machines configured/loaded. Please load or configure the plant machines before generating schedule.");
                 return;
             }
-
-            Orders.Clear();
 
             currentInventoryItems.Clear();
 
@@ -120,9 +108,7 @@ namespace ScheduleGen
 
 
                 // initialize with current waste, line, and width
-                CurrentWaste = StaticFactoryValuesManager.CurrentWaste;
                 CurrentDay = StartGen;
-                LastWidth = 0;
 
                 // add the first shift to the schedule
                 schedule.AddLogic();
@@ -132,74 +118,67 @@ namespace ScheduleGen
                 scheduleLine = (CoatingScheduleLine)scheduleDay.ChildrenLogic[0];
 
                 // get a list of all sales orders
-                Orders = RequirementsHandler.GetMakeOrders(SalesOutlook);
+                GenerationData.SalesList = RequirementsHandler.GetMakeOrders(SalesOutlook);
 
-                MakeOrder nextOrder = null;
+                // get list of items that can be made in the coating plant
+                List<ProductMasterItem> masterItemsAvailableToMake =
+                    StaticInventoryTracker.ProductMasterList.Where(
+                        m => m.MadeIn.ToUpper().Equals("COATING")).ToList();
 
                 // While we have not reached the end of the schedule
+                bool moveToNext = false;
 
                 while (CurrentDay <= EndGen)
                 {
-                    // flag when an item is scheduled (item must be scheduled on each shift)
-                    bool scheduledItem = false;
-
                     // TODO main loop for generation from flowchart
 
-                    // Get item with highest priority
-                    GenerationData.PriorityList = StaticInventoryTracker.ProductMasterList.Select(Evaluator.Evaluate).OrderBy(p => p.Priority).ToList();
-                    int itemIndex = 0;
-
-                    PriorityItem currentItem = GenerationData.PriorityList[itemIndex];
-                    Configuration config;
-                    double unitsToMake;
-                    bool itemScheduled = false;
-
-                    foreach (var coatingLine in StaticFactoryValuesManager.CoatingLines)
+                    // attempt to schedule the highest priority item until the line is full. 
+                    while (GenerationData.ScheduledItem.Any(s => !s.Value) && !LineIsFull())
                     {
-                        if (LineIsFull())
+                        foreach (var coatingLine in StaticFactoryValuesManager.CoatingLines)
                         {
-                            // move to next shift
-                            AddControl();
+                            if (moveToNext) break;
 
-                            break;
-                        }
-
-                        var bestMachine = GetBestMachine(currentItem.Item,coatingLine);
-
-                        // if the item can be made
-                        if (bestMachine != null)
-                        {
-                            config = bestMachine.Item2.Configurations.FirstOrDefault(c => c.CanMake(currentItem.Item));
-                            if (config != null)
+                            // Get item with highest priority
+                            GenerationData.PriorityList = new List<PriorityItem>();
+                            foreach (var productMasterItem in masterItemsAvailableToMake)
                             {
-                                unitsToMake = GetUnitsToMake(currentItem.Item, bestMachine.Item1);
+                                GenerationData.PriorityList.Add(Evaluator.Evaluate(productMasterItem, coatingLine));
+                            }
+                            int itemIndex = 0;
 
-                                if (unitsToMake > 0)
-                                {
-                                    // Check for required inventory
-                                    if (HasPrerequisites(config, unitsToMake))
-                                    {
-                                        // If inventory, schedule item
-                                        itemScheduled = true;
-                                        ScheduleItem(currentItem.Item, unitsToMake);
-                                    }
-                                    else
-                                    {
-                                        // Else, select the highest priority item needed and schedule that
-                                        itemScheduled = SchedulePrerequisite(config,unitsToMake);
-                                    }
-                                }
+                            PriorityItem currentItem = GenerationData.PriorityList[itemIndex];
+
+                            if (currentItem.Item.MadeIn.ToUpper().Equals("COATING"))
+                            {
+                                ScheduleCoating(currentItem.Item, coatingLine);
+                            }
+                            else if (currentItem.Item.MadeIn.ToUpper().Equals("PRESS"))
+                            {
+                                // Error. Press items should not be in the list.
+                                MessageBox.Show("ERROR: Attempted to schedule item that cannot be made in coating");
+                            }
+                            else
+                            {
+                                // error
+                                MessageBox.Show(
+                                    "ERROR: Attempted to schedule item that cannot be made in coating or press");
+                                throw new Exception("ERROR: Could not make item " + currentItem.Item +
+                                                    " as it is not made in press or coating.");
+                            }
+                            // move to next item
+                            ++itemIndex;
+
+                            // Check if all the lines have been scheduled or if we have tried all the items and none can be scheduled, move on
+                            if (GenerationData.ScheduledItem.All(s => s.Value) ||
+                                itemIndex >= GenerationData.PriorityList.Count)
+                            {
+                                AddControl();
+                                moveToNext = true;
                             }
                         }
-
-                        if (!itemScheduled)
-                        {
-                            // Move to the next shift/line/day
-                        }
-
                     }
                 }
-
                 scheduleWindow.LoadTrackingItems();
                 pressScheduleWindow.UpdateControls();
 
@@ -216,6 +195,68 @@ namespace ScheduleGen
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        private void SchedulePress(ProductMasterItem currentItem, double unitsRequired)
+        {
+            var scheduled = PressManager.ScheduleItem(currentItem , unitsRequired, scheduleLine.Date);
+
+            // update waste
+            if (scheduled)
+            {
+                GenerationData.CurrentWaste += currentItem.Waste * unitsRequired;
+            }
+        }
+
+        /// <summary>
+        /// Attempt to schedule an item on the coating line.
+        /// </summary>
+        /// <param name="currentItem"></param>
+        /// <param name="coatingLine"></param>
+        private bool ScheduleCoating(ProductMasterItem currentItem, string coatingLine)
+        {
+            Configuration config;
+            double unitsToMake;
+            bool itemMade = false;
+
+                var bestMachine = GetBestMachine(currentItem, coatingLine);
+
+                // if the item can be made
+                if (bestMachine != null)
+                {
+                    config = bestMachine.Item2.Configurations.FirstOrDefault(c => c.CanMake(currentItem));
+                    if (config != null)
+                    {
+                        unitsToMake = GetUnitsToMake(currentItem, bestMachine.Item1);
+
+                        if (unitsToMake > 0)
+                        {
+                            // Check for required inventory
+                            if (HasPrerequisites(config, unitsToMake))
+                            {
+                                // If inventory, schedule item
+                                GenerationData.ScheduledItem[coatingLine] = ScheduleCoating(currentItem, unitsToMake, bestMachine, config);
+                            }
+                            else
+                            {
+                                // Else, select the highest priority item needed and schedule that
+                                GenerationData.ScheduledItem[coatingLine] = SchedulePrerequisite(config, unitsToMake,coatingLine);
+                            }
+                            if (GenerationData.ScheduledItem[coatingLine])
+                            {
+                                // mark the machine as used
+                                GenerationData.LastRunMachine[bestMachine.Item1] = new ConfigTime(bestMachine.Item2, scheduleLine.Date);
+                            }
+                        }
+                    }
+
+                // if the item was made on a line, mark as made and exit.
+                if (GenerationData.ScheduledItem[coatingLine])
+                {
+                    itemMade = true;
+                }
+            }
+            return itemMade;
         }
 
         private bool LineIsFull()
@@ -251,59 +292,26 @@ namespace ScheduleGen
         }
 
         /// <summary>
-        /// Used for prediction generation
+        /// Schedule the item with the given config.
         /// </summary>
         /// <param name="nextItem"></param>
+        /// <param name="unitsToMake"></param>
+        /// <param name="scheduleInfo"></param>
+        /// <param name="config"></param>
         /// <returns></returns>
-        private bool ScheduleItem(ProductMasterItem nextItem)
+        private bool ScheduleCoating(ProductMasterItem nextItem, double unitsToMake, Tuple<Machine, ConfigurationGroup, int> scheduleInfo, Configuration config)
         {
-            // TODO: this should be checked somewhere else
-            //while (LineFull())
-            //{
-            //    DateTime beforeDay = CurrentDay;
-            //    AddControl();
-
-            //    int daysAdded = (CurrentDay - beforeDay).Days;
-            //    if (daysAdded > 0)
-            //        DecrementInventory(daysAdded);
-            //}
-
-            // get a prioritized list of items that still needs to be made
-
-            // try to make each item. Once one id added, exit loop
-
-            Tuple<Machine, ConfigurationGroup, int> machineLine = GetBestMachine(nextItem);
-
-            Machine machine = machineLine.Item1;
-            int lineIndex = machineLine.Item3;
-            ConfigurationGroup configGroup = machineLine.Item2;
+            Machine machine = scheduleInfo.Item1;
+            int lineIndex = scheduleInfo.Item3;
 
             if (machine != null) // if the item can be made currently
             {
                 //set shift to add to
                 scheduleShift = (CoatingScheduleShift)scheduleLine.ChildrenLogic[lineIndex];
 
-                // update running machine availability. Date is the time it will be available again
-                // TODO Update this to current usage
-                //_runningMachines[machine] = new LastConfigTime(StaticFunctions.GetDayAndTime(scheduleLine.Date, scheduleLine.Shift.StartTime) + scheduleLine.Shift.Duration, config);
-                //StaticFunctions.OutputDebugLine($"Machine {machine.Name} is being used until {_runningMachines[machine].LastShiftTime} to make {nextItem.Description}");
-
-                double unitsToMake = GetUnitsToMake(nextItem, machine);
-
                 if (unitsToMake > 0)
                 {
-                    //scheduleShift.AddLogic(product);
-                    bool canMake = true;
-                    if (!HasPrerequisites(configGroup, unitsToMake))
-                    {
-                        canMake = SchedulePrerequisite(configGroup, unitsToMake);
-                    }
-
-                    if (!canMake) return false;
-
-                    LastWidth = nextItem.Width;
-
-                    var unitsMade = scheduleShift.ScheduleItem(machine, configGroup, nextItem, unitsToMake);
+                    var unitsMade = scheduleShift.ScheduleItem(machine, config, nextItem, unitsToMake);
 
                     var inv = currentInventoryItems.FirstOrDefault(i => i.MasterID == nextItem.MasterID);
                     if (inv != null)
@@ -315,33 +323,45 @@ namespace ScheduleGen
                         currentInventoryItems.Add(new InventoryItem(nextItem, unitsMade, "Dealer"));
                     }
 
+                    // Remove the sale from the generation data.
+                    var soldPcs = (int)unitsMade * nextItem.PiecesPerUnit;
+
+                    var sales = GenerationData.SalesList.Where(s => s.MasterID == nextItem.MasterID);
+                    foreach (var makeOrder in sales)
+                    {
+                        if (soldPcs <= 0) break;
+
+                        // this is the only (or last sale to fill)
+                        if (soldPcs <= makeOrder.PiecesToMake)
+                        {
+                            makeOrder.PiecesToMake -= soldPcs;
+                        }
+                        else
+                        {
+                            // order filled. Remove it.
+                            soldPcs -= makeOrder.PiecesToMake;
+                            GenerationData.SalesList.Remove(makeOrder);
+                        }
+                    }
+
                     added = true;
-
-                    // factor in waste created
-                    CurrentWaste += nextItem.Waste * unitsMade;
-
-                    DateTime beforeDay = CurrentDay;
-                    AddControl();
-
-                    int daysAdded = (CurrentDay - beforeDay).Days;
-                    if (daysAdded > 0)
-                        DecrementInventory(daysAdded);
-
+                    GenerationData.MarkItemScheduled(nextItem,lineIndex,unitsMade);
                     return true;
                 }
             }
             return false;
         }
 
-        private bool SchedulePrerequisite(Configuration config, double unitsToMake)
+
+        private bool SchedulePrerequisite(Configuration config, double unitsNeeded, string coatingLine)
         {
-            double unitsRequired = unitsToMake;
+            double unitsRequired = unitsNeeded;
             bool scheduled = false;
             var inv = currentInventoryItems.FirstOrDefault(i => i.MasterID == config.ItemInID);
             if (inv != null)
             {
                 double unitsAvailable = inv.Units;
-                unitsRequired = unitsToMake * (config.ItemsIn / (double)config.ItemsOut);
+                unitsRequired = unitsNeeded * (config.ItemsIn / (double)config.ItemsOut);
                 unitsRequired -= unitsAvailable;
             }
 
@@ -353,17 +373,11 @@ namespace ScheduleGen
             // try to schedule item
             if (prevItem.MadeIn == "Coating")
             {
-                scheduled = ScheduleItem(prevItem);
+                scheduled = ScheduleCoating(prevItem, coatingLine);
             }
             else if (prevItem.MadeIn == "Press")
             {
-                scheduled = PressManager.ScheduleItem(prevItem, unitsRequired, scheduleLine.Date);
-
-                // update waste
-                if (scheduled)
-                {
-                    CurrentWaste += prevItem.Waste * unitsRequired;
-                }
+                SchedulePress(prevItem,unitsRequired);
             }
 
             return scheduled;
@@ -419,25 +433,6 @@ namespace ScheduleGen
 
             return unitUsage;
         }
-
-        /// <summary>
-        /// Fill orders with scheduled item from closest sale to farthest
-        /// </summary>
-        /// <param name="nextItem"></param>
-        /// <param name="unitsToMake"></param>
-        public static void AddSalesFulfillment(ProductMasterItem nextItem, double unitsToMake)
-        {
-            SalesItem sale = StaticInventoryTracker.GetPrioritySale(nextItem);
-            double remainder = 1;
-
-            while (remainder != 0 && sale != null)
-            {
-                remainder = sale.FulfillOrder(unitsToMake);
-                unitsToMake = remainder;
-                sale = StaticInventoryTracker.GetPrioritySale(nextItem);
-            }
-        }
-
 
         public Tuple<Machine, ConfigurationGroup, int> GetBestMachine(ProductMasterItem nextItem, string lineToRunOn)
         {
@@ -515,7 +510,6 @@ namespace ScheduleGen
 
             return new Tuple<Machine, ConfigurationGroup, int>(bestMachine, configGroup, lineIndex);
         }
-
 
         public bool LoadSettings(string fileName = datFile)
         {
@@ -707,6 +701,8 @@ namespace ScheduleGen
 
         private void AddControl()
         {
+            DateTime beforeDay = CurrentDay;
+
             if (scheduleDay.CanAddShift()) // if all shifts not used.
             {
                 scheduleDay.AddLogic();
@@ -723,6 +719,14 @@ namespace ScheduleGen
                 scheduleDay.AddLogic();
                 scheduleLine = (CoatingScheduleLine)scheduleDay.ChildrenLogic.Last();
             }
+
+            // decrement inventory
+            int daysAdded = (CurrentDay - beforeDay).Days;
+            if (daysAdded > 0)
+                DecrementInventory(daysAdded);
+            
+            // reset the state for the next shift
+            GenerationData.ResetForNextShift();
         }
 
         private void DecrementInventory(int dayDif)
@@ -770,16 +774,17 @@ namespace ScheduleGen
                                 turnUnits = 1;
 
                             double turns = inventoryItem.Units / turnUnits;
-                            if (master.MinSupply < turns && !PredictionItems.Contains(master))
+                            if (master.MinSupply < turns)
                             {
-                                PredictionItems.Add(master);
+                                GenerationData.AddPredictionOrder(master);
                             }
                         }
                         else
                         {
-                            if (inventoryItem.Units < master.MinSupply && !PredictionItems.Contains(master))
+                            if (inventoryItem.Units < master.MinSupply)
                             {
-                                PredictionItems.Add(master);
+                                GenerationData.AddPredictionOrder(master);
+                                
                             }
                         }
                     }

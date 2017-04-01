@@ -16,13 +16,13 @@ static class Evaluator
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    public static PriorityItem Evaluate(ProductMasterItem item)
+    public static PriorityItem Evaluate(ProductMasterItem item, string line)
     {
         int weight = 0;
         weight += EvaluateSales(item);
-        weight += EvaluateWidth(item);
+        weight += EvaluateWidth(item, line);
         weight += EvaluateProjection(item);
-        weight += EvaluateGrouping(item);
+        weight += EvaluateGrouping(item,line);
 
         return new PriorityItem(item,weight);
     }
@@ -53,10 +53,10 @@ static class Evaluator
     /// </summary>
     /// <param name="item">Item to potentially schedule</param>
     /// <returns>weight that the item should be scheduled</returns>
-    private static int EvaluateWidth(ProductMasterItem item)
+    private static int EvaluateWidth(ProductMasterItem item, string line)
     {
         // Linear progression of weight with the dif in current working width.
-        return  WidthWeight - (int)Math.Abs(ScheduleGenerator.Instance.LastWidth - item.Width);
+        return  WidthWeight - (int)Math.Abs(ScheduleGenerator.Instance.GenerationData.LastWidth[line] - item.Width);
     }
 
     /// <summary>
@@ -66,9 +66,9 @@ static class Evaluator
     /// <returns>weight that the item should be scheduled</returns>
     private static int EvaluateProjection(ProductMasterItem item)
     {
-        if (ScheduleGenerator.Instance.PredictionItems == null) return 0;
+        if (ScheduleGenerator.Instance.GenerationData.PredictionList == null) return 0;
 
-        return ScheduleGenerator.Instance.PredictionItems.Contains(item) ? ProjectedSalesWeight : 0;
+        return ScheduleGenerator.Instance.GenerationData.PredictionList.Any(p => p.MasterID == item.MasterID) ? ProjectedSalesWeight : 0;
     }
 
     /// <summary>
@@ -76,10 +76,10 @@ static class Evaluator
     /// </summary>
     /// <param name="item">Item to potentially schedule</param>
     /// <returns>weight that the item should be scheduled</returns>
-    private static int EvaluateGrouping(ProductMasterItem item)
+    private static int EvaluateGrouping(ProductMasterItem item, string line)
     {
         var possibleGroups = MachineHandler.Instance.AllConfigGroups.Where(confGroup => confGroup.CanMake(item));
-        if (possibleGroups.Contains(ScheduleGenerator.Instance.LastUsedGroup))
+        if (possibleGroups.Contains(ScheduleGenerator.Instance.GenerationData.LastRunConfigurationGroups[line]))
             return ConfigGroupingWeight;
 
         return 0;

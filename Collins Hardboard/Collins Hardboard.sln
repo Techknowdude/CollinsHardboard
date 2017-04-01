@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main Application", "Main Application\Main Application.csproj", "{C9086DEC-4FE8-4815-9196-E59F8505B67C}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -34,8 +34,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleGen", "ScheduleGen\ScheduleGen.csproj", "{1E74D0EA-01AB-4A1E-AFF2-7EE6ADC22823}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelLibTests", "ModelLibTests\ModelLibTests.csproj", "{1D583FF8-A58C-4C45-A90E-FF9600DDD08C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleGenTests", "ScheduleGenTests\ScheduleGenTests.csproj", "{507B9D0D-E014-42C6-87DD-B5A9D78189E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportLibTests", "ImportLibTests\ImportLibTests.csproj", "{55C23EBE-AA0F-448E-8519-EF9210B059BB}"
 EndProject
@@ -100,10 +98,6 @@ Global
 		{1D583FF8-A58C-4C45-A90E-FF9600DDD08C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D583FF8-A58C-4C45-A90E-FF9600DDD08C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D583FF8-A58C-4C45-A90E-FF9600DDD08C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{507B9D0D-E014-42C6-87DD-B5A9D78189E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{507B9D0D-E014-42C6-87DD-B5A9D78189E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{507B9D0D-E014-42C6-87DD-B5A9D78189E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{507B9D0D-E014-42C6-87DD-B5A9D78189E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{55C23EBE-AA0F-448E-8519-EF9210B059BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{55C23EBE-AA0F-448E-8519-EF9210B059BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55C23EBE-AA0F-448E-8519-EF9210B059BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
