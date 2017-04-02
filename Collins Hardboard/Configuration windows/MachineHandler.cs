@@ -32,6 +32,15 @@ namespace Configuration_windows
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Flag for if the machine handler has loaded a config file into memory
+        /// </summary>
+        public bool IsLoaded
+        {
+            get { return _hasLoaded && AllConfigurations.Count > 0; }
+        }
+
         /// <summary>
         /// The file that holds the machine handler information
         /// </summary>
@@ -64,6 +73,7 @@ namespace Configuration_windows
                         }
                     }
                 }
+
                 return _inner;
             }
         }
@@ -84,14 +94,29 @@ namespace Configuration_windows
             set { _configWindow = value; }
         }
 
-        //TODO: Manage and save this list.
-        public ObservableCollection<ConfigurationGroup> AllConfigGroups { get; set; }
+        public List<ConfigurationGroup> AllConfigGroups
+        {
+            get
+            {
+                List<ConfigurationGroup> all = new List<ConfigurationGroup>();
+                foreach (var machine in MachineList)
+                {
+                    all.AddRange(machine.ConfigurationList);
+                }
+                return all;
+            }
+        }
 
         public ObservableCollection<Configuration> AllConfigurations
         {
             get { return _allConfigurations; }
             set { _allConfigurations = value; }
         }
+        //public ObservableCollection<Configuration> AllConfigurations
+        //{
+        //    get { return _allConfigurations; }
+        //    set { _allConfigurations = value; }
+        //}
 
         #endregion
 
@@ -99,7 +124,7 @@ namespace Configuration_windows
         /// Private ctor
         /// </summary>
         private MachineHandler()
-        {   
+        {
             _machineList = new ObservableCollection<Machine>();
             _allConfigurations = new ObservableCollection<Configuration>();
         }
@@ -124,7 +149,7 @@ namespace Configuration_windows
         public void AddMachine(Machine machine = null)
         {
             Machine newMachine = machine;
-            if(newMachine == null)
+            if (newMachine == null)
                 newMachine = Machine.CreateMachine("New Machine");
             _machineList.Add(newMachine);
             //newMachine.PropertyChanged += ChildMachineChanged;
@@ -166,7 +191,7 @@ namespace Configuration_windows
                 }
             }
         }
-        
+
         /// <summary>
         /// Saves the machine list to a binary file
         /// </summary>
@@ -194,7 +219,7 @@ namespace Configuration_windows
         /// <summary>
         /// Loads the machine list
         /// </summary>
-        public void Load()
+        public void Load(bool quietMode = false)
         {
             string fileName = SaveName;
             try
@@ -202,12 +227,16 @@ namespace Configuration_windows
                 using (Stream stream = new FileStream(fileName, FileMode.OpenOrCreate))
                 {
                     MachineList.Clear();
-                    MachineList = (ObservableCollection<Machine>) formatter.Deserialize(stream);
+                    MachineList = (ObservableCollection<Machine>)formatter.Deserialize(stream);
                     _hasLoaded = true;
+                    RefreshConfigurations();
                 }
             }
             catch (Exception exception)
             {
+                // don't show the dialog if calling from the instance usage.
+                if (quietMode) return;
+
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.DefaultExt = "dat";
                 openFileDialog.Filter = "Data Files (.dat)|*.dat|All Files|*";
@@ -225,13 +254,14 @@ namespace Configuration_windows
                         {
                             MachineList.Clear();
                             MachineList = (ObservableCollection<Machine>)formatter.Deserialize(stream);
+                            RefreshConfigurations();
                             _hasLoaded = true;
                         }
 
                     }
                     catch (Exception inException)
                     {
-                        MessageBox.Show("Unable to load Machine configuration. Error: " + inException.Message,"ERROR",MessageBoxButton.OK);
+                        MessageBox.Show("Unable to load Machine configuration. Error: " + inException.Message, "ERROR", MessageBoxButton.OK);
                     }
                 }
             }
@@ -242,7 +272,7 @@ namespace Configuration_windows
             using (Stream stream = new FileStream(fileName, FileMode.OpenOrCreate))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<Machine>));
-                serializer.Serialize(stream,MachineList);
+                serializer.Serialize(stream, MachineList);
             }
         }
 
@@ -255,8 +285,9 @@ namespace Configuration_windows
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void LoadDialog()
+        public bool LoadDialog()
         {
+            bool loaded = false;
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -270,9 +301,10 @@ namespace Configuration_windows
                     //SaveName = openFileDialog.FileName;
                     using (Stream stream = new FileStream(openFileDialog.FileName, FileMode.OpenOrCreate))
                     {
-                        MachineList = (ObservableCollection<Machine>) formatter.Deserialize(stream);
+                        MachineList = (ObservableCollection<Machine>)formatter.Deserialize(stream);
                         _hasLoaded = true;
                         RefreshConfigurations();
+                        loaded = true;
                     }
                 }
             }
@@ -280,6 +312,7 @@ namespace Configuration_windows
             {
                 MessageBox.Show("An error occured while loading the file: " + exception.Message);
             }
+            return loaded;
         }
 
         public void SaveDialog()

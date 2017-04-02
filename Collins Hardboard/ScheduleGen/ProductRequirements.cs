@@ -86,9 +86,9 @@ namespace ScheduleGen
         public static ProductRequirements CreateProductRequirements(ProductMasterItem master, Configuration usedConfig)
         {
             var req = new ProductRequirements(master);
-            if(usedConfig != null)
+            if(usedConfig != null && usedConfig.OutputItems.Any(c => c.MasterID == master.MasterID))
             {
-                req.OutPieces = (int) (usedConfig.ItemsOut > 0 ? usedConfig.ItemsOut : 1);
+                req.OutPieces = (int) (usedConfig.OutputItems.FirstOrDefault(o => o.MasterID == master.MasterID).Pieces > 0 ? usedConfig.OutputItems.FirstOrDefault(o => o.MasterID == master.MasterID).Pieces : 1);
                 req.Input = usedConfig.InputItems.ToList();
                 req.HasConfig = true;
             }

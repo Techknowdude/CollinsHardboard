@@ -112,7 +112,7 @@ namespace ScheduleGen
                         if (day.PurchaseOrderPieces > 0)
                         {
                             orders.Insert(0,
-                                new MakeOrder(productRequirements.MasterItem.MasterID, day.PurchaseOrderPieces));
+                                new MakeOrder(productRequirements.MasterItem.MasterID, day.PurchaseOrderPieces, current));
                         }
                     }
                 }

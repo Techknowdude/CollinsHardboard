@@ -12,7 +12,6 @@
                     <Button Name="SaveButton" Content="_Save" Click="SaveButton_OnClick"></Button>
                     <Button Name="LoadButton" Content="_Load" Click="LoadButton_OnClick"></Button>
                     <Button Name="ExcelExportButton" Content="_Export to Excel" Click="ExcelExportButton_OnClick"></Button>
-                    <Button Name="TrackingListButton" Content="_Tracking List" Click="TrackingListButton_OnClickButton_OnClick"></Button>
                 </Menu>
 
                 <Grid Margin="0,10,0,10">

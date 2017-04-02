@@ -340,9 +340,8 @@ namespace CoatingScheduler
         /// <param name="machine"></param>
         /// <param name="config"></param>
         /// <param name="item"></param>
-        /// <param name="idealNumber"></param>
         /// <returns></returns>
-        public double ScheduleItem(Machine machine, Configuration config, ProductMasterItem item, double idealNumber)
+        public double ScheduleItem(Machine machine, Configuration config, ProductMasterItem item)
         {
             double made = 0;
 

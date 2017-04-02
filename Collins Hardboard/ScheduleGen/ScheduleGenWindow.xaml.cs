@@ -9,13 +9,12 @@ namespace ScheduleGen
     /// </summary>
     public partial class ScheduleGenWindow : Window
     {
-        public DateTime StartDate { get; set; } = DateTime.Today;
-        public DateTime EndDate { get; set; } = DateTime.Today.AddDays(7);
-        public DateTime SaleDate { get; set; } = DateTime.Today.AddDays(14);
-        public ScheduleGenerator ScheduleGen { get { return ScheduleGenerator.Instance; } }
+        public GenerationSettings GenerationSettings { get; set; }
 
         public ScheduleGenWindow()
         {
+            GenerationSettings = new GenerationSettings();
+
             InitializeComponent();
 
             ScheduleGenerator.Instance.Window = this;
@@ -26,9 +25,8 @@ namespace ScheduleGen
         {
             try
             {
-
-            ScheduleGenerator.Instance.GenerateSchedule(SaleDate,StartDate,EndDate);
-
+                if(GenerationSettings != null)
+                    ScheduleGenerator.Instance.GenerateSchedule(GenerationSettings);
             }
             catch (Exception exception)
             {

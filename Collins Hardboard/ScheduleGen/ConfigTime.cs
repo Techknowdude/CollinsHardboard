@@ -1,7 +1,7 @@
 using System;
 using Configuration_windows;
 
-class ConfigTime
+public class ConfigTime
 {
     public ConfigurationGroup Group { get; set; }
     public DateTime Time { get; set; }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Configuration_windows;
 using ModelLib;
@@ -15,6 +16,7 @@ static class Evaluator
     /// Gathers the weight that the item should be scheduled. Based on any registered evaluators.
     /// </summary>
     /// <param name="item"></param>
+    /// <param name="line"></param>
     /// <returns></returns>
     public static PriorityItem Evaluate(ProductMasterItem item, string line)
     {
@@ -23,9 +25,22 @@ static class Evaluator
         weight += EvaluateWidth(item, line);
         weight += EvaluateProjection(item);
         weight += EvaluateGrouping(item,line);
+        weight += EvaluateThickness(item, line);
 
         return new PriorityItem(item,weight);
     }
+
+    private static int EvaluateThickness(ProductMasterItem item, string line)
+    {
+        if (ScheduleGenerator.Instance.GenerationData.LastWidth.ContainsKey(line) && ScheduleGenerator.Instance.GenerationData.LastWidth[line] != 0)
+        {
+            return 5 -
+                   ((int) Math.Abs(ScheduleGenerator.Instance.GenerationData.LastThickness[line] - item.Thickness) * 8);
+                // 2*.25 = 8*1
+        }
+        return 0;
+    }
+
 
     /// <summary>
     /// Get the weight value of scheduling the item
@@ -38,12 +53,16 @@ static class Evaluator
 
         int daysTillDue = -1;
         //check for due date
-        var sale = ScheduleGenerator.Instance.GenerationData.SalesList.Where(s => s.MasterID == item.MasterID).OrderBy(s => s.DueDay).First();
-        if (sale != null)
-            daysTillDue = (int)(sale.DueDay - ScheduleGenerator.Instance.CurrentDay).TotalDays;
+        List<MakeOrder> sales = ScheduleGenerator.Instance.GenerationData.SalesList.Where(s => s.MasterID == item.MasterID).ToList();
+        if(sales.Any())
+        {
+            var sale = sales.OrderBy(s => s.DueDay).First();
+            if (sale != null)
+                daysTillDue = (int)(sale.DueDay - ScheduleGenerator.Instance.CurrentDay).TotalDays;
 
-        if(daysTillDue != -1)
-            return SalesWeight - (5 * daysTillDue);
+            if(daysTillDue != -1)
+                return SalesWeight - (5 * daysTillDue);
+        }
         return 0;
     }
 
@@ -55,8 +74,12 @@ static class Evaluator
     /// <returns>weight that the item should be scheduled</returns>
     private static int EvaluateWidth(ProductMasterItem item, string line)
     {
-        // Linear progression of weight with the dif in current working width.
-        return  WidthWeight - (int)Math.Abs(ScheduleGenerator.Instance.GenerationData.LastWidth[line] - item.Width);
+        if(ScheduleGenerator.Instance.GenerationData.LastWidth.ContainsKey(line) && ScheduleGenerator.Instance.GenerationData.LastWidth[line] != 0)
+        {
+            // Linear progression of weight with the dif in current working width.
+            return  WidthWeight - (int)Math.Abs(ScheduleGenerator.Instance.GenerationData.LastWidth[line] - item.Width);
+        }
+        return 0;
     }
 
     /// <summary>
@@ -78,10 +101,12 @@ static class Evaluator
     /// <returns>weight that the item should be scheduled</returns>
     private static int EvaluateGrouping(ProductMasterItem item, string line)
     {
-        var possibleGroups = MachineHandler.Instance.AllConfigGroups.Where(confGroup => confGroup.CanMake(item));
-        if (possibleGroups.Contains(ScheduleGenerator.Instance.GenerationData.LastRunConfigurationGroups[line]))
-            return ConfigGroupingWeight;
-
+        if (ScheduleGenerator.Instance.GenerationData.LastRunConfigurationGroups.ContainsKey(line))
+        {
+            var possibleGroups = MachineHandler.Instance.AllConfigGroups.Where(confGroup => confGroup.CanMake(item));
+            if (possibleGroups.Contains(ScheduleGenerator.Instance.GenerationData.LastRunConfigurationGroups[line]))
+                return ConfigGroupingWeight;
+        }
         return 0;
     }
 

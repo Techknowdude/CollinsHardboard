@@ -170,11 +170,6 @@ namespace CoatingScheduler
             }
         }
 
-        public void ClearRunningTotals()
-        {
-            RunningTotalStackPanel.Children.Clear();
-        }
-
         public void AddRunningTotal(String content, Int32 row)
         {
             while (row > RunningTotalStackPanel.Children.Count - 1)// remove -1
@@ -192,82 +187,6 @@ namespace CoatingScheduler
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 VerticalContentAlignment = VerticalAlignment.Center
             });
-        }
-
-        public void LoadTrackingInfo()
-        {
-            ClearRunningTotals();
-
-            // foreach tracking
-            // foreach row
-            // foreach shift
-
-            // update each tracking item
-            for (int index = 0; index < TrackingSelectionWindow.TrackingItems.Count; index++)
-            {
-                bool done = false;
-
-                var productMasterItem = TrackingSelectionWindow.TrackingItems[index];
-                double runningTotal = CoatingScheduleWindow.TrackingItemRunningTotals[index];
-
-                // get numbers from each shift row
-                for (int row = 0; !done; row++)
-                {
-                    done = true;
-                    for (int i = 0; i < ShiftControls.Count; i++)
-                    {
-                        var shiftControl = ShiftControls[i];
-
-                        if (shiftControl.ProductControls.Count > row)
-                        {
-                            done = false;
-
-                            try
-                            {
-                                runningTotal += shiftControl.GetRunningTotal(productMasterItem, row);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-
-                            }
-
-                            CoatingScheduleWindow.TrackingItemRunningTotals[index] = runningTotal;
-                        }
-                    }
-                    if(!done)
-                        AddRunningTotal(runningTotal.ToString(), row);
-
-                }
-            }
-
-            #region old code
-            //foreach (var shiftControl in ShiftControls)
-            //{
-            //    foreach (var productMasterItem in TrackingSelectionWindow.TrackingItems)
-            //    {
-            //        foreach (var productControl in shiftControl.ProductControls)
-            //        {
-            //            if (productControl is ProductNoteControl)
-            //            {
-            //                AddRunningTotal(CoatingScheduleWindow.GetCurrentTotal(productMasterItem, 0), 0, 0);
-
-            //            }
-            //            else
-            //            {
-            //                AddRunningTotal(CoatingScheduleWindow.GetCurrentTotal(productMasterItem, 0), 0, 0);
-
-            //            }
-            //        }
-            //    }
-            //}
-
-            #endregion
-        }
-
-        public void ReloadTrackingInfo()
-        {
-            ((DayControl)ParentControl).ReloadTrackingInfo();
         }
 
         public void GetInvChange()

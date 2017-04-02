@@ -12,10 +12,11 @@ namespace ScheduleGen
         private int _piecesToMake;
         public DateTime DueDay { get; set; }
 
-        public MakeOrder(int master, double pieces)
+        public MakeOrder(int master, double pieces, DateTime dueDay = default(DateTime))
         {
             MasterID = master;
             PiecesToMake = (int) pieces;
+            DueDay = dueDay;
         }
 
         public int MasterID

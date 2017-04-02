@@ -74,10 +74,6 @@ namespace CoatingScheduler
             try
             {
                 Product.Units = MtbUnits.Text;
-                if(ParentControl != null)
-                    ((ShiftControl)ParentControl).ReloadTrackingItems();
-
-
             }
             catch (Exception exception)
             {
@@ -141,7 +137,6 @@ namespace CoatingScheduler
             if (Product != null)
             {
                 Product.DestroySelf();
-                ((ShiftControl)ParentControl).ReloadTrackingItems();
             }
         }
 
@@ -150,7 +145,6 @@ namespace CoatingScheduler
             if (Product != null)
             {
                 Product.PushUp();
-                ((ShiftControl)ParentControl).ReloadTrackingItems();
             }
         }
 
@@ -159,7 +153,6 @@ namespace CoatingScheduler
             if (Product != null)
             {
                 Product.PushDown();
-                ((ShiftControl)ParentControl).ReloadTrackingItems();
             }
         }
 
@@ -168,7 +161,6 @@ namespace CoatingScheduler
             if (Product != null)
             {
                 Product.SwapUp();
-                ((ShiftControl)ParentControl).ReloadTrackingItems();
             }
         }
 
@@ -177,7 +169,6 @@ namespace CoatingScheduler
             if (Product != null)
             {
                 Product.SwapDown();
-                ((ShiftControl)ParentControl).ReloadTrackingItems();
             }
         }
 
@@ -194,7 +185,6 @@ namespace CoatingScheduler
             if (Product != null)
             {
                 Product.AddLogic();
-                ((ShiftControl)ParentControl).ReloadTrackingItems();
             }
         }
 
@@ -271,10 +261,6 @@ namespace CoatingScheduler
         private void DurationComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Product.DurationType = DurationComboBox.SelectedIndex == 0 ? DurationType.Units : DurationType.Hours;
-
-            if (ParentControl != null)
-                ((ShiftControl)ParentControl).ReloadTrackingItems();
-
         }
 
         private void CbbMarked_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -126,12 +126,6 @@ namespace Configuration_windows
             }
         }
 
-        //TODO: remove this
-        public int ItemOutID { get; set; }
-        public int ItemInID { get; set; }
-        public double ItemsIn { get; set; }
-        public double ItemsOut { get; set; }
-
         public ObservableCollection<ConfigItem> OutputItems
         {
             get { return _outputItems; }
@@ -146,7 +140,6 @@ namespace Configuration_windows
         /// <returns>A new Configuration</returns>
         public static Configuration CreateConfiguration()
         {
-            //TODO: Remove output ID and change time
             return new Configuration();
         }
 
@@ -301,7 +294,8 @@ namespace Configuration_windows
         /// <returns>fastest config or null if neither can make</returns>
         public Configuration GetFastestConfig(Configuration otherConfiguration, ProductMasterItem nextItem)
         {
-            //TODO: fill this in
+            if (otherConfiguration == null) return this;
+
             var myOutput = OutputItems.FirstOrDefault(o => o.MasterID == nextItem.MasterID);
             var otherOutput = otherConfiguration.OutputItems.FirstOrDefault(o => o.MasterID == nextItem.MasterID);
 
@@ -357,8 +351,7 @@ namespace Configuration_windows
             var output = OutputItems.FirstOrDefault(o => o.MasterID == item.MasterID);
             if (output == null) return -1;
 
-            //TODO: Update with rate of output.
-            return ((60 * hours) / (item.PiecesPerUnit * (_piecesOutPerMinute * (output.Pieces))));
+            return (output.Pieces*hours*60)/item.PiecesPerUnit;
         }
 
         /// <summary>

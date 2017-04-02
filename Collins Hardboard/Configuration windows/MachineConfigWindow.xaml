@@ -190,7 +190,7 @@
                                             <ListBox.ItemTemplate>
                                                 <DataTemplate DataType="configurationWindows:ConfigItem">
                                                     <WrapPanel>
-                                                        <ComboBox Width="200" ItemsSource="{Binding ElementName=ViewModel, Path=MasterList}" SelectedValuePath="MasterID" SelectedValue="{Binding MasterID}" DisplayMemberPath="Description"></ComboBox>
+                                                        <ComboBox Width="200" ItemsSource="{Binding ElementName=ViewModel, Path=MasterList}" SelectedValuePath="MasterID" SelectedValue="{Binding MasterID}" ></ComboBox>
                                                         <Label>Pieces:</Label>
                                                         <TextBox Margin="5,0" Padding="5" MinWidth="80" Text="{Binding Path=Pieces}"></TextBox>
                                                         <Button Command="{Binding ElementName=ConfigurationGb, Path=DataContext.(configurationWindows:Configuration.RemoveOutputCommand)}" CommandParameter="{Binding}">Delete</Button>
@@ -207,7 +207,7 @@
                                             <ListBox.ItemTemplate>
                                                 <DataTemplate DataType="configurationWindows:ConfigItem">
                                                     <WrapPanel>
-                                                        <ComboBox Width="200" ItemsSource="{Binding ElementName=ViewModel, Path=MasterList}" SelectedValuePath="MasterID" SelectedValue="{Binding MasterID}" DisplayMemberPath="Description"></ComboBox>
+                                                        <ComboBox Width="200" ItemsSource="{Binding ElementName=ViewModel, Path=MasterList}" SelectedValuePath="MasterID" SelectedValue="{Binding MasterID}" ></ComboBox>
                                                         <Label>Pieces:</Label>
                                                         <TextBox Margin="5,0" Padding="5" MinWidth="80" Text="{Binding Path=Pieces}"></TextBox>
                                                         <Button Command="{Binding ElementName=ConfigurationGb, Path=DataContext.(configurationWindows:Configuration.RemoveInputCommand)}" CommandParameter="{Binding}">Delete</Button>

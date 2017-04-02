@@ -8,33 +8,37 @@
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label>Starting day:</Label>
-            <DatePicker Name="StartDatePicker" SelectedDate="{Binding Path=StartDate}"></DatePicker>
+            <DatePicker Name="StartDatePicker" SelectedDate="{Binding Path=GenerationSettings.StartGen}"></DatePicker>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label>Ending day:</Label>
-            <DatePicker Name="EndDatePicker" SelectedDate="{Binding Path=EndDate}"></DatePicker>
+            <DatePicker Name="EndDatePicker" SelectedDate="{Binding Path=GenerationSettings.EndGen}"></DatePicker>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label>Consider sales due before:</Label>
-            <DatePicker Name="SalesDatePicker"  SelectedDate="{Binding Path=SaleDate}"></DatePicker>
+            <DatePicker Name="SalesDatePicker"  SelectedDate="{Binding Path=GenerationSettings.SalesOutlook}"></DatePicker>
         </StackPanel>
         <ListBox Name="ControlsListView">
 
             <WrapPanel>
                 <TextBlock>Sales weight:</TextBlock>
-                <TextBox Text="{Binding Path=ScheduleGen.SalesWeight}" Width="80"></TextBox>
+                <TextBox Text="{Binding Path=GenerationSettings.SalesWeight}" Width="80"></TextBox>
             </WrapPanel>
             <WrapPanel>
                 <TextBlock>Configuration grouping weight:</TextBlock>
-                <TextBox Text="{Binding Path=ScheduleGen.ConfigGroupingWeight}" Width="80"></TextBox>
+                <TextBox Text="{Binding Path=GenerationSettings.GroupWeight}" Width="80"></TextBox>
             </WrapPanel>
             <WrapPanel>
                 <TextBlock>Sales projection weight:</TextBlock>
-                <TextBox Text="{Binding Path=ScheduleGen.ProjectedSalesWeight}" Width="80"></TextBox>
+                <TextBox Text="{Binding Path=GenerationSettings.ProjectionWeight}" Width="80"></TextBox>
             </WrapPanel>
             <WrapPanel>
                 <TextBlock>Similar width weight:</TextBlock>
-                <TextBox Text="{Binding Path=ScheduleGen.WidthWeight}" Width="80"></TextBox>
+                <TextBox Text="{Binding Path=GenerationSettings.WidthWeight}" Width="80"></TextBox>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock>Waste weight:</TextBlock>
+                <TextBox Text="{Binding Path=GenerationSettings.WasteWeight}" Width="80"></TextBox>
             </WrapPanel>
         </ListBox>
         <StackPanel Orientation="Horizontal">

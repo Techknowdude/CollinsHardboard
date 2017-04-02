@@ -136,7 +136,6 @@ namespace Main_Application
 
         private void BtnOpenGenerator_Click(object sender, RoutedEventArgs e)
         {
-            return;
             ScheduleGenWindow window = new ScheduleGenWindow();
 
             window.Show();

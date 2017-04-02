@@ -84,6 +84,7 @@
     <Compile Include="ConfigTime.cs" />
     <Compile Include="Evaluator.cs" />
     <Compile Include="GenerationData.cs" />
+    <Compile Include="GenerationSettings.cs" />
     <Compile Include="MakeOrder.cs" />
     <Compile Include="PriorityItem.cs" />
     <Compile Include="ProductRequirements.cs" />

@@ -9,7 +9,7 @@ using StaticHelpers;
 /// <summary>
 /// Holds the state of the generation data.
 /// </summary>
-class GenerationData
+public class GenerationData
 {
     public Dictionary<string,double> LastWidth { get; set; } = new Dictionary<string, double>();
     public Dictionary<string,double> LastThickness { get; set; } = new Dictionary<string, double>();
@@ -33,9 +33,9 @@ class GenerationData
         PredictionList.Clear();
         LastRunMachine.Clear();
         PriorityList.Clear();
-        foreach (var keyValuePair in ScheduledItem)
+        foreach (var line in StaticFactoryValuesManager.CoatingLines)
         {
-            ScheduledItem[keyValuePair.Key] = false;
+            ScheduledItem[line] = false;
         }
         CurrentWaste = StaticFactoryValuesManager.CurrentWaste;
     }
@@ -74,6 +74,11 @@ class GenerationData
 
         LastWidth[line] = item.Width;
         LastThickness[line] = item.Thickness;
+
+        var prediction = PredictionList.FirstOrDefault(p => p.MasterID == item.MasterID);
+        if (prediction != null)
+            PredictionList.Remove(prediction);
+
         CurrentWaste += item.Waste * unitsMade;
     }
 
@@ -92,5 +97,20 @@ class GenerationData
         {
             order.PiecesToMake += (int)(master.PiecesPerUnit * master.TargetSupply);
         }
+    }
+
+    public void CreatePriorityList(List<ProductMasterItem> masterItemsAvailableToMake, string coatingLine)
+    {
+        if(PriorityList == null)
+            PriorityList = new List<PriorityItem>();
+
+        PriorityList.Clear();
+
+        foreach (var productMasterItem in masterItemsAvailableToMake)
+        {
+            PriorityList.Add(Evaluator.Evaluate(productMasterItem, coatingLine));
+        }
+
+        PriorityList.Sort(PriorityItem.Comparer);
     }
 }

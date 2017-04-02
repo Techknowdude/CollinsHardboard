@@ -127,10 +127,6 @@ namespace Configuration_windows
             get { return MachineHandler.Instance.MachineList; }
         }
         
-        public ObservableCollection<ConfigurationGroup> ExistingConfigGroups
-        {
-            get { return MachineHandler.Instance.AllConfigGroups; }
-        }
         private void DeleteMachine(object obj)
         {
             Machine machine = obj as Machine;

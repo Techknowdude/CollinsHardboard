@@ -169,7 +169,7 @@ namespace ModelLib
 
         public override string ToString()
         {
-            return Description;
+            return Description + "(ID: " + MasterID + ")";
         }
 
         public void Save(BinaryWriter writer)

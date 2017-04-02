@@ -49,8 +49,6 @@ namespace CoatingScheduler
                 productControl.Machine = addProductWindow.ItemMachine;
                 productControl.Config = addProductWindow.Config;
             }
-
-            ((LineControl)ParentControl).ReloadTrackingInfo();
         }
 
         public void AddControlToBottom(ICoatingScheduleLogic logic)
@@ -180,88 +178,6 @@ namespace CoatingScheduler
         {
             CoatingScheduleNote newNote = new CoatingScheduleNote();
             Shift.AddLogic(newNote);
-        }
-
-        public void LoadTrackingInfo()
-        {
-            for (Int32 index = 0; index < ProductControls.Count; index++)
-            {
-                var productControlBase = ProductControls[index];
-                ProductControl pControl = (ProductControl) ProductControls[index];
-                ProductMasterItem product =
-                    TrackingSelectionWindow.TrackingItems.FirstOrDefault(
-                        x => x.MasterID == pControl.Product.MasterID);
-                Int32 column = -1;
-
-                if (product != null)
-                    column = TrackingSelectionWindow.TrackingItems.IndexOf(product);
-
-                //((LineControl) ParentControl).AddRunningTotal(productControlBase.LoadTrackingItem(),index +1,column +1);
-            }
-        }
-
-        public void ReloadTrackingItems()
-        {
-            ((LineControl)ParentControl).ReloadTrackingInfo();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="productMasterItem"></param>
-        /// <param name="row">0 indexed</param>
-        /// <param name="duration"></param>
-        /// <returns></returns>
-        public double GetRunningTotal(ProductMasterItem productMasterItem, int row)
-        {
-            if (ProductControls.Count <= row) return 0;
-
-            var product = ProductControls[row] as ProductControl;
-
-            if (product == null) return 0;
-            double temp = 0;
-
-            if (product.Product.DurationType == DurationType.Hours)
-            {
-                try
-                {
-                    double unitChange = 0;
-
-                    if (product.Config.ItemInID == productMasterItem.MasterID)
-                    {
-                        Double.TryParse(product.Product.Units, out temp);
-                        //TODO: update all of this....
-                        unitChange -= product.Config.GetUnitsConsumed(productMasterItem, temp, null);
-                    }
-                    if (product.Config.ItemOutID == productMasterItem.MasterID)
-                    {
-                        Double.TryParse(product.Product.Units, out temp);
-                        unitChange += product.Config.ItemsOut * temp;
-                    }
-                        
-                    return unitChange;
-
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-
-            double units = 0;
-
-            if (product.Config.ItemInID == productMasterItem.MasterID)
-            {
-                Double.TryParse(product.Product.Units,out temp);
-                units -= (product.Config.ItemsIn/(double) product.Config.ItemsOut)*temp;
-            }
-            if (product.Config.ItemOutID == productMasterItem.MasterID)
-            {
-                Double.TryParse(product.Product.Units, out temp);
-                units += temp;
-            }
-
-            return units;
         }
 
         public void GetInvChange()

@@ -57,8 +57,6 @@ namespace CoatingScheduler
 
                 if (!ShiftHandler.CoatingInstance.LoadShifts())
                     MessageBox.Show("Could not load shift information");
-
-                LoadTrackingItems();
             }
         }
 
@@ -72,42 +70,6 @@ namespace CoatingScheduler
             }
         }
 
-        public void LoadTrackingItems()
-        {
-            TrackingStackPanel.Children.Clear();
-
-            if (TrackingSelectionWindow.TrackingItems == null) return;
-
-            // get current inventory numbers as base
-            TrackingItemRunningTotals = new List<double>();
-            for (Int32 index = 0; index < TrackingSelectionWindow.TrackingItems.Count; index++)
-            {
-                var productMasterItem = TrackingSelectionWindow.TrackingItems[index];
-                var inv =
-                    StaticInventoryTracker.AllInventoryItems.FirstOrDefault(
-                        x => x.InventoryItemID == productMasterItem.MasterID);
-                if (inv != null)
-                    TrackingItemRunningTotals.Add(inv.Units);
-                else
-                    TrackingItemRunningTotals.Add(0);
-            }
-
-            Int32 startingOffset = 255 + 520*StaticFactoryValuesManager.CoatingLines.Count();
-            TrackingStackPanel.Margin = new Thickness(startingOffset,0,0,0);
-
-            // add labels to top
-            foreach (var productMasterItem in TrackingSelectionWindow.TrackingItems)
-            {
-                TrackingStackPanel.Children.Add(new Label() { Content = productMasterItem.Description, Width = 70, Height = 30, BorderThickness = new Thickness(2), BorderBrush = Brushes.Blue});
-            }
-
-            // update numbers for each product made
-            foreach (var dayControl in DayControls)
-            {
-                dayControl.LoadTrackingItems();
-            }
-        }
-        
         private void PopulateControlList()
         {
             for (Int32 index = 0; index < Schedule.ChildrenLogic.Count; index++)
@@ -302,27 +264,6 @@ namespace CoatingScheduler
                 MessageBox.Show("Export already taking place.");
             }
             
-        }
-
-        private void TrackingListButton_OnClickButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            TrackingSelectionWindow window = new TrackingSelectionWindow();
-
-            window.ShowDialog();
-
-            LoadTrackingItems();
-        }
-
-        public static string GetCurrentTotal(ProductMasterItem item, double produced)
-        {
-            Int32 index = TrackingSelectionWindow.TrackingItems.IndexOf(item);
-            if (index == -1)
-                return "";
-            else
-            {
-                TrackingItemRunningTotals[index] += produced;
-                return TrackingItemRunningTotals[index].ToString();
-            }
         }
 
         private void NewButton_OnClick(object sender, RoutedEventArgs e)

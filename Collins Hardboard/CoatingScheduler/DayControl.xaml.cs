@@ -31,17 +31,8 @@ namespace CoatingScheduler
             UpdateControlData();
         }
 
-        public void LoadTrackingItems()
-        {
-            foreach (var lineControl in LineControls)
-            {
-                lineControl.LoadTrackingInfo();
-            }
-        }
-
         public void ReloadTrackingInfo()
         {
-            ParentControl.LoadTrackingItems();
         }
 
         private void RemoveDayButton_Click(object sender, RoutedEventArgs e)

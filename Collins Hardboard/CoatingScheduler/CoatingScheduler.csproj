@@ -95,12 +95,6 @@
     <Compile Include="ShiftControl.xaml.cs">
       <DependentUpon>ShiftControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TrackingItemControl.xaml.cs">
-      <DependentUpon>TrackingItemControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TrackingSelectionWindow.xaml.cs">
-      <DependentUpon>TrackingSelectionWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UnitChangeWindow.xaml.cs">
       <DependentUpon>UnitChangeWindow.xaml</DependentUpon>
     </Compile>
@@ -160,14 +154,6 @@
     <Page Include="ShiftControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TrackingItemControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TrackingSelectionWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UnitChangeWindow.xaml">
       <SubType>Designer</SubType>
