@@ -73,6 +73,8 @@ namespace ModelLib
             set { _genUnits = value - Units; }
         }
 
+        public int TotalPieces { get { return (int) (Units * PiecesPerUnit); } }
+
         #endregion
 
         public InventoryItem(string code, double unit = 0, double pcsPer = 0, string grade = "", int master = -1, int id = -1, bool purge = false)

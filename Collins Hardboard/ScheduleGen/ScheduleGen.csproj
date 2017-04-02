@@ -86,6 +86,7 @@
     <Compile Include="GenerationData.cs" />
     <Compile Include="GenerationSettings.cs" />
     <Compile Include="MakeOrder.cs" />
+    <Compile Include="PrereqMakeOrder.cs" />
     <Compile Include="PriorityItem.cs" />
     <Compile Include="ProductRequirements.cs" />
     <Compile Include="RequirementsDay.cs" />

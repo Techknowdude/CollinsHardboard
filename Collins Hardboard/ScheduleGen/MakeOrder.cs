@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.Remoting.Activation;
 using System.Text;
 using System.Threading.Tasks;
+using ModelLib;
 
 namespace ScheduleGen
 {
@@ -15,7 +15,7 @@ namespace ScheduleGen
         public MakeOrder(int master, double pieces, DateTime dueDay = default(DateTime))
         {
             MasterID = master;
-            PiecesToMake = (int) pieces;
+            PiecesToMake = (int)pieces;
             DueDay = dueDay;
         }
 
@@ -43,6 +43,14 @@ namespace ScheduleGen
             {
                 _piecesToMake = value;
             }
+        }
+
+        public static int DueDateComparerByDay(MakeOrder x, MakeOrder y)
+        {
+            if (x == null) return 1;
+            if (y == null) return -1;
+
+            return (y.DueDay - x.DueDay).Days;
         }
     }
 }

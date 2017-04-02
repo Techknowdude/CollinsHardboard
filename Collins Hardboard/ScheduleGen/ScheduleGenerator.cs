@@ -36,21 +36,12 @@ namespace ScheduleGen
         CoatingScheduleShift scheduleShift;
         CoatingSchedule schedule = new CoatingSchedule();
         private bool added;
-        private SalesPrediction.SalesDurationEnum duration;
         static double avgSold;
 
 
         private ScheduleGenWindow _window;
-        private DateTime _currentDay = DateTime.Today;
         public const string datFile = "ScheduleGenSettings.dat";
-        List<InventoryItem> currentInventoryItems = new List<InventoryItem>();
-        public List<InventoryItem> CurrentInventory { get { return currentInventoryItems; } }
 
-        public DateTime CurrentDay
-        {
-            get { return _currentDay; }
-            set { _currentDay = value; }
-        }
 
         public ScheduleGenWindow Window
         {
@@ -67,7 +58,6 @@ namespace ScheduleGen
             GenerationSettings = settings;
             if (GenerationData == null)
                 GenerationData = new GenerationData();
-            GenerationData.Reset();
 
             if(!MachineHandler.Instance.IsLoaded)
                 MachineHandler.Instance.Load();
@@ -93,15 +83,6 @@ namespace ScheduleGen
                 return;
             }
 
-            currentInventoryItems.Clear();
-
-            foreach (var allInventoryItem in StaticInventoryTracker.AllInventoryItems)
-            {
-                currentInventoryItems.Add(new InventoryItem(allInventoryItem.ProductCode, allInventoryItem.Units,
-                    allInventoryItem.PiecesPerUnit, allInventoryItem.Grade, allInventoryItem.MasterID,
-                    allInventoryItem.InventoryItemID));
-            }
-
             try
             {
                 CoatingSchedule.CurrentSchedule?.ChildrenLogic.Clear();
@@ -114,18 +95,17 @@ namespace ScheduleGen
                 pressScheduleWindow.UpdateControls();
 
 
-                // initialize with current waste, line, and width
-                CurrentDay = GenerationSettings.StartGen;
 
                 // add the first shift to the schedule
                 schedule.AddLogic();
                 scheduleDay = (CoatingScheduleDay)schedule.ChildrenLogic[0];
-                scheduleDay.Date = CurrentDay;
+                scheduleDay.Date = GenerationSettings.StartGen;
                 scheduleDay.AddLogic();
                 scheduleLine = (CoatingScheduleLine)scheduleDay.ChildrenLogic[0];
 
-                // get a list of all sales orders
-                GenerationData.SalesList = RequirementsHandler.GetMakeOrders(GenerationSettings.SalesOutlook);
+                GenerationData.InitializeData(RequirementsHandler.GetMakeOrders(GenerationSettings.SalesOutlook),
+                    GenerationSettings);
+                
 
                 // get list of items that can be made in the coating plant
                 List<ProductMasterItem> masterItemsAvailableToMake =
@@ -135,10 +115,6 @@ namespace ScheduleGen
                 List<ProductMasterItem> unmakeableItems =
                 masterItemsAvailableToMake.Where(
                     item => MachineHandler.Instance.AllConfigurations.All(c => !c.CanMake(item))).ToList();
-
-                // TODO remove sales from inventory if possible. 
-                // TODO needs to mark a sale as scheduled the prereq. and have a date for when those are ready. -> prevents double scheduling. 
-                // -> create a pair for tracking when an attempt to schedule something happens.
 
                 if (unmakeableItems.Any())
                 {
@@ -155,7 +131,7 @@ namespace ScheduleGen
                 }
 
                 // While we have not reached the end of the schedule
-                while (CurrentDay <= GenerationSettings.EndGen)
+                while (GenerationData.CurrentDay <= GenerationSettings.EndGen)
                 {
                     // attempt to schedule the highest priority item until the line is full. 
                     while (GenerationData.ScheduledItem.Any(s => !s.Value) && !LineIsFull())
@@ -168,6 +144,8 @@ namespace ScheduleGen
                             // Get item with highest priority
                             GenerationData.CreatePriorityList(masterItemsAvailableToMake, coatingLine);
                             
+                            //TODO Add handling of adding prerequisites for an item using the GenData PrereqOrders. (check other tag too)
+                            // Use the next item in the prereq. list as the most favorable.
                             PriorityItem currentItem = GenerationData.PriorityList[itemIndex];
 
                             if (currentItem.Item.MadeIn.ToUpper().Equals("COATING"))
@@ -293,32 +271,6 @@ namespace ScheduleGen
         }
 
 
-        private List<MakeOrder> GetPredictions()
-        {
-            var predictions = new List<MakeOrder>();
-
-            foreach (var master in StaticInventoryTracker.ProductMasterList)//.Where(p => p.MadeIn.Equals("Coating")))
-            {
-                double pieces = master.PiecesPerUnit * master.TargetSupply;
-
-                StaticFunctions.OutputDebugLine("Creating new prediction for " + master);
-                MakeOrder newOrder = new MakeOrder(master.MasterID, pieces) { DueDay = CurrentDay }; // assume the current day is the due date unless we have inventory data (Could have no inventory)
-                // forecast out when the order should be due
-                var inv = Instance.currentInventoryItems.FirstOrDefault(i => i.MasterID == master.MasterID);
-                if (inv != null)
-                {
-                    double currentInv = inv.Units;
-                    double usedPerDay = GetAvgUnitsPerDay(master) * 30;
-                    int daysTillOut = (int)Math.Floor(currentInv / usedPerDay);
-                    newOrder.DueDay = CurrentDay.AddDays(daysTillOut);
-                    StaticFunctions.OutputDebugLine("Found inventory of " + currentInv + " for prediction " + master + " predicted to run out in " + daysTillOut + " days");
-                }
-                predictions.Add(newOrder);
-            }
-
-            return predictions;
-        }
-
         /// <summary>
         /// Schedule the item with the given config.
         /// </summary>
@@ -339,39 +291,9 @@ namespace ScheduleGen
 
                 var unitsMade = scheduleShift.ScheduleItem(machine, config, nextItem);
 
-                var inv = currentInventoryItems.FirstOrDefault(i => i.MasterID == nextItem.MasterID);
-                if (inv != null)
-                {
-                    inv.Units += unitsMade;
-                }
-                else
-                {
-                    currentInventoryItems.Add(new InventoryItem(nextItem, unitsMade, "Dealer"));
-                }
-
-                // Remove the sale from the generation data.
-                var soldPcs = (int)unitsMade * nextItem.PiecesPerUnit;
-
-                var sales = GenerationData.SalesList.Where(s => s.MasterID == nextItem.MasterID);
-                foreach (var makeOrder in sales)
-                {
-                    if (soldPcs <= 0) break;
-
-                    // this is the only (or last sale to fill)
-                    if (soldPcs <= makeOrder.PiecesToMake)
-                    {
-                        makeOrder.PiecesToMake -= soldPcs;
-                    }
-                    else
-                    {
-                        // order filled. Remove it.
-                        soldPcs -= makeOrder.PiecesToMake;
-                        GenerationData.SalesList.Remove(makeOrder);
-                    }
-                }
-
                 added = true;
                 GenerationData.MarkItemScheduled(nextItem, lineIndex, unitsMade);
+
                 return true;
             }
             return false;
@@ -380,6 +302,7 @@ namespace ScheduleGen
 
         private bool SchedulePrerequisite(Configuration config, double unitsNeeded, string coatingLine, ProductMasterItem item)
         {
+            //TODO Add handling of adding prerequisites for an item using the GenData PrereqOrders.
             double unitsRequired = unitsNeeded;
             bool scheduled = false;
             double minimumUnits = 0;
@@ -390,7 +313,7 @@ namespace ScheduleGen
 
             foreach (var configInputItem in config.InputItems)
             {
-                var inv = currentInventoryItems.FirstOrDefault(i => i.MasterID == configInputItem.MasterID);
+                var inv = GenerationData.CurrentInventory.FirstOrDefault(i => i.MasterID == configInputItem.MasterID);
                 if (inv != null)
                 {
                     prevItem = StaticInventoryTracker.ProductMasterList.FirstOrDefault(
@@ -431,7 +354,7 @@ namespace ScheduleGen
             bool hasEnough = false;
             foreach (var configInputItem in config.InputItems)
             {
-                var inv = currentInventoryItems.FirstOrDefault(i => i.MasterID == configInputItem.MasterID);
+                var inv = GenerationData.CurrentInventory.FirstOrDefault(i => i.MasterID == configInputItem.MasterID);
                 if (inv != null)
                 {
                     var inputMaster =
@@ -448,36 +371,6 @@ namespace ScheduleGen
             return hasEnough;
         }
 
-        private double GetAvgUnitsPerDay(ProductMasterItem nextItem)
-        {
-            double unitUsage = 0;
-            var forecast = StaticInventoryTracker.ForecastItems.FirstOrDefault(f => f.MasterID == nextItem.MasterID);
-            if (forecast != null)
-            {
-                switch (duration)
-                {
-                    case SalesPrediction.SalesDurationEnum.LastMonth:
-                        unitUsage = forecast.AvgOneMonth / 30;
-                        break;
-                    case SalesPrediction.SalesDurationEnum.Last3Months:
-                        unitUsage = forecast.AvgThreeMonths / 30;
-                        break;
-                    case SalesPrediction.SalesDurationEnum.Last6Months:
-                        unitUsage = forecast.AvgSixMonths / 30;
-                        break;
-                    case SalesPrediction.SalesDurationEnum.Last12Months:
-                        unitUsage = forecast.AvgTwelveMonths / 30;
-                        break;
-                    case SalesPrediction.SalesDurationEnum.LastYear:
-                        unitUsage = forecast.AvgPastYear / 30;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-
-            return unitUsage;
-        }
 
         public Tuple<Machine, ConfigurationGroup, int> GetBestMachine(ProductMasterItem nextItem, string lineToRunOn)
         {
@@ -628,7 +521,7 @@ namespace ScheduleGen
                 ForecastItem forecast = StaticInventoryTracker.ForecastItems.FirstOrDefault(forcast => forcast.MasterID == nextItem.MasterID);
                 if (forecast != null)
                 {
-                    switch (duration)
+                    switch (GenerationData.SalesOutlookDuration)
                     {
                         case SalesPrediction.SalesDurationEnum.LastMonth:
                             avgSold = forecast.AvgOneMonth;
@@ -733,7 +626,7 @@ namespace ScheduleGen
 
         private void AddControl()
         {
-            DateTime beforeDay = CurrentDay;
+            DateTime beforeDay = GenerationData.CurrentDay;
 
             if (scheduleDay.CanAddShift()) // if all shifts not used.
             {
@@ -743,91 +636,24 @@ namespace ScheduleGen
             else
             {
                 // advance a day and remove expected inventory
-                CurrentDay = ShiftHandler.CoatingInstance.GetNextWorkingDay(CurrentDay);
+                GenerationData.CurrentDay = ShiftHandler.CoatingInstance.GetNextWorkingDay(GenerationData.CurrentDay);
 
                 schedule.AddLogic();
                 scheduleDay = (CoatingScheduleDay)schedule.ChildrenLogic.Last();
-                scheduleDay.Date = CurrentDay;
+                scheduleDay.Date = GenerationData.CurrentDay;
                 scheduleDay.AddLogic();
                 scheduleLine = (CoatingScheduleLine)scheduleDay.ChildrenLogic.Last();
             }
 
             // decrement inventory
-            int daysAdded = (CurrentDay - beforeDay).Days;
+            int daysAdded = (GenerationData.CurrentDay - beforeDay).Days;
             if (daysAdded > 0)
-                DecrementInventory(daysAdded);
+                GenerationData.DecrementInventory(daysAdded);
             
             // reset the state for the next shift
             GenerationData.ResetForNextShift();
         }
 
-        private void DecrementInventory(int dayDif)
-        {
-            // update inventory by lowering it by the number of days past
-            foreach (var inventoryItem in CurrentInventory)
-            {
-                var forecast = StaticInventoryTracker.ForecastItems.FirstOrDefault(f => f.MasterID == inventoryItem.MasterID);
-                ProductMasterItem master = StaticInventoryTracker.ProductMasterList.FirstOrDefault(m => m.MasterID == inventoryItem.MasterID);
-                if (forecast != null && master != null)
-                {
-                    try
-                    {
-                        double turnUnits = 0;
-                        switch (duration)
-                        {
-                            case SalesPrediction.SalesDurationEnum.LastMonth:
-                                inventoryItem.Units -= forecast.AvgOneMonth / 30 * dayDif;
-                                turnUnits = forecast.AvgOneMonth;
-                                break;
-                            case SalesPrediction.SalesDurationEnum.Last3Months:
-                                inventoryItem.Units -= forecast.AvgThreeMonths / 30 * dayDif;
-                                turnUnits = forecast.AvgThreeMonths;
-                                break;
-                            case SalesPrediction.SalesDurationEnum.Last6Months:
-                                inventoryItem.Units -= forecast.AvgSixMonths / 30 * dayDif;
-                                turnUnits = forecast.AvgSixMonths;
-                                break;
-                            case SalesPrediction.SalesDurationEnum.Last12Months:
-                                inventoryItem.Units -= forecast.AvgTwelveMonths / 30 * dayDif;
-                                turnUnits = forecast.AvgTwelveMonths;
-                                break;
-                            case SalesPrediction.SalesDurationEnum.LastYear:
-                                inventoryItem.Units -= forecast.AvgPastYear / 30 * dayDif;
-                                turnUnits = forecast.AvgPastYear;
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-
-                        // check if the master item should be triggered to be scheduled.
-                        if (master.TurnType == "T")
-                        {
-                            if (turnUnits <= 0)
-                                turnUnits = 1;
-
-                            double turns = inventoryItem.Units / turnUnits;
-                            if (master.MinSupply < turns)
-                            {
-                                GenerationData.AddPredictionOrder(master);
-                            }
-                        }
-                        else
-                        {
-                            if (inventoryItem.Units < master.MinSupply)
-                            {
-                                GenerationData.AddPredictionOrder(master);
-                                
-                            }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                }
-            }
-
-        }
 
         public DateTime GetSalesRange()
         {
