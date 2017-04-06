@@ -409,11 +409,13 @@ namespace ScheduleGen
                 config = MachineHandler.Instance.AllConfigurations.FirstOrDefault(c => c.CanMake(item));
             }
 
-            if (config == null)// && item.MadeIn.ToUpper().Equals("COATING"))
+            if (config == null && item.MadeIn.ToUpper().Equals("COATING"))
             {
-                _errors.Enqueue("Tried to add prerequisite item " + item + ", but could not find a config for it.");
+                var message = "Tried to add prerequisite item " + item + ", but could not find a config for it.";
+                if (!_errors.Any(m => m.Equals(message)))
+                    _errors.Enqueue(message);
             }
-            else// if(!item.MadeIn.ToUpper().Equals("COATING"))
+            else if(config != null)
             {
                 foreach (var configInputItem in config.InputItems)
                 {
