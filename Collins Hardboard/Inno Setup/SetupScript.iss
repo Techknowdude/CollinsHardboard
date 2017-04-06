@@ -36,7 +36,7 @@ Source: "D:\Programming\Collins\CollinsHardboard\Collins Hardboard\Main Applicat
 Source: "D:\Programming\Collins\CollinsHardboard\Collins Hardboard\Main Application\bin\Debug\ImportLib.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Programming\Collins\CollinsHardboard\Collins Hardboard\Main Application\bin\Debug\InventoryViewer.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Programming\Collins\CollinsHardboard\Collins Hardboard\Main Application\bin\Debug\LumenWorks.Framework.IO.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Programming\Collins\CollinsHardboard\Collins Hardboard\Main Application\bin\Debug\Main Application.vshost.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Programming\Collins\CollinsHardboard\Collins Hardboard\Main Application\bin\Debug\HBScheduler.vshost.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Programming\Collins\CollinsHardboard\Collins Hardboard\Main Application\bin\Debug\ModelLib.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Programming\Collins\CollinsHardboard\Collins Hardboard\Main Application\bin\Debug\ProductionScheduler.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Programming\Collins\CollinsHardboard\Collins Hardboard\Main Application\bin\Debug\ScheduleGen.exe"; DestDir: "{app}"; Flags: ignoreversion
