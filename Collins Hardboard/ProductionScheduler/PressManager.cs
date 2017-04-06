@@ -160,10 +160,10 @@ namespace ProductionScheduler
             return true;
         }
 
-        public static bool ScheduleItem(ProductMasterItem item, double count, DateTime targetTime)
+        public static DateTime ScheduleItem(ProductMasterItem item, double count, DateTime targetTime)
         {
-            DateTime finishedDateTime = DateTime.MinValue;
-
+            DateTime finishedDateTime = targetTime;
+            int loopPrevention = 1000;
             bool completed = false;
 
             if (PlateConfigurations.Count == 0)
@@ -171,28 +171,34 @@ namespace ProductionScheduler
                 Instance.CreateNewConfig();
             }
 
-            while (!completed && finishedDateTime < targetTime)
+            // schedule until the item is scheduled
+            while (!completed)
             {
                 // Find closest plate config
                 foreach (var plateConfiguration in PlateConfigurations)
                 {
                     // try to fill
-                    if (plateConfiguration.Add(item, count, ref finishedDateTime))
+                    if (count <= 0 || plateConfiguration.Add(item, ref count, ref finishedDateTime))
                     {
                         completed = true;
                         break;
                     }
                 }
 
-                if (!completed && finishedDateTime < targetTime)
+                while (!completed && loopPrevention-- > 0)
                 {
                     // add another config
-                    Instance.CreateNewConfig();
+                    var plateConfiguration = Instance.CreateNewConfig();
+                    // try to fill
+                    if (plateConfiguration.Add(item, ref count, ref finishedDateTime) && count <= 0)
+                    {
+                        break;
+                    }
                 }
             }
 
 
-            return finishedDateTime <= targetTime;
+            return finishedDateTime;
         }
 
         /// <summary>
@@ -210,9 +216,28 @@ namespace ProductionScheduler
                 if (start > plateConfiguration.StartTime && end < plateConfiguration.EndTime + DelayTime)
                 {
                     var shift = plateConfiguration.GetShift(start, end);
-                    if(shift != null)
+                    if (shift != null)
                         shifts.Add(shift);
                 }
+            }
+
+            return shifts;
+        }
+        /// <summary>
+        /// Retrieves the press shifts that finished within the time frame
+        /// </summary>
+        /// <param name="start">Lower bound for checking. Not inclusive.</param>
+        /// <param name="end">Upper bound for checking. Is inclusive.</param>
+        /// <returns>List of shifts. List is never null, but may be empty</returns>
+        public List<PressShift> GetPressShiftsInRange(DateTime start, DateTime end)
+        {
+            List<PressShift> shifts = new List<PressShift>();
+
+            foreach (var plateConfiguration in PlateConfigurations)
+            {
+                    var shiftsInConfig = plateConfiguration.GetShiftsInRange(start, end);
+                    if (shiftsInConfig != null && shiftsInConfig.Count > 0)
+                        shifts.AddRange(shiftsInConfig);
             }
 
             return shifts;
@@ -233,12 +258,12 @@ namespace ProductionScheduler
             {
                 var configuration = PlateConfigurations[index];
                 // keep true that it was added. Check unit count for full completion.
-                added = added || configuration.Add(item, unitCount, ref dueDate);
+                added = added || configuration.Add(item, ref unitCount, ref dueDate);
             }
             if (unitCount > 0)
             {
                 var config = CreateNewConfig();
-                config.Add(item, unitCount, ref dueDate);
+                config.Add(item, ref unitCount, ref dueDate);
                 PlateConfigurations.Add(config);
             }
 
@@ -251,7 +276,8 @@ namespace ProductionScheduler
         /// <returns></returns>
         public PlateConfiguration CreateNewConfig()
         {
-            DateTime begin = DateTime.Today;
+            // default to one week ago if first thing.
+            DateTime begin = DateTime.Today.AddDays(-7);
             DateTime end = begin;
             if (PlateConfigurations != null && PlateConfigurations.Count > 0)
             {
@@ -329,6 +355,32 @@ namespace ProductionScheduler
             }
 
             return finishedDateTime <= date;
+        }
+
+        public List<Tuple<ProductMasterItem,double>> GetProduction(DateTime currentDay, DateTime addDays)
+        {
+            List<Tuple<ProductMasterItem,double>> production= new List<Tuple<ProductMasterItem, double>>(); 
+
+            var shifts = GetPressShiftsInRange(currentDay, addDays);
+            foreach (var pressShift in shifts)
+            {
+                foreach (var pressMasterItem in pressShift.Produced)
+                {
+                    var prodIndex = production.FindIndex(p => p.Item1.MasterID == pressMasterItem.MasterItem.MasterID);
+                    if (prodIndex != -1)
+                    {
+                        var prod = production[prodIndex];
+
+                        production[prodIndex] = new Tuple<ProductMasterItem, double>(prod.Item1, prod.Item2 + pressMasterItem.UnitsMade);
+                    }
+                    else
+                    {
+                        production.Add(new Tuple<ProductMasterItem, double>(pressMasterItem.MasterItem, pressMasterItem.UnitsMade));
+                    }
+                }
+            }
+
+            return production;
         }
     }
 }

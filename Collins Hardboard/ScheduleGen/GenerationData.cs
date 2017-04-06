@@ -4,6 +4,7 @@ using System.Linq;
 using Configuration_windows;
 using ImportLib;
 using ModelLib;
+using ProductionScheduler;
 using ScheduleGen;
 using StaticHelpers;
 
@@ -12,9 +13,12 @@ using StaticHelpers;
 /// </summary>
 public class GenerationData
 {
-    public Dictionary<string,double> LastWidth { get; set; } = new Dictionary<string, double>();
-    public Dictionary<string,double> LastThickness { get; set; } = new Dictionary<string, double>();
-    public Dictionary<string, ConfigurationGroup> LastRunConfigurationGroups { get; set; } = new Dictionary<string, ConfigurationGroup>();
+    public Dictionary<string, double> LastWidth { get; set; } = new Dictionary<string, double>();
+    public Dictionary<string, double> LastThickness { get; set; } = new Dictionary<string, double>();
+
+    public Dictionary<string, ConfigurationGroup> LastRunConfigurationGroups { get; set; } =
+        new Dictionary<string, ConfigurationGroup>();
+
     public Dictionary<Machine, ConfigTime> LastRunMachine { get; set; } = new Dictionary<Machine, ConfigTime>();
     public DateTime CurrentDay { get; set; } = DateTime.Today;
     public List<MakeOrder> PredictionList { get; set; } = new List<MakeOrder>();
@@ -24,8 +28,10 @@ public class GenerationData
     public double CurrentWaste { get; set; }
     public List<InventoryItem> CurrentInventory { get; set; }
     public List<PrereqMakeOrder> PrereqMakeOrders { get; set; }
+    public GenerationSettings GenSettings { get; set; }
+    public DateTime LastPressProductionUpdate { get; set; } = DateTime.MinValue;
 
-    public SalesPrediction.SalesDurationEnum SalesOutlookDuration;
+    public SalesDurationEnum SalesOutlookDuration;
 
     public List<MakeOrder> SalesList
     {
@@ -33,7 +39,7 @@ public class GenerationData
         set
         {
             _salesList = value;
-            if(_salesList != null)
+            if (_salesList != null)
                 _salesList.Sort(MakeOrder.DueDateComparerByDay);
         }
     }
@@ -82,9 +88,9 @@ public class GenerationData
     /// </summary>
     public void ResetForNextShift()
     {
-        foreach (var keyValuePair in ScheduledItem)
+        foreach (var line in StaticFactoryValuesManager.CoatingLines)
         {
-            ScheduledItem[keyValuePair.Key] = false;
+            ScheduledItem[line] = false;
         }
     }
 
@@ -105,7 +111,7 @@ public class GenerationData
         var prediction = PredictionList.FirstOrDefault(p => p.MasterID == item.MasterID);
         if (prediction != null)
             PredictionList.Remove(prediction);
-        
+
         // remove sale
         var sale = SalesList.FirstOrDefault(s => s.MasterID == item.MasterID);
         int pcsToRemove = pcsMade;
@@ -118,7 +124,7 @@ public class GenerationData
             }
             else
             {
-               // made more or equal to the amount for this sale
+                // made more or equal to the amount for this sale
                 pcsToRemove -= sale.PiecesToMake;
                 SalesList.Remove(sale);
                 sale = SalesList.FirstOrDefault(s => s.MasterID == item.MasterID);
@@ -147,20 +153,20 @@ public class GenerationData
         }
         else
         {
-            order.PiecesToMake += (int)(master.PiecesPerUnit * master.TargetSupply);
+            order.PiecesToMake += (int) (master.PiecesPerUnit * master.TargetSupply);
         }
     }
 
     public void CreatePriorityList(List<ProductMasterItem> masterItemsAvailableToMake, string coatingLine)
     {
-        if(PriorityList == null)
+        if (PriorityList == null)
             PriorityList = new List<PriorityItem>();
 
         PriorityList.Clear();
 
         foreach (var productMasterItem in masterItemsAvailableToMake)
         {
-            PriorityList.Add(Evaluator.Evaluate(productMasterItem, coatingLine));
+            PriorityList.Add(Evaluator.Evaluate(productMasterItem, coatingLine, GenSettings));
         }
 
         PriorityList.Sort(PriorityItem.Comparer);
@@ -218,7 +224,8 @@ public class GenerationData
         foreach (var inventoryItem in CurrentInventory)
         {
             var forecast = StaticInventoryTracker.ForecastItems.FirstOrDefault(f => f.MasterID == inventoryItem.MasterID);
-            ProductMasterItem master = StaticInventoryTracker.ProductMasterList.FirstOrDefault(m => m.MasterID == inventoryItem.MasterID);
+            ProductMasterItem master =
+                StaticInventoryTracker.ProductMasterList.FirstOrDefault(m => m.MasterID == inventoryItem.MasterID);
             if (forecast != null && master != null)
             {
                 try
@@ -226,23 +233,23 @@ public class GenerationData
                     double turnUnits = 0;
                     switch (SalesOutlookDuration)
                     {
-                        case SalesPrediction.SalesDurationEnum.LastMonth:
+                        case SalesDurationEnum.LastMonth:
                             inventoryItem.Units -= forecast.AvgOneMonth / 30 * dayDif;
                             turnUnits = forecast.AvgOneMonth;
                             break;
-                        case SalesPrediction.SalesDurationEnum.Last3Months:
+                        case SalesDurationEnum.Last3Months:
                             inventoryItem.Units -= forecast.AvgThreeMonths / 30 * dayDif;
                             turnUnits = forecast.AvgThreeMonths;
                             break;
-                        case SalesPrediction.SalesDurationEnum.Last6Months:
+                        case SalesDurationEnum.Last6Months:
                             inventoryItem.Units -= forecast.AvgSixMonths / 30 * dayDif;
                             turnUnits = forecast.AvgSixMonths;
                             break;
-                        case SalesPrediction.SalesDurationEnum.Last12Months:
+                        case SalesDurationEnum.Last12Months:
                             inventoryItem.Units -= forecast.AvgTwelveMonths / 30 * dayDif;
                             turnUnits = forecast.AvgTwelveMonths;
                             break;
-                        case SalesPrediction.SalesDurationEnum.LastYear:
+                        case SalesDurationEnum.LastYear:
                             inventoryItem.Units -= forecast.AvgPastYear / 30 * dayDif;
                             turnUnits = forecast.AvgPastYear;
                             break;
@@ -285,27 +292,30 @@ public class GenerationData
     {
         var predictions = new List<MakeOrder>();
 
-        foreach (var master in StaticInventoryTracker.ProductMasterList)//.Where(p => p.MadeIn.Equals("Coating")))
+        foreach (var master in StaticInventoryTracker.ProductMasterList) //.Where(p => p.MadeIn.Equals("Coating")))
         {
             double pieces = master.PiecesPerUnit * master.TargetSupply;
 
             StaticFunctions.OutputDebugLine("Creating new prediction for " + master);
-            MakeOrder newOrder = new MakeOrder(master.MasterID, pieces) { DueDay = CurrentDay }; // assume the current day is the due date unless we have inventory data (Could have no inventory)
-                                                                                                 // forecast out when the order should be due
+            MakeOrder newOrder = new MakeOrder(master.MasterID, pieces) {DueDay = CurrentDay};
+                // assume the current day is the due date unless we have inventory data (Could have no inventory)
+            // forecast out when the order should be due
             var inv = CurrentInventory.FirstOrDefault(i => i.MasterID == master.MasterID);
             if (inv != null)
             {
                 double currentInv = inv.Units;
                 double usedPerDay = GetAvgUnitsPerDay(master) * 30;
-                int daysTillOut = (int)Math.Floor(currentInv / usedPerDay);
+                int daysTillOut = (int) Math.Floor(currentInv / usedPerDay);
                 newOrder.DueDay = CurrentDay.AddDays(daysTillOut);
-                StaticFunctions.OutputDebugLine("Found inventory of " + currentInv + " for prediction " + master + " predicted to run out in " + daysTillOut + " days");
+                StaticFunctions.OutputDebugLine("Found inventory of " + currentInv + " for prediction " + master +
+                                                " predicted to run out in " + daysTillOut + " days");
             }
             predictions.Add(newOrder);
         }
 
         return predictions;
     }
+
     private double GetAvgUnitsPerDay(ProductMasterItem nextItem)
     {
         double unitUsage = 0;
@@ -314,19 +324,19 @@ public class GenerationData
         {
             switch (SalesOutlookDuration)
             {
-                case SalesPrediction.SalesDurationEnum.LastMonth:
+                case SalesDurationEnum.LastMonth:
                     unitUsage = forecast.AvgOneMonth / 30;
                     break;
-                case SalesPrediction.SalesDurationEnum.Last3Months:
+                case SalesDurationEnum.Last3Months:
                     unitUsage = forecast.AvgThreeMonths / 30;
                     break;
-                case SalesPrediction.SalesDurationEnum.Last6Months:
+                case SalesDurationEnum.Last6Months:
                     unitUsage = forecast.AvgSixMonths / 30;
                     break;
-                case SalesPrediction.SalesDurationEnum.Last12Months:
+                case SalesDurationEnum.Last12Months:
                     unitUsage = forecast.AvgTwelveMonths / 30;
                     break;
-                case SalesPrediction.SalesDurationEnum.LastYear:
+                case SalesDurationEnum.LastYear:
                     unitUsage = forecast.AvgPastYear / 30;
                     break;
                 default:
@@ -344,6 +354,7 @@ public class GenerationData
     /// <param name="generationSettings"></param>
     public void InitializeData(List<MakeOrder> saleOrders, GenerationSettings generationSettings)
     {
+        GenSettings = generationSettings;
         // reset the state of the data
         Reset();
         // get a list of all sales orders
@@ -353,5 +364,62 @@ public class GenerationData
         // get snapshot of the current inventory
         SetInventory();
         RemoveFilledSales();
+    }
+
+    public PriorityItem GetPriorityItem(int itemIndex)
+    {
+        var item = PriorityList[itemIndex];
+        var hasPrereq = PrereqMakeOrders.Any(p => p.MasterID == item.Item.MasterID);
+        if (hasPrereq)
+        {
+            var prereq = PrereqMakeOrders.FirstOrDefault(p => p.MasterID == item.Item.MasterID);
+            if (prereq != null)
+            {
+                var make = prereq.GetLowestRequirement();
+                var master = StaticInventoryTracker.ProductMasterList.FirstOrDefault(m => m.MasterID == make.MasterID);
+                return new PriorityItem(master, item.Priority);
+            }
+            return new PriorityItem(item.Item, item.Priority);
+        }
+
+        return item;
+    }
+
+    public void AddPressProduction()
+    {
+        if(CurrentDay > LastPressProductionUpdate)
+        {
+            AddPressProduction(LastPressProductionUpdate,CurrentDay);
+            LastPressProductionUpdate = CurrentDay;
+        }
+    }
+
+    public void AddPressProduction(DateTime pressFinishTime)
+    {
+        if (LastPressProductionUpdate < pressFinishTime)
+        {
+            AddPressProduction(LastPressProductionUpdate,pressFinishTime);
+            LastPressProductionUpdate = pressFinishTime;
+        }
+    }
+
+    private void AddPressProduction(DateTime start, DateTime end)
+    {
+        // current day already moved
+        var production = PressManager.Instance.GetProduction(start, end);
+        foreach (var tuple in production)
+        {
+            // add inventory
+            var inv = CurrentInventory.FirstOrDefault(i => i.MasterID == tuple.Item1.MasterID);
+            if (inv != null)
+            {
+                inv.Units += tuple.Item2;
+            }
+            else
+            {
+                InventoryItem newInv = new InventoryItem(tuple.Item1, tuple.Item2, "DEALER");
+                CurrentInventory.Add(newInv);
+            }
+        }
     }
 }

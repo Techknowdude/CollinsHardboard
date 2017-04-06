@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using Configuration_windows;
+using ImportLib;
 using Microsoft.Office.Interop.Excel;
 using ModelLib;
 using StaticHelpers;
@@ -105,11 +106,41 @@ namespace CoatingScheduler
                     if (product != null && product.Units != String.Empty)
                     {
                         var units = Double.Parse(product.Units);
-                        hours -= units / product.UnitsPerHour;
+                            var master = StaticInventoryTracker.ProductMasterList.FirstOrDefault(m => m.MasterID == product.MasterID);
+                        if (product.Config == null)
+                        {
+                            if (master != null)
+                            {
+                                product.Config =
+                                MachineHandler.Instance.AllConfigurations.FirstOrDefault(
+                                    c => c.CanMake(master));
+                            }
+                        }
+                        if (product.Config != null && master != null)
+                        {
+                            // use configs to find the rate
+                            var output = product.Config.OutputItems.FirstOrDefault(o => o.MasterID == product.MasterID);
+                            if(output != null)
+                            {
+                                var pcsPerMin = output.Pieces * product.Config.PiecesOutPerMinute;
+                                hours -= units / (pcsPerMin * 60 / master.PiecesPerUnit);
+                            }
+                            else
+                            {
+                                // do our best to estimate what the master file says
+                                hours -= units / product.UnitsPerHour;
+                            }
+                        }
+                        else
+                        {
+                            // do our best to estimate what the master file says
+                            hours -= units / product.UnitsPerHour;
+                        }
                     }
                 }
 
-                return hours <= 0;
+                // mark as full if the shift has been used 75% or more
+                return hours/ shift.Duration.TotalHours <= .15;
             }
             return true;
         }
@@ -395,6 +426,22 @@ namespace CoatingScheduler
             }
 
             return consumed;
+        }
+
+        public List<Machine> GetMachinesUsed()
+        {
+            List<Machine> machines = new List<Machine>();
+
+            foreach (var coatingScheduleLogic in ChildrenLogic)
+            {
+                var prodItem = coatingScheduleLogic as CoatingScheduleProduct;
+                if (prodItem?.Machine != null)
+                {
+                    machines.Add(prodItem.Machine);
+                }
+            }
+
+            return machines;
         }
     }
 

@@ -187,5 +187,33 @@ namespace ModelLib
                 }
             }
         }
+
+        public double GetAvgUnitsSold(SalesDurationEnum generationDataSalesOutlookDuration)
+        {
+            double unitSoldAvg = 0;
+
+            switch (generationDataSalesOutlookDuration)
+            {
+                case SalesDurationEnum.LastMonth:
+                    unitSoldAvg = GetAvg(0,1);
+                    break;
+                case SalesDurationEnum.Last3Months:
+                    unitSoldAvg = GetAvg(0,3);
+                    break;
+                case SalesDurationEnum.Last6Months:
+                    unitSoldAvg = GetAvg(0,6);
+                    break;
+                case SalesDurationEnum.Last12Months:
+                    unitSoldAvg = GetAvg(0,2);
+                    break;
+                case SalesDurationEnum.LastYear:
+                    unitSoldAvg = GetAvg(10,3);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(generationDataSalesOutlookDuration), generationDataSalesOutlookDuration, null);
+            }
+
+            return unitSoldAvg;
+        }
     }
 }

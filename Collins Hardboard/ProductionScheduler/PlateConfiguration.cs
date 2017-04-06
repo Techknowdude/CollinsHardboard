@@ -248,10 +248,10 @@ namespace ProductionScheduler
         /// <param name="count">Number of units to make. Altered by the function.</param>
         /// <param name="time">The time the item must be completed.</param>
         /// <returns></returns>
-        public bool Add(ProductMasterItem item, double count, ref DateTime time)
+        public bool Add(ProductMasterItem item, ref double count, ref DateTime time)
         {
             bool added = false;
-            double scheduledCount = count;
+            //double scheduledCount = count;
             bool undo = false;
             DateTime currentTime = DateTime.MinValue;
 
@@ -260,27 +260,27 @@ namespace ProductionScheduler
             {
                 currentTime = _shifts[index].EndTime + PressManager.Instance.DelayTime;
 
-                if (currentTime > time)
-                {
-                    undo = true;
-                    break;
-                }
+                //if (currentTime > time)
+                //{
+                //    //undo = true;
+                //    break;
+                //}
 
                 added = _shifts[index].Add(item, ref count) || added;
             }
 
-            // if time has past or not all items could be made
-            if (undo || count > 0)
-            {
-                scheduledCount = scheduledCount - count;
+            //// if time has past or not all items could be made
+            //if (undo || count > 0)
+            //{
+            //    scheduledCount = scheduledCount - count;
 
-                for (int index = _shifts.Count -1; index >= 0 && scheduledCount > 0; --index)
-                {
-                    var shift = _shifts[index];
-                    shift.Remove(item, ref scheduledCount);
-                }
-                added = false; // did not completed
-            }
+            //    for (int index = _shifts.Count -1; index >= 0 && scheduledCount > 0; --index)
+            //    {
+            //        var shift = _shifts[index];
+            //        shift.Remove(item, ref scheduledCount);
+            //    }
+            //    added = false; // did not completed
+            //}
 
             time = currentTime;
 
@@ -333,10 +333,20 @@ namespace ProductionScheduler
             return shift;
         }
 
-        public bool Add(ProductMasterItem item, ref double count)
+        public List<PressShift> GetShiftsInRange(DateTime start, DateTime end)
         {
-            return true;
-        }
+            List<PressShift> shifts = new List<PressShift>();
 
+            foreach (var pressShift in _shifts)
+            {
+                if (pressShift.StartTime + PressManager.Instance.DelayTime <= end &&
+                    pressShift.EndTime + PressManager.Instance.DelayTime >= start)
+                {
+                    shifts.Add(pressShift);
+                }
+            }
+
+            return shifts;
+        }
     }
 }

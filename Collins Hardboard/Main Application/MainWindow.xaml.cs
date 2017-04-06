@@ -47,7 +47,7 @@ namespace Main_Application
         private void LoadDataFiles()
         {
             StaticInventoryTracker.LoadDefaults();
-            StaticFactoryValuesManager.LoadValues();
+            StaticFactoryValuesManager.LoadValues(true);
             var loadschedule = CoatingSchedule.Load();
             if (loadschedule != null)
                 schedule = loadschedule;

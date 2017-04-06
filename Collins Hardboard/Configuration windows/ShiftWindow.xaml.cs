@@ -141,7 +141,7 @@ namespace Configuration_windows
 
                         if (dialog.ShowDialog() == true)
                         {
-                            if (ShiftHandler.ProductionInstance.LoadShifts())
+                            if (ShiftHandler.ProductionInstance.LoadShifts(dialog.FileName))
                             {
                                 MessageBox.Show("Shifts loaded.");
                             }

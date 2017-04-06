@@ -43,6 +43,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumContainer.cs" />
     <Compile Include="ForecastItem.cs" />
     <Compile Include="ICompareItem.cs" />
     <Compile Include="Product.cs" />

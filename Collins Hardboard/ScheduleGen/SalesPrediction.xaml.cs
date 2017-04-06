@@ -53,13 +53,5 @@ namespace ScheduleGen
             }
         }
 
-        public enum SalesDurationEnum
-        {
-            LastMonth,
-            Last3Months,
-            Last6Months,
-            Last12Months,
-            LastYear
-        }
     }
 }

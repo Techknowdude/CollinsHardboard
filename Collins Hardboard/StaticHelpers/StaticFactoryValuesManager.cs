@@ -10,6 +10,9 @@ namespace StaticHelpers
     public static class StaticFactoryValuesManager
     {
         #region Fields
+
+        private static bool _loaded = false;
+
         private static List<Texture> _texturesList = new List<Texture>(); 
 
         private const string datFile = "FactoryValues.dat";
@@ -94,13 +97,13 @@ namespace StaticHelpers
         public static double WasteMin { get; set; }
         public static double WasteMax { get; set; }
         public static double CurrentWaste { get; set; }
-
+        public static bool Loaded { get { return _loaded;} }
         #endregion
 
 
         static StaticFactoryValuesManager()
         {
-            LoadValues();
+            LoadValues(true);
         }
 
         public static bool SaveValues()
@@ -186,9 +189,9 @@ namespace StaticHelpers
             return succeeded;
         }
 
-        public static void LoadValues()
+        public static void LoadValues(bool quietMode = false)
         {
-            if(!LoadData(datFile))
+            if (!LoadData(datFile) && !quietMode)
             {
                 MessageBox.Show("Failed to load factory settings. Please open factory settings file.");
                 OpenFileDialog dlg = new OpenFileDialog
@@ -270,6 +273,8 @@ namespace StaticHelpers
             {
                 succeeded = false;
             }
+            if (succeeded)
+                _loaded = true;
 
             return succeeded;
         }

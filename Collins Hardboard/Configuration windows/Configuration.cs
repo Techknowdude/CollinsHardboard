@@ -131,7 +131,7 @@ namespace Configuration_windows
             get { return _outputItems; }
             set { _outputItems = value; }
         }
-
+        
         #endregion
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace Configuration_windows
             var output = OutputItems.FirstOrDefault(o => o.MasterID == item.MasterID);
             if (output == null) return -1;
 
-            return (output.Pieces*hours*60)/item.PiecesPerUnit;
+            return (output.Pieces*PiecesOutPerMinute*hours*60)/item.PiecesPerUnit;
         }
 
         /// <summary>

@@ -412,6 +412,44 @@ namespace CoatingScheduler
             return consumed;
 
         }
+
+        public List<String> FullLines()
+        {
+            List<string> lines = new List<string>();
+
+            foreach (var source in ChildrenLogic.Where(l => l.IsFull()))
+            {
+                lines.Add(source.CoatingLine);
+            }
+            return lines;
+        }
+
+        public List<string> OpenLines()
+        {
+            List<string> lines = new List<string>();
+
+            foreach (var source in ChildrenLogic.Where(l => !l.IsFull()))
+            {
+                lines.Add(source.CoatingLine);
+            }
+            return lines;
+        }
+
+        public List<Machine> GetMachinesOnShift()
+        {
+            List<Machine> machines = new List<Machine>();
+
+            foreach (var coatingScheduleLogic in ChildrenLogic)
+            {
+                CoatingScheduleShift shift = coatingScheduleLogic as CoatingScheduleShift;
+                if (shift != null)
+                {
+                    machines.AddRange(shift.GetMachinesUsed());
+                }
+            }
+
+            return machines;
+        }
     }
 
 }
