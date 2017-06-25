@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using LumenWorks.Framework.IO.Csv;
 using Microsoft.Win32;
@@ -142,7 +143,6 @@ namespace ImportLib
                     {
                         OleDbDataReader excelData = myCommand.ExecuteReader();
                         Int32 prodOrdinal = excelData.GetOrdinal("Product Code"); //set to the sales columns.
-                        //Int32 descOrdinal = excelData.GetOrdinal("");
                         Int32 widthOrdinal = excelData.GetOrdinal("Width");
                         Int32 idOrdinal = excelData.GetOrdinal("Master ID");
                         Int32 lengthOrdinal = excelData.GetOrdinal("Length");
@@ -367,9 +367,7 @@ namespace ImportLib
                             }
                             catch (Exception e)
                             {
-                                StackTrace trace = new StackTrace(e);
                                 Console.WriteLine(e.Message);
-                                Console.WriteLine(trace.GetFrame(0).GetFileLineNumber());
                                 failedRows.Add(rowNum);
                             }
                         }
@@ -387,7 +385,13 @@ namespace ImportLib
                 }
             }
 
-            MessageBox.Show("Completed master import with " + numImported + " items");
+            var failedMessage = new StringBuilder();
+            foreach (var failedRow in failedRows)
+            {
+                failedMessage.Append(string.Format("{0},", failedRow));
+            }
+
+            MessageBox.Show("Completed master import with " + numImported + " items\nFailed on: " + failedMessage.ToString());
 
             return numImported;
         }
@@ -857,7 +861,7 @@ ORDER BY        DueDate,OrderNum, PD.Product;
                             if (!ignore &&
                                 MessageBox.Show(
                                     String.Format(
-                                        "No master file entry for {0}. Unable to add sale. Ignore future errors?", prodCode),
+                                        "No master file entry for Code: {0}, Thickness: {1}, Width: {2}, Length: {3}. Unable to add sale. Ignore future errors?", prodCode, thick, width, length),
                                     "Error",
                                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {

@@ -1,0 +1,236 @@
+<?xml version="1.0"?>
+<ShiftHandler xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Shifts>
+    <Shift>
+      <Duration>288000000000</Duration>
+      <StartDate>2017-02-02T00:00:00</StartDate>
+      <EndDate>2117-02-02T00:00:00</EndDate>
+      <ExceptionList />
+      <DaysList>
+        <DayOfWeek>Monday</DayOfWeek>
+        <DayOfWeek>Tuesday</DayOfWeek>
+        <DayOfWeek>Wednesday</DayOfWeek>
+        <DayOfWeek>Saturday</DayOfWeek>
+        <DayOfWeek>Sunday</DayOfWeek>
+      </DaysList>
+      <Name>Gyd</Name>
+      <BackgroundColor>
+        <A>255</A>
+        <R>240</R>
+        <G>248</G>
+        <B>255</B>
+        <ScA>1</ScA>
+        <ScR>0.8713671</ScR>
+        <ScG>0.9386857</ScG>
+        <ScB>1</ScB>
+      </BackgroundColor>
+      <ForegroundColor>
+        <A>255</A>
+        <R>0</R>
+        <G>0</G>
+        <B>255</B>
+        <ScA>1</ScA>
+        <ScR>0</ScR>
+        <ScG>0</ScG>
+        <ScB>1</ScB>
+      </ForegroundColor>
+      <StartTime>2017-02-02T23:00:00</StartTime>
+      <LinesCanRunOn>
+        <string>Lap Line</string>
+        <string>Panel Line</string>
+        <string>Phase 1</string>
+      </LinesCanRunOn>
+    </Shift>
+    <Shift>
+      <Duration>288000000000</Duration>
+      <StartDate>2017-02-02T00:00:00</StartDate>
+      <EndDate>2117-02-02T00:00:00</EndDate>
+      <ExceptionList />
+      <DaysList>
+        <DayOfWeek>Thursday</DayOfWeek>
+        <DayOfWeek>Friday</DayOfWeek>
+      </DaysList>
+      <Name>Relief</Name>
+      <BackgroundColor>
+        <A>255</A>
+        <R>240</R>
+        <G>248</G>
+        <B>255</B>
+        <ScA>1</ScA>
+        <ScR>0.8713671</ScR>
+        <ScG>0.9386857</ScG>
+        <ScB>1</ScB>
+      </BackgroundColor>
+      <ForegroundColor>
+        <A>255</A>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+        <ScA>1</ScA>
+        <ScR>1</ScR>
+        <ScG>0</ScG>
+        <ScB>0</ScB>
+      </ForegroundColor>
+      <StartTime>2017-02-02T23:00:00</StartTime>
+      <LinesCanRunOn>
+        <string>Panel Line</string>
+        <string>Phase 1</string>
+        <string>Lap Line</string>
+      </LinesCanRunOn>
+    </Shift>
+    <Shift>
+      <Duration>288000000000</Duration>
+      <StartDate>2017-02-02T00:00:00</StartDate>
+      <EndDate>2117-02-02T00:00:00</EndDate>
+      <ExceptionList />
+      <DaysList>
+        <DayOfWeek>Monday</DayOfWeek>
+        <DayOfWeek>Tuesday</DayOfWeek>
+        <DayOfWeek>Wednesday</DayOfWeek>
+        <DayOfWeek>Thursday</DayOfWeek>
+        <DayOfWeek>Friday</DayOfWeek>
+      </DaysList>
+      <Name>Days</Name>
+      <BackgroundColor>
+        <A>255</A>
+        <R>240</R>
+        <G>248</G>
+        <B>255</B>
+        <ScA>1</ScA>
+        <ScR>0.8713671</ScR>
+        <ScG>0.9386857</ScG>
+        <ScB>1</ScB>
+      </BackgroundColor>
+      <ForegroundColor>
+        <A>255</A>
+        <R>139</R>
+        <G>0</G>
+        <B>0</B>
+        <ScA>1</ScA>
+        <ScR>0.258182853</ScR>
+        <ScG>0</ScG>
+        <ScB>0</ScB>
+      </ForegroundColor>
+      <StartTime>2017-02-02T07:00:00</StartTime>
+      <LinesCanRunOn>
+        <string>Lap Line</string>
+        <string>Panel Line</string>
+        <string>Phase 1</string>
+      </LinesCanRunOn>
+    </Shift>
+    <Shift>
+      <Duration>288000000000</Duration>
+      <StartDate>2017-02-02T00:00:00</StartDate>
+      <EndDate>2117-02-02T00:00:00</EndDate>
+      <ExceptionList />
+      <DaysList>
+        <DayOfWeek>Saturday</DayOfWeek>
+        <DayOfWeek>Sunday</DayOfWeek>
+      </DaysList>
+      <Name>Relief</Name>
+      <BackgroundColor>
+        <A>255</A>
+        <R>240</R>
+        <G>248</G>
+        <B>255</B>
+        <ScA>1</ScA>
+        <ScR>0.8713671</ScR>
+        <ScG>0.9386857</ScG>
+        <ScB>1</ScB>
+      </BackgroundColor>
+      <ForegroundColor>
+        <A>255</A>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+        <ScA>1</ScA>
+        <ScR>1</ScR>
+        <ScG>0</ScG>
+        <ScB>0</ScB>
+      </ForegroundColor>
+      <StartTime>2017-02-02T07:00:00</StartTime>
+      <LinesCanRunOn>
+        <string>Lap Line</string>
+        <string>Panel Line</string>
+        <string>Phase 1</string>
+      </LinesCanRunOn>
+    </Shift>
+    <Shift>
+      <Duration>288000000000</Duration>
+      <StartDate>2017-02-02T00:00:00</StartDate>
+      <EndDate>2117-02-02T00:00:00</EndDate>
+      <ExceptionList />
+      <DaysList>
+        <DayOfWeek>Wednesday</DayOfWeek>
+        <DayOfWeek>Thursday</DayOfWeek>
+        <DayOfWeek>Friday</DayOfWeek>
+        <DayOfWeek>Saturday</DayOfWeek>
+        <DayOfWeek>Sunday</DayOfWeek>
+      </DaysList>
+      <Name>Swing</Name>
+      <BackgroundColor>
+        <A>255</A>
+        <R>240</R>
+        <G>248</G>
+        <B>255</B>
+        <ScA>1</ScA>
+        <ScR>0.8713671</ScR>
+        <ScG>0.9386857</ScG>
+        <ScB>1</ScB>
+      </BackgroundColor>
+      <ForegroundColor>
+        <A>255</A>
+        <R>0</R>
+        <G>100</G>
+        <B>0</B>
+        <ScA>1</ScA>
+        <ScR>0</ScR>
+        <ScG>0.127437681</ScG>
+        <ScB>0</ScB>
+      </ForegroundColor>
+      <StartTime>2017-02-02T15:00:00</StartTime>
+      <LinesCanRunOn>
+        <string>Lap Line</string>
+        <string>Panel Line</string>
+        <string>Phase 1</string>
+      </LinesCanRunOn>
+    </Shift>
+    <Shift>
+      <Duration>288000000000</Duration>
+      <StartDate>2017-02-02T00:00:00</StartDate>
+      <EndDate>2117-02-02T00:00:00</EndDate>
+      <ExceptionList />
+      <DaysList>
+        <DayOfWeek>Monday</DayOfWeek>
+        <DayOfWeek>Tuesday</DayOfWeek>
+      </DaysList>
+      <Name>Relief</Name>
+      <BackgroundColor>
+        <A>255</A>
+        <R>240</R>
+        <G>248</G>
+        <B>255</B>
+        <ScA>1</ScA>
+        <ScR>0.8713671</ScR>
+        <ScG>0.9386857</ScG>
+        <ScB>1</ScB>
+      </BackgroundColor>
+      <ForegroundColor>
+        <A>255</A>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+        <ScA>1</ScA>
+        <ScR>1</ScR>
+        <ScG>0</ScG>
+        <ScB>0</ScB>
+      </ForegroundColor>
+      <StartTime>2017-02-02T15:00:00</StartTime>
+      <LinesCanRunOn>
+        <string>Lap Line</string>
+        <string>Panel Line</string>
+        <string>Phase 1</string>
+      </LinesCanRunOn>
+    </Shift>
+  </Shifts>
+</ShiftHandler>
